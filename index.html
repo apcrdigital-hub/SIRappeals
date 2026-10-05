@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIR Karnataka Application Builder — Legal Framework & Representation Formats</title>
+  <style>
+    :root {
+      --navy-950: #0a1322;
+      --navy-900: #101e36;
+      --navy-800: #182b4d;
+      --navy-700: #223c6a;
+      --amber-600: #b45309;
+      --amber-500: #d97706;
+      --amber-100: #fef3c7;
+      --amber-50: #fffbeb;
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-300: #cbd5e1;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+      --crimson-700: #991b1b;
+      --crimson-50: #fef2f2;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.65;
+      color: var(--slate-800);
+      background-color: var(--slate-50);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Banner & Header */
+    .top-bar {
+      background-color: var(--navy-950);
+      color: #94a3b8;
+      font-size: 0.85rem;
+      padding: 0.5rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .top-bar a {
+      color: #cbd5e1;
+      text-decoration: none;
+    }
+    .top-bar a:hover {
+      text-decoration: underline;
+    }
+
+    header {
+      background: linear-gradient(180deg, var(--navy-900) 0%, var(--navy-800) 100%);
+      color: #ffffff;
+      padding: 2.75rem 1.5rem 2.25rem;
+      border-bottom: 3px solid var(--amber-500);
+    }
+
+    .header-container {
+      max-width: 1040px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .header-branding {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex: 1;
+      min-width: 320px;
+    }
+
+    .apcr-header-logo {
+      height: 92px;
+      width: auto;
+      object-fit: contain;
+      background: #ffffff;
+      padding: 6px 10px;
+      border-radius: 8px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
+      flex-shrink: 0;
+    }
+
+    .header-titles {
+      flex: 1;
+      min-width: 260px;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background-color: var(--amber-500);
+      color: var(--navy-950);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      margin-bottom: 0.85rem;
+    }
+
+    h1 {
+      font-family: Charter, Georgia, "Times New Roman", serif;
+      font-size: 2.25rem;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 1.15rem;
+      color: #cbd5e1;
+      font-weight: 400;
+      margin-bottom: 0.75rem;
+    }
+
+    .contact-line {
+      font-size: 0.875rem;
+      color: #94a3b8;
+    }
+    .contact-line strong {
+      color: #f1f5f9;
+    }
+
+    .header-cta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.5rem;
+    }
+
+    .btn-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: var(--amber-500);
+      color: var(--navy-950);
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 0.85rem 1.5rem;
+      border-radius: 6px;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      transition: background-color 0.15s ease, transform 0.15s ease;
+    }
+
+    .btn-cta:hover {
+      background-color: #f59e0b;
+      transform: translateY(-1px);
+    }
+
+    .cta-subtext {
+      font-size: 0.8rem;
+      color: #94a3b8;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Page Layout Wrapper */
+    .layout-wrapper {
+      max-width: 1260px;
+      margin: 2rem auto 4rem;
+      padding: 0 1.5rem;
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    /* Left Vertical Sidebar Navigation */
+    aside.sidebar-nav {
+      width: 270px;
+      min-width: 240px;
+      position: sticky;
+      top: 1.5rem;
+      max-height: calc(100vh - 3rem);
+      overflow-y: auto;
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 8px;
+      padding: 1.25rem 1rem;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+    }
+
+    .sidebar-title {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--slate-600);
+      padding: 0 0.5rem 0.6rem;
+      border-bottom: 1.5px solid var(--slate-200);
+      margin-bottom: 0.75rem;
+    }
+
+    .sidebar-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .sidebar-menu a {
+      display: block;
+      padding: 0.6rem 0.75rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--slate-700);
+      text-decoration: none;
+      border-radius: 5px;
+      border-left: 3px solid transparent;
+      transition: all 0.15s ease;
+      line-height: 1.35;
+    }
+
+    .sidebar-menu a:hover {
+      background-color: var(--slate-100);
+      color: var(--navy-900);
+      border-left-color: var(--amber-500);
+    }
+
+    .sidebar-cta-box {
+      margin-top: 1.25rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--slate-200);
+    }
+
+    .sidebar-cta-box .cta-text {
+      font-size: 0.75rem;
+      color: var(--slate-600);
+      margin-bottom: 0.5rem;
+      padding: 0 0.25rem;
+    }
+
+    .sidebar-btn-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      width: 100%;
+      background-color: var(--amber-500);
+      color: var(--navy-950);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.65rem 0.85rem;
+      border-radius: 5px;
+      text-decoration: none;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.15s ease, transform 0.15s ease;
+    }
+
+    .sidebar-btn-cta:hover {
+      background-color: #f59e0b;
+      transform: translateY(-1px);
+    }
+
+    /* Content Area on the Right */
+    main.content-main {
+      flex: 1;
+      min-width: 0;
+    }
+
+    section {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 8px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+      scroll-margin-top: 1.5rem;
+    }
+
+    h2 {
+      font-family: Charter, Georgia, "Times New Roman", serif;
+      font-size: 1.5rem;
+      color: var(--navy-900);
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--slate-100);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    h3 {
+      font-size: 1.15rem;
+      color: var(--navy-800);
+      margin: 1.5rem 0 0.75rem;
+    }
+
+    p {
+      margin-bottom: 1rem;
+      color: var(--slate-700);
+    }
+
+    ul, ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.5rem;
+      color: var(--slate-700);
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Notice callout */
+    .callout {
+      background-color: var(--amber-50);
+      border-left: 4px solid var(--amber-500);
+      padding: 1.25rem 1.5rem;
+      border-radius: 0 6px 6px 0;
+      margin: 1.25rem 0;
+    }
+
+    .callout-title {
+      font-weight: 700;
+      color: var(--amber-600);
+      margin-bottom: 0.35rem;
+    }
+
+    .callout-blue {
+      background-color: #f0f7ff;
+      border-left: 4px solid #2563eb;
+      padding: 1.25rem 1.5rem;
+      border-radius: 0 6px 6px 0;
+      margin: 1.25rem 0;
+    }
+    .callout-blue .callout-title {
+      color: #1e40af;
+    }
+
+    /* Procedure Steps Grid */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.25rem;
+    }
+
+    .step-card {
+      border: 1px solid var(--slate-200);
+      border-radius: 6px;
+      padding: 1.25rem;
+      background-color: var(--slate-50);
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+    .step-card:hover {
+      border-color: var(--slate-300);
+      transform: translateY(-2px);
+    }
+
+    .step-num {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 800;
+      background-color: var(--navy-800);
+      color: #ffffff;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      margin-bottom: 0.5rem;
+    }
+
+    .step-title {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--navy-950);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Formats Directory / Index */
+    .formats-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin-top: 1.25rem;
+    }
+
+    .format-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--slate-200);
+      border-radius: 6px;
+      background-color: #ffffff;
+      transition: all 0.15s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .format-item:hover {
+      border-color: var(--navy-700);
+      background-color: #f8fafc;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+
+    .format-info {
+      flex: 1;
+      padding-right: 1.5rem;
+    }
+
+    .format-title {
+      font-weight: 700;
+      color: var(--navy-900);
+      font-size: 0.975rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .format-desc {
+      font-size: 0.825rem;
+      color: var(--slate-600);
+    }
+
+    .btn-format {
+      display: inline-block;
+      white-space: nowrap;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--navy-800);
+      background-color: var(--slate-100);
+      border: 1px solid var(--slate-300);
+      padding: 0.45rem 0.9rem;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+
+    .format-item:hover .btn-format {
+      background-color: var(--navy-800);
+      color: #ffffff;
+      border-color: var(--navy-800);
+    }
+
+    /* Legal Verbatim Block */
+    .legal-quote {
+      font-family: Charter, Georgia, "Times New Roman", serif;
+      font-size: 0.925rem;
+      line-height: 1.6;
+      background-color: #fafbfc;
+      border: 1px solid var(--slate-200);
+      border-left: 3px solid var(--navy-700);
+      padding: 1.25rem;
+      border-radius: 0 4px 4px 0;
+      margin: 1rem 0;
+      color: var(--slate-800);
+    }
+
+    .legal-quote p {
+      margin-bottom: 0.75rem;
+    }
+    .legal-quote p:last-child {
+      margin-bottom: 0;
+    }
+
+    .para-num {
+      font-weight: bold;
+      color: var(--navy-900);
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--navy-950);
+      color: #94a3b8;
+      padding: 2.5rem 1.5rem;
+      font-size: 0.875rem;
+      border-top: 1px solid var(--navy-800);
+    }
+
+    .footer-container {
+      max-width: 1040px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .footer-col strong {
+      color: #ffffff;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .header-branding {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+      .apcr-header-logo {
+        height: 68px;
+      }
+      .header-cta {
+        align-items: flex-start;
+        width: 100%;
+      }
+      .format-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+      .format-info {
+        padding-right: 0;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .layout-wrapper {
+        flex-direction: column;
+        padding: 0 1rem;
+      }
+      aside.sidebar-nav {
+        width: 100%;
+        position: static;
+        max-height: none;
+        margin-bottom: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <img src="APCR Logo.png" alt="APCR Logo" style="height: 22px; width: auto; background: #fff; padding: 1px 3px; border-radius: 3px;">
+      <span><strong>Special Intensive Revision (SIR) Karnataka</strong> | Claims, Objections &amp; Appeals</span>
+    </div>
+    <div><a href="mailto:apcrkarnataka.sir26@gmail.com">apcrkarnataka.sir26@gmail.com</a></div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <div class="header-branding">
+        <img src="APCR Logo.png" alt="Association for Protection of Civil Rights (APCR) Logo" class="apcr-header-logo">
+        <div class="header-titles">
+          <span class="badge">Association for Protection of Civil Rights (APCR) &bull; Karnataka</span>
+          <h1>SIR Karnataka Application Builder</h1>
+          <div class="subtitle">Statutory Representation Templates &amp; Legal Safeguards for Phase 3 Notice Disposal</div>
+          <div class="contact-line">
+            Anchored to the Constitutional Safeguards under Articles 324 &amp; 326 and Hon'ble Supreme Court Judgments (2025–2026)
+          </div>
+        </div>
+      </div>
+      <div class="header-cta">
+        <a href="form.html" class="btn-cta">
+          <span>Create an Application</span>
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </a>
+        <span class="cta-subtext">Choose from 13 sample formats & export PDF</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Layout with Left Vertical Navigation -->
+  <div class="layout-wrapper">
+
+    <!-- Left Vertical Navigation Sidebar -->
+    <aside class="sidebar-nav">
+      <div class="sidebar-title">Contents &amp; Navigation</div>
+      <nav class="sidebar-menu">
+        <a href="#overview"><span>Overview</span></a>
+        <a href="#framework"><span>Legal Framework</span></a>
+        <a href="#procedure"><span>6-Step Procedure</span></a>
+        <a href="#formats"><span>Application Formats Index</span></a>
+        <a href="#adr-judgment"><span>SC: ADR Judgment (Paras 130–142)</span></a>
+        <a href="#lal-babu"><span>SC: Lal Babu Hussein (Para 6)</span></a>
+        <a href="#notified-docs"><span>Notified Document List</span></a>
+      </nav>
+
+      <div class="sidebar-cta-box">
+        <div class="cta-text">Statutory representations:</div>
+        <a href="form.html" class="sidebar-btn-cta">
+          <span>Application Builder &rarr;</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content Area on Right -->
+    <main class="content-main">
+
+    <!-- Overview Section -->
+    <section id="overview">
+      <h2>Overview of Special Intensive Revision (SIR)</h2>
+      <p>
+        The Election Commission of India (ECI) periodically conducts a <strong>Special Intensive Revision (SIR) / Summary Revision</strong> to clean, verify, and synchronize the electoral roll database with legacy baseline records (such as the 2002 SIR baseline). During <strong>Phase 3 (Claims, Objections & Notice Disposal)</strong>, Assistant Electoral Registration Officers (AEROs) issue statutory show-cause notices to electors whose records trigger anomaly flags in the Election Commission system.
+      </p>
+
+      <h3>Typical Causes of Algorithmic Anomaly Flags</h3>
+      <ul>
+        <li><strong>Historical typographical and phonetic errors</strong> in legacy rolls.</li>
+        <li><strong>Apparent biological discrepancies</strong> (e.g., parental age gaps under 15 years or over 50 years, or sibling age intervals under 9 months).</li>
+        <li><strong>Incorrect automated record-linkages</strong> across family trees or multi-member households.</li>
+        <li><strong>Name, initial, or middle-name spelling variations</strong> between legacy rolls and current EPIC databases.</li>
+        <li><strong>Unresolved doubts as to citizenship</strong>, or an elector being marked <em>"absent"</em> / <em>"shifted"</em> during house-to-house enumeration despite continuing to reside at the recorded address.</li>
+      </ul>
+
+      <div class="callout">
+        <div class="callout-title">Notice is a Statutory Opportunity, Not a Deletion</div>
+        Receipt of an AERO notice does not mean your name has been struck off; it is a statutory opportunity to place accurate facts, relationship matrices, and documentary proofs on record. This portal provides standardized, legally sound application templates designed to address specific notice categories systematically, ensuring your constitutional right to franchise under <strong>Article 326 of the Constitution of India</strong> is safeguarded — expressly anchored to the safeguards laid down by the Hon'ble Supreme Court and constitutional courts in the course of the 2025–2026 SIR litigation.
+      </div>
+    </section>
+
+    <!-- Legal and Judicial Framework Section -->
+    <section id="framework">
+      <h2>Legal and Judicial Framework</h2>
+
+      <h3>A. Statutory Basis</h3>
+      <ul>
+        <li><strong>Articles 324 and 326, Constitution of India</strong> — The Election Commission's power of superintendence, direction, and control over electoral rolls, and the constitutional guarantee of adult suffrage.</li>
+        <li><strong>Section 21(3), Representation of the People Act, 1950</strong> — Source of the Election Commission's power to direct a "special revision" of electoral rolls (the statutory basis for SIR).</li>
+        <li><strong>Sections 22, 23 and 24, Representation of the People Act, 1950</strong> — Correction of entries, inclusion/exclusion of names, and the statutory right of appeal against an Electoral Registration Officer's order.</li>
+        <li><strong>Rule 21A, Registration of Electors Rules, 1960</strong> — Requires a reasonable opportunity to show cause, inquiry, hearing, and a reasoned determination before any proposed deletion.</li>
+      </ul>
+
+      <h3>B. Association for Democratic Reforms v. Election Commission of India</h3>
+      <p>
+        <em>W.P.(C) No. 640/2025 and connected matters, Supreme Court of India, judgment dated 27 May 2026</em> (Surya Kant, CJI and Joymalya Bagchi, J.; subsequent implementation directions concerning the West Bengal SIR were passed by a bench also comprising Vipul M. Pancholi, J., in the same batch of proceedings). Key holdings and directions relevant to these templates:
+      </p>
+      <ul>
+        <li>The revision under Section 21(3) must be conducted through <strong>"fairness in action."</strong></li>
+        <li><strong>Rule 21A safeguards</strong> (notice, inquiry, hearing, and reasoned determination) must survive <strong>"in substance."</strong></li>
+        <li><strong>Rebuttable presumption of eligibility:</strong> Existing inclusion in the electoral roll creates a rebuttable presumption of eligibility; furnishing supporting material in response to a notice does not itself negate that presumption, and an elector is not required to prove eligibility afresh from a blank slate.</li>
+        <li><strong>Aadhaar document inclusion:</strong> Aadhaar was directed to be accepted as an additional (12th) document for identity/address verification purposes, alongside the Election Commission's original 11-document list — though Aadhaar alone is not proof of citizenship.</li>
+        <li><strong>Citizenship referral within 4 weeks:</strong> Where deletion is founded on a finding of doubtful/non-citizenship, the Election Commission must refer the case to the competent authority within 4 weeks; such determination must follow notice and hearing, must conclude before the next Assembly/local body election, and the name must be restored if the person is found to be a citizen.</li>
+        <li><strong>Restoration for temporary absence:</strong> Persons who remain domiciled/ordinarily resident but were wrongly deleted merely on the ground of temporary absence at enumeration may submit a representation for restoration.</li>
+      </ul>
+
+      <h3>C. Lal Babu Hussein v. Electoral Registration Officer</h3>
+      <p>
+        <em>(1995) 3 SCC 100</em> — The foundational authority (reaffirmed in the 2026 judgment above) establishing that an Electoral Registration Officer acts quasi-judicially and cannot delete an existing name on suspicion alone; the elector is entitled to a specific, intelligible statement of the case against them and a genuine opportunity to meet it before any adverse order.
+      </p>
+
+      <h3>D. A Note on Algorithmic Generated Anomaly Flags</h3>
+      <p>
+        An automatically generated "anomaly" or "discrepancy" flag (e.g., name-similarity, age-gap, or linkage flags) is a screening trigger, not a finding. It does not, by itself, discharge the AERO/ERO's obligation to independently verify the underlying facts and to record reasons before passing any adverse order. Applicants are accordingly entitled to:
+      </p>
+      <ol>
+        <li>An <strong>intelligible description</strong> of the specific field or record relied upon, and</li>
+        <li>A <strong>reasoned order</strong> if their representation is not accepted.</li>
+      </ol>
+      <p>Both of these rights are now built into the standing prayers of every template on this portal.</p>
+
+      <h3>E. Appeals — Section 24, Representation of the People Act, 1950</h3>
+      <p>
+        An order of the AERO/ERO may be appealed to the <strong>Designated Appellate Authority</strong> (the District Magistrate, Additional District Magistrate, Sub-Divisional/Executive Magistrate, District Collector, or an officer of equivalent rank, as notified for the district) under <strong>Section 24(a)</strong>, and a further appeal lies to the Chief Electoral Officer under <strong>Section 24(b)</strong>.
+      </p>
+      <p>
+        In the West Bengal SIR proceedings arising from the same batch of matters, the Hon'ble Supreme Court directed that appellate tribunals accord out-of-turn/expedited hearing to persons excluded from the electoral roll, given the compressed timelines of the SIR exercise. <strong>Format 13</strong> in this document is designed for use at this appellate stage and expressly seeks such expedited treatment.
+      </p>
+    </section>
+
+    <!-- Step-by-Step Procedure Section -->
+    <section id="procedure">
+      <h2>Step-by-Step Procedure to Prepare and File Your Response</h2>
+      <p>Follow this step-by-step procedure to prepare and file your representation systematically:</p>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <span class="step-num">Step 1</span>
+          <div class="step-title">Match the Exact Notice Scenario</div>
+          <p>Review the specific ground(s) cited in your AERO Notice and select the matching template scenario (e.g., Parent Age Gap, Sibling Linkage Anomaly, Self-Name Variance, Citizenship Doubt, Absence at Enumeration). Do not use a generic format if a scenario-specific template exists.</p>
+        </div>
+
+        <div class="step-card">
+          <span class="step-num">Step 2</span>
+          <div class="step-title">Collate Supporting Documents</div>
+          <p>Gather official documents to establish identity, age, lineage, and residential occupancy:</p>
+          <ul style="font-size: 0.85rem; padding-left: 1.1rem; margin-bottom: 0;">
+            <li><strong>Identity & Residence:</strong> EPIC, Passport, DL, Bank Passbook, Aadhaar (identity/address only).</li>
+            <li><strong>Lineage & Age:</strong> Birth Certificate, Class 10/School Leaving Certificate, Ration Card, Court Affidavit.</li>
+            <li><strong>Legacy Roll:</strong> Extract of 2002 SIR roll for self, parents, or grandparents.</li>
+            <li><strong>Citizenship:</strong> Any of the notified list of documents.</li>
+          </ul>
+        </div>
+
+        <div class="step-card">
+          <span class="step-num">Step 3</span>
+          <div class="step-title">Complete All Fields Accurately</div>
+          <p>Fill in every blank bracket or line with exact details as they appear on official records. Select/check only the specific variance checkboxes that apply to your situation; strike through non-applicable options. Keep official document numbers ready for verification.</p>
+        </div>
+
+        <div class="step-card">
+          <span class="step-num">Step 3A</span>
+          <div class="step-title">Assert Procedural Rights Expressly</div>
+          <p>Where the AERO Notice does not specify the exact field, record, or basis of the algorithmic flag, expressly request this in your representation. Every template includes a standing prayer for an intelligible statement of the discrepancy and a reasoned/speaking order with a personal hearing.</p>
+        </div>
+
+        <div class="step-card">
+          <span class="step-num">Step 4</span>
+          <div class="step-title">Dual Submission Protocol</div>
+          <p><strong>Digital:</strong> Upload the completed representation and primary document via the portal/BLO application where prompted.<br>
+          <strong>Physical (Crucial):</strong> Submit two physical copies (one original + one photocopy) of the signed representation with self-attested documents to the DEO/AERO office. Obtain an official Inward/Diary stamped acknowledgment.</p>
+        </div>
+
+        <div class="step-card">
+          <span class="step-num">Step 5 & 6</span>
+          <div class="step-title">Personal Hearing & Appeal</div>
+          <p><strong>Step 5:</strong> If summoned for personal hearing, carry original documents, acknowledgment copy, and supporting family members.<br>
+          <strong>Step 6:</strong> If rejected or ignored, file an expedited statutory appeal under Section 24 using <strong>Format 13</strong> before the Designated Appellate Authority.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Application Formats Index Section -->
+    <section id="formats">
+      <h2>Sample Application Formats — Index</h2>
+      <p>Click on any scenario below to open the Application Builder with that format pre-selected:</p>
+
+      <div class="formats-list">
+
+        <a href="form.html?format=scenario1" class="format-item">
+          <div class="format-info">
+            <div class="format-title">Scenario 1: Details Related to You/Your Relative Could Not Be Established</div>
+            <div class="format-desc">For general notice citing inability to establish voter or relative credentials from automated roll records.</div>
+          </div>
+          <span class="btn-format">Open Builder &rarr;</span>
+        </a>
+
+        <a href="form.html?format=scenario2" class="format-item">
+          <div class="format-info">
+            <div class="format-title">Scenario 2: Six or More Siblings When Linkage Is Correct</div>
+            <div class="format-desc">When the father has 6+ children in reality and the family linkage shown in the electoral records is factually correct.</div>
+          </div>
+          <span class="btn-format">Open Builder &rarr;</span>
+        </a>
+
+        <a href="form.html?format=scenario3" class="format-item">
+          <div class="format-info">
+            <div class="format-title">Scenario 3: Six or More Siblings When Linkage Is Incorrect</div>
+            <div class="format-desc">When the father has fewer than 6 children, and unauthorized or clerical entries have been erroneously linked to him.</div>
+          </div>
+          <span class="btn-format">Open Builder &rarr;</span>
+        </a>
+
+        <a href="form.html?format=scenario4" class="format-item">
+          <div class="format-info">
+            <div class="format-title">Scenario 4: Age Discrepancy — Parents (15 Years or Less / 50 Years or More) — Age Correctly Stated in 2002 SIR</div>
+            <div class="format-desc">Parental age gap anomaly where the 2002 baseline age is correct (early marriage, late childbirth, adoption, remarriage).</div>
+          </div>
+          <span class="btn-format">Open Builder &rarr;</span>
+        </a>
+
+        <a href="form.html?format=scenario5" class="format-item">
+          <div class="format-info">
+            <div class="format-title">Scenario 5: Age Discrepancy — Parents (15 Years or Less / 50 Years or More) — Age Incorrectly Stated in 2002 SIR</div>
+            <div class="format-desc">Parental age gap anomaly where the age recorded in the 2002 SIR baseline was factually incorrect.</div>
+          </div>
+          <span class="btn-format">Open Builder &rarr;</span>
+        </a>
+
+        <a href="form.html?format=scenario6" class="format-item">
+          <div class="format-info">
+            <div class="format-title">Scenario 6: Father's Name Mismatch Between Current Roll and Previous SIR Roll</div>
+            <div class="format-desc">Typographical, phonetic, initial expansion, or enumeration mis-linkage in father's name across rolls.</div>
+          </div>
+          <span class="btn-format">Open Builder &rarr;</span>
+        </a>
+
+        <a href="form.html?format=scenario7" class="format-item">
+          <div class="format-info">
+            <div class="format-title">Scenario 7: Age Discrepancy — Grandparents (40 Years) — Age Incorrectly Stated in SIR 2002</div>
+            <div class="format-desc">Grandparent age difference flagged as under 40 years due to incorrect entry in the 2002 roll.</div>
+          </div>
+          <span class="btn-format">Open Builder &rarr;</span>
+        </a>
+
+        <a href="form.html?format=scenario8" class="format-item">
+          <div class="format-info">
+            <div class="format-title">Scenario 8: Age Discrepancy — Grandparents (40 Years) — Age Correctly Stated in SIR 2002</div>
+            <div class="format-desc">Grandparent age difference under 40 years where baseline records are correct (e.g. historical minor marriage).</div>
+          </div>
+          <span class="btn-format">Open Builder &rarr;</span>
+        </a>
+
+        <a href="form.html?format=scenario9" class="format-item">
+          <div class="format-info">
+            <div class="format-title">Scenario 9: Self-Name Mismatch Between Current Roll and Previous SIR Roll</div>
+            <div class="format-desc">Spelling variation, initial expansion, or enumeration mis-linkage for the elector's own name.</div>
+          </div>
+          <span class="btn-format">Open Builder &rarr;</span>
+        </a>
+
+        <a href="form.html?format=scenario10" class="format-item">
+          <div class="format-info">
+            <div class="format-title">Scenario 10: Sibling Age Gap of Less Than 9 Months</div>
+            <div class="format-desc">Biological interval flag resolved via twin birth, past record error, adoption, or erroneous sibling linkage.</div>
+          </div>
+          <span class="btn-format">Open Builder &rarr;</span>
+        </a>
+
+        <a href="form.html?format=scenario11" class="format-item">
+          <div class="format-info">
+            <div class="format-title">Scenario 11: Deletion/Flagging on Ground of Alleged Non-Citizenship / "Doubtful" Status (New)</div>
+            <div class="format-desc">Voter marked 'doubtful' or 'D-category'. Invokes mandatory SC safeguards and 4-week statutory referral rules.</div>
+          </div>
+          <span class="btn-format">Open Builder &rarr;</span>
+        </a>
+
+        <a href="form.html?format=scenario12" class="format-item">
+          <div class="format-info">
+            <div class="format-title">Scenario 12: Wrongful Deletion Despite Continued Domicile — Temporary Absence at Enumeration (New)</div>
+            <div class="format-desc">Voter wrongly marked absent/shifted due to work, education, marriage, or medical care outside constituency.</div>
+          </div>
+          <span class="btn-format">Open Builder &rarr;</span>
+        </a>
+
+        <a href="form.html?format=format13" class="format-item" style="border-left: 4px solid var(--amber-600); background-color: #fffdf9;">
+          <div class="format-info">
+            <div class="format-title">Format 13: Appeal Under Section 24, Representation of the People Act, 1950 (New)</div>
+            <div class="format-desc">Statutory appeal before the Designated Appellate Authority against rejection, non-disposal, or unreasoned orders.</div>
+          </div>
+          <span class="btn-format" style="background-color: var(--amber-500); color: var(--navy-950); border-color: var(--amber-600);">Open Builder &rarr;</span>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- Supreme Court Judgment Excerpts Section -->
+    <section id="adr-judgment">
+      <h2>Supreme Court Judgment in ADR v. ECI (27 May 2026)</h2>
+      <p>
+        Excerpts from the judgment in <em>Association for Democratic Reforms & Ors. versus Election Commission of India & Ors.</em> (W.P.(C) No. 640/2025, Paras 130–142):
+      </p>
+
+      <div class="legal-quote">
+        <p><span class="para-num">130.</span> Rule 21A of the 1960 Rules delineates the procedure to be followed where the ERO forms an opinion, before final publication of the roll, that certain entries are liable to be deleted on account of ineligibility, error, or change in status. The Rule mandates, in the first instance, the preparation of a list of such electors proposed to be deleted, followed by its publication, along with a notice specifying the time and place at which the question of deletion shall be considered. It further contemplates an opportunity for affected persons to submit objections, whether oral or in writing, which are to be duly considered before any decision is taken. Crucially, the proviso engrafts an additional safeguard by requiring that, wherever the proposed deletion is founded on grounds such as non-residence or ineligibility, the concerned elector must, as far as practicable, be afforded a reasonable opportunity to show cause against such action.</p>
+
+        <p><span class="para-num">131.</span> The said Rule, in essence, prescribes that no name already entered in the electoral roll shall be deleted without prior notice to the concerned elector and without affording an opportunity of hearing. The question, therefore, is whether the SIR framework dispenses with these safeguards, or whether it incorporates them in substance, albeit through a structured process.</p>
+
+        <p><span class="para-num">132.</span> A close reading of the SIR Guidelines indicates that the process commences with a comprehensive house-to-house enumeration, wherein each existing elector is provided with a pre-filled Enumeration Form and is guided in its completion. Paragraphs 3 (b) and (c) of the Guidelines further require Booth Level Officers to make repeated visits in cases where electors are not available, thereby ensuring that the exercise is not reduced to a one-time or perfunctory attempt. This stage, in effect, serves as the initial point of engagement with the elector, ensuring awareness and participation in the revision process.</p>
+
+        <p><span class="para-num">133.</span> The procedural framework is further strengthened by the requirement under Paragraphs 3 (e) and (f) of the Guidelines, which provides that each elector submit the Enumeration Form along with the requisite information and documents, coupled with an acknowledgement mechanism evidencing receipt.</p>
+
+        <p><span class="para-num">134.</span> The preparation of the draft electoral roll marks the next stage. Paragraph 4(b) of the Guidelines provides that the draft roll shall include the names of all electors who have submitted their Enumeration Forms, while those in respect of whom forms have not been received are not included at this stage. It is of significance that such non-inclusion is not tantamount to a final deletion, but is only a provisional step, preceding the statutory process of claims and objections.</p>
+
+        <p><span class="para-num">135.</span> The heart of the procedural safeguard lies in the claims and objections stage. Paragraph 5 (a) of the Guidelines mandates that the ERO shall scrutinise the eligibility of electors in accordance with the constitutional and statutory requirements. This ensures that the enquiry into eligibility remains anchored within the framework of the RP Act.</p>
+
+        <p><span class="para-num">136.</span> More importantly, in cases where the ERO entertains any doubt regarding the eligibility of an elector, Paragraph 5(b) of the Guidelines mandates the initiation of a suo motu enquiry and the issuance of notice to the concerned elector, calling upon them to show cause. This requirement directly incorporates the essence of Rule 21A of the 1960 Rules, ensuring that no adverse decision is taken without prior notice and an opportunity of hearing. The Guidelines further contemplate that the ERO shall arrive at a determination based on field verification and documentary material, and shall pass a reasoned or speaking order in each case. Such an onerous duty serves as an important check against arbitrariness and ensures that the exercise of power is both transparent and accountable.</p>
+
+        <p><span class="para-num">137.</span> The framework also provides for wide dissemination and transparency through the display of lists of claims and objections. These lists are to be exhibited at the office of the ERO and made available on official platforms, thereby enabling public scrutiny and participation. This aspect assumes significance in a process that has a direct bearing on electoral rights. The aforesaid safeguard was further strengthened by this Court, namely Order dated 14.08.2025, directing the Commission to publish the list of approximately 65 lakh electors who had been excluded from the draft roll, along with the reasons for such exclusion, and to give ample coverage to such publication through newspapers, electronic media and radio.</p>
+
+        <p><span class="para-num">138.</span> Further, the availability of an appellate remedy constitutes an additional safeguard. Paragraph 7 of the Guidelines expressly recognises that any decision of the ERO is subject to appeal under Section 24 of the RP Act. This ensures that the process is not final at the initial stage and that any erroneous exclusion can be corrected through a statutory mechanism.</p>
+
+        <p><span class="para-num">139.</span> Finally, the Guidelines under Paragraph 11 (d) clarify that exclusion from the final electoral roll occurs only after completion of the scrutiny process, including enquiry and opportunity of hearing, and that such electors retain the right to challenge the decision. This makes it clear that the operative act of deletion is preceded by due process, consistent with the mandate of Rule 21A of the 1960 Rules.</p>
+
+        <p><span class="para-num">140.</span> Viewed holistically, the scheme underlying the SIR Guidelines reveals that the safeguards embedded in Rule 21A of the 1960 Rules have not been abrogated, but are instead operationalised within a broader and structured revision framework. The essential elements of Rule 21A of the 1960 Rules, namely, identification of doubtful entries, publication of such cases, notice to the concerned elector, and a determination after considering objections, find clear reflection across the various stages of the SIR process. The form may differ, but the substance remains intact.</p>
+
+        <p><span class="para-num">141.</span> In particular, what Rule 21A of the 1960 Rules contemplates as a singular, event specific exercise of deletion is, under the SIR framework, distributed across multiple procedural stages, beginning with enumeration, followed by draft publication, and culminating in the claims and objections process. It is at this latter stage that the core safeguards are activated: the elector is put to notice, an enquiry is undertaken where doubt exists, and a reasoned determination is made. The requirement of affording a "reasonable opportunity" to show cause, as envisaged in the proviso to Rule 21A of the 1960 Rules, thus stands fully incorporated.</p>
+
+        <p><span class="para-num">142.</span> Equally, the contention that non-inclusion in the draft roll results in automatic or final deletion cannot be accepted. The draft roll is, by design, provisional. It triggers a participatory process in which electors are afforded an opportunity to assert their entitlement, produce supporting material, and contest any proposed exclusion. The finality attaches only after this process is complete, and after compliance with the safeguards of notice, enquiry, and hearing.</p>
+      </div>
+    </section>
+
+    <!-- Lal Babu Hussein Judgment Section -->
+    <section id="lal-babu">
+      <h2>Supreme Court Judgment in Lal Babu Hussein v. ERO (1995) 3 SCC 100</h2>
+      <p>Excerpt from Paragraph 6:</p>
+      <div class="legal-quote">
+        <p><span class="para-num">Para 6.</span> ...it becomes clear that whenever any authority is called upon to decide even for the limited purpose of another law, whether a person is or is not a citizen of India, the authority must carefully examine the question in the context of the constitutional provisions and the provisions of the Citizenship Act extracted hereinbefore. In the instant case Article 323 of the Constitution provides for one general electoral roll for every territorial constituency; so does 1950 Act. This has to be done under the Superintendence, direction and control of Election Commission as per the mandate of Article 324 the Constitution. Section 16 of the 1950 Act in terms states that a person shall disqualified for registration in an electoral roll if he is not a citizen of India. Put positively a person must be a citizen of India to be entitled to inclusion in the electoral roll. Sub-section (2) of the said section empowers striking off the name of a person who incurs a disqualification set out in clauses (a), (b) or (c) of sub section (1) after his name is entered in the register of electoral rolls. Otherwise every person who is not less than 18 years of age on the qualifying date and is ordinarily resident in a given constituency is entitled to be registered. Section 22 empowers the Electoral Registration Officer for a constituency to delete any entry already made if on enquiry he is satisfied that it is erroneous or defective in any particular or needs to be transposed to another place in the roll or the concerned person has died or has ceased to be ordinarily resident in that constituency or that he is otherwise not entitled to be registered. Of course before any such action is taken the person concerned, except in the case of death, must be given an opportunity to be heard. Similar is the provision in Rule 21A of the 1960 Rules which empowers the registration officer before final publication of the roll to delete the name or names of any person or persons which have been entered owing to inadvertence or error if the person concerned is dead or has ceased to be ordinarily resident in that constituency or is otherwise not entitled to be registered. The procedure for exercise of the said power is set out therein and conforms to the requirements of the principles of natural justice. It is obvious from the above that two situations arise; the first where the name is to be entered on the rolls for the first time and the second where the name already entered is required to be deleted. In the first mentioned situation before the name is entered on the rolls, the concerned officer must be satisfied that the person seeking to have his name entered is not disqualified by reason of his not being a citizen of India. Therefore, he would be justified in requiring the concerned person to show evidence that he is a citizen of India. In the second situation, since the name is already entered, it must be presumed that before entering his name the concerned officer must have gone through the procedural requirements under the statute. This would be so even if we invoke Section 114(e) of the Evidence Act. But then possibilities of mistakes cannot be ruled out. These mistakes, if any, would have to be corrected. Even if we are to assume (without deciding) that the words "is otherwise not entitled to be registered in that roll" used in Section 22 of the 1950 Act or Rule 21A of the 1960 Rules are wide enough to cover the question relating to citizenship, the issue would have to be decided after giving the concerned person a reasonable opportunity of being heard. If the opportunity of being heard before deletion of the name is to be a meaningful and purposive one, it goes without saying that the concerned person whose name is borne on the roll and is intended to be removed must be informed why a suspicion has arisen in regard to his status as a citizen of India so that he may be able to show that the basis for the suspicion is ill founded. Unless the basis for the doubt is disclosed, it would not be possible for the concerned person to remove the doubt and explain any circumstance or circumstances responsible for the doubt.</p>
+      </div>
+    </section>
+
+    <!-- Notified Document List Section -->
+    <section id="notified-docs">
+      <h2>Annexure: Election Commission's Notified Document List for SIR (Reference)</h2>
+      <p>
+        The following documents have, over the course of the 2025–2026 SIR exercises, been notified by the Election Commission as acceptable proof for claims and objections (originally 11 documents, expanded to include Aadhaar as a 12th, pursuant to the Hon'ble Supreme Court's direction). Confirm the current list applicable to the Karnataka SIR with your local BLO/AERO or the CEO Karnataka's official notifications, as the list may be further revised:
+      </p>
+
+      <ol>
+        <li>Valid Indian Passport</li>
+        <li>Birth Certificate issued by a Registrar of Births &amp; Deaths / competent municipal or government authority</li>
+        <li>National Register of Citizens (NRC), where applicable</li>
+        <li>Permanent Residence Certificate</li>
+        <li>Caste Certificate (issued by a competent authority, where the applicant belongs to a Scheduled Caste / Scheduled Tribe / Other Backward Class)</li>
+        <li>Certificate / diploma / degree issued by a recognised Board or University</li>
+        <li>Pension Payment Order (government / PSU)</li>
+        <li>Government-issued Land / Homestead Allotment Certificate</li>
+        <li>Identity Card / Certificate issued by a Government Office, PSU, Bank, or Public Limited Company (dated prior to 1 July 1987)</li>
+        <li>Family Register issued by the State Government or a local authority</li>
+        <li>Forest Rights Certificate issued under law</li>
+        <li><strong>Aadhaar</strong> — accepted for identity/address verification purposes only, pursuant to the Hon'ble Supreme Court's direction in <em>Association for Democratic Reforms v. Election Commission of India (supra)</em>; not, by itself, proof of citizenship.</li>
+      </ol>
+
+      <div class="callout-blue">
+        <div class="callout-title">Additional Corroborative Documents</div>
+        In addition, for the purposes of these templates, <strong>EPIC (Voter ID), PAN, Driving Licence, and Bank Passbook</strong> are commonly relied upon for identity/address corroboration alongside the above list — verify their acceptability for your specific notice category with the AERO/ERO.
+      </div>
+    </section>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-col" style="display: flex; gap: 14px; align-items: flex-start;">
+        <img src="APCR Logo.png" alt="APCR Logo" style="height: 54px; width: auto; background: #fff; padding: 4px 6px; border-radius: 6px; flex-shrink: 0;">
+        <div>
+          <strong>Association for Protection of Civil Rights (APCR)</strong>
+          <p style="margin-bottom: 0.25rem;">Karnataka Chapter &bull; Elector Franchise Protection Initiative</p>
+          <p style="font-size: 0.8rem; color: #64748b;">Standard Operating Procedures &amp; Representation Formats</p>
+        </div>
+      </div>
+      <div class="footer-col">
+        <strong>Contact &amp; Assistance</strong>
+        <p>Email: <a href="mailto:apcrkarnataka.sir26@gmail.com" style="color: #cbd5e1; text-decoration: none;">apcrkarnataka.sir26@gmail.com</a></p>
+      </div>
+      <div class="footer-col">
+        <strong>Quick Navigation</strong>
+        <p><a href="form.html" style="color: var(--amber-500); text-decoration: none; font-weight: 600;">Go to Application Builder &rarr;</a></p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

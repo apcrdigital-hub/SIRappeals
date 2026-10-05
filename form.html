@@ -1,0 +1,2345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIR Karnataka Application Builder — Representation & Appeal Generator</title>
+  <!-- html2pdf.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    :root {
+      --navy-950: #0a1322;
+      --navy-900: #101e36;
+      --navy-800: #182b4d;
+      --navy-700: #223c6a;
+      --amber-600: #b45309;
+      --amber-500: #d97706;
+      --amber-100: #fef3c7;
+      --amber-50: #fffbeb;
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-300: #cbd5e1;
+      --slate-400: #94a3b8;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+      --emerald-600: #059669;
+      --emerald-50: #ecfdf5;
+      --crimson-700: #b91c1c;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--slate-800);
+      background-color: #ebf0f7;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      background-color: var(--navy-950);
+      color: #94a3b8;
+      font-size: 0.8rem;
+      padding: 0.4rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .top-bar a {
+      color: #cbd5e1;
+      text-decoration: none;
+    }
+    .top-bar a:hover {
+      text-decoration: underline;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(180deg, var(--navy-900) 0%, var(--navy-800) 100%);
+      color: #ffffff;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 3px solid var(--amber-500);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.4rem 0.75rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      transition: all 0.15s ease;
+    }
+    .back-link:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    h1 {
+      font-family: Charter, Georgia, "Times New Roman", serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .header-sub {
+      font-size: 0.8rem;
+      color: #94a3b8;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.55rem 1.1rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      border-radius: 5px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background-color: var(--amber-500);
+      color: var(--navy-950);
+      font-weight: 700;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+    .btn-primary:hover {
+      background-color: #f59e0b;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+    .btn-secondary:hover {
+      background-color: rgba(255, 255, 255, 0.18);
+    }
+
+    /* Page Fit Badge */
+    .page-gauge {
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.35rem 0.75rem;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background-color: rgba(255, 255, 255, 0.12);
+      color: #e2e8f0;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .page-gauge.ok {
+      color: #a7f3d0;
+      border-color: #059669;
+    }
+
+    /* Main Layout */
+    .app-container {
+      display: flex;
+      height: calc(100vh - 120px);
+      min-height: 600px;
+    }
+
+    /* Left Form Sidebar */
+    .form-panel {
+      width: 490px;
+      min-width: 400px;
+      max-width: 530px;
+      background-color: #ffffff;
+      border-right: 1px solid var(--slate-300);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.04);
+      z-index: 10;
+    }
+
+    .format-selector-box {
+      padding: 1rem 1.25rem;
+      background-color: var(--slate-100);
+      border-bottom: 1px solid var(--slate-200);
+    }
+
+    .format-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--slate-600);
+      margin-bottom: 0.4rem;
+    }
+
+    select.format-select {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--navy-950);
+      background-color: #ffffff;
+      border: 1.5px solid var(--navy-700);
+      border-radius: 5px;
+      outline: none;
+      cursor: pointer;
+    }
+    select.format-select:focus {
+      border-color: var(--amber-500);
+      box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.2);
+    }
+
+    .fields-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.25rem;
+    }
+
+    .section-title {
+      font-size: 0.775rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--navy-800);
+      margin: 1.25rem 0 0.75rem;
+      padding-bottom: 0.35rem;
+      border-bottom: 1.5px solid var(--slate-200);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .section-title:first-child {
+      margin-top: 0;
+    }
+
+    .form-group {
+      margin-bottom: 0.85rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.825rem;
+      font-weight: 600;
+      color: var(--slate-700);
+      margin-bottom: 0.25rem;
+    }
+
+    .form-group .field-hint {
+      font-size: 0.725rem;
+      color: var(--slate-500);
+      margin-top: 0.2rem;
+      line-height: 1.35;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="tel"],
+    input[type="email"],
+    select.field-input,
+    textarea {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.85rem;
+      border: 1px solid var(--slate-300);
+      border-radius: 4px;
+      color: var(--slate-900);
+      background-color: #ffffff;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      font-family: inherit;
+    }
+
+    input:focus,
+    select.field-input:focus,
+    textarea:focus {
+      border-color: var(--navy-700);
+      box-shadow: 0 0 0 2px rgba(34, 60, 106, 0.15);
+    }
+
+    textarea {
+      min-height: 54px;
+      resize: vertical;
+      line-height: 1.4;
+    }
+
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      background-color: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      padding: 0.75rem;
+      border-radius: 5px;
+      margin-bottom: 0.9rem;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      font-size: 0.825rem;
+      color: var(--slate-700);
+      cursor: pointer;
+    }
+
+    .checkbox-item input[type="checkbox"],
+    .checkbox-item input[type="radio"] {
+      margin-top: 0.2rem;
+      accent-color: var(--navy-800);
+      cursor: pointer;
+    }
+
+    /* Right Preview Panel */
+    .preview-panel {
+      flex: 1;
+      background-color: #525659;
+      overflow-y: auto;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .preview-toolbar {
+      width: 790px;
+      max-width: 100%;
+      margin-bottom: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #e2e8f0;
+      font-size: 0.825rem;
+    }
+
+    .paper-sheet {
+      width: 790px;
+      max-width: 100%;
+      background: #ffffff;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+      border-radius: 2px;
+      padding: 32px 42px;
+      color: #0f172a;
+      font-family: Charter, Cambria, Georgia, "Times New Roman", serif;
+      font-size: 13.5px;
+      line-height: 1.4;
+      position: relative;
+    }
+
+    /* Compact mode for strict 2-page enforcement */
+    .paper-sheet.compact-fit {
+      font-size: 12.5px;
+      line-height: 1.34;
+      padding: 26px 36px;
+    }
+
+    .paper-sheet p {
+      margin-bottom: 0.45rem;
+    }
+
+    .paper-sheet.compact-fit p {
+      margin-bottom: 0.35rem;
+    }
+
+    .pet-header {
+      margin-bottom: 0.75rem;
+    }
+
+    .pet-to {
+      margin-bottom: 0.65rem;
+      line-height: 1.35;
+    }
+
+    .pet-subject {
+      font-weight: 700;
+      margin: 0.65rem 0;
+      text-align: justify;
+    }
+
+    .pet-salutation {
+      margin: 0.5rem 0;
+      font-weight: 600;
+    }
+
+    .pet-prayer-title {
+      font-weight: 700;
+      margin: 0.65rem 0 0.35rem;
+    }
+
+    .pet-prayers {
+      margin-left: 1.25rem;
+      margin-bottom: 0.65rem;
+      padding-left: 0.5rem;
+    }
+    .pet-prayers li {
+      margin-bottom: 0.35rem;
+      text-align: justify;
+    }
+
+    .pet-verification {
+      margin: 0.65rem 0 0.45rem;
+      text-align: justify;
+    }
+
+    .pet-meta-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 0.45rem 0;
+    }
+
+    .pet-signature-block {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 0.65rem;
+    }
+
+    .pet-sig-inner {
+      width: 320px;
+      line-height: 1.35;
+      font-size: 0.95em;
+    }
+
+    .pet-annexures {
+      margin-top: 0.65rem;
+      padding-top: 0.45rem;
+      border-top: 1px dashed #cbd5e1;
+      font-size: 0.9em;
+    }
+
+    /* Live blank styling */
+    .blank-filled {
+      font-weight: 700;
+      color: #0a1322;
+      border-bottom: 1px solid #1e293b;
+      padding: 0 2px;
+    }
+
+    .blank-empty {
+      color: #94a3b8;
+      border-bottom: 1px dotted #94a3b8;
+      padding: 0 4px;
+      font-style: italic;
+      font-weight: normal;
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+      }
+      .top-bar, header, .form-panel, .preview-toolbar {
+        display: none !important;
+      }
+      .app-container {
+        height: auto;
+        display: block;
+      }
+      .preview-panel {
+        background: transparent;
+        padding: 0;
+        overflow: visible;
+      }
+      .paper-sheet {
+        box-shadow: none;
+        width: 100% !important;
+        padding: 0;
+        font-size: 11pt;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .app-container {
+        flex-direction: column;
+        height: auto;
+      }
+      .form-panel {
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+        height: 520px;
+      }
+      .preview-panel {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <img src="APCR Logo.png" alt="APCR Logo" style="height: 20px; width: auto; background: #fff; padding: 1px 3px; border-radius: 3px;">
+      <span><strong>SIR (Karnataka): Claims, Objections &amp; Appeals</strong> | Application Builder</span>
+    </div>
+    <div><a href="mailto:apcrkarnataka.sir26@gmail.com">apcrkarnataka.sir26@gmail.com</a></div>
+  </div>
+
+  <!-- App Header -->
+  <header>
+    <div class="header-left">
+      <a href="index.html" class="back-link">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+        <span>Theory &amp; Legal Framework</span>
+      </a>
+      <img src="APCR Logo.png" alt="APCR Logo" class="app-header-logo" style="height: 54px; width: auto; object-fit: contain; background: #ffffff; padding: 4px 8px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.25); flex-shrink: 0;">
+      <div>
+        <h1>SIR Karnataka Application Builder</h1>
+        <div class="header-sub">Association for Protection of Civil Rights (APCR) &bull; Representation &amp; Appeal Generator</div>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <div id="pageGauge" class="page-gauge ok">📄 PDF Length: Fits in 2 A4 Pages</div>
+      <button id="btnPrint" class="btn btn-secondary">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4H7v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+        <span>Print</span>
+      </button>
+      <button id="btnPdf" class="btn btn-primary">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        <span>Download as PDF</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Workspace Container -->
+  <div class="app-container">
+
+    <!-- Left Form Panel -->
+    <aside class="form-panel">
+      <div class="format-selector-box">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 0.85rem; padding-bottom: 0.65rem; border-bottom: 1px solid var(--slate-200);">
+          <img src="APCR Logo.png" alt="APCR" style="height: 38px; width: auto; object-fit: contain; background: #ffffff; padding: 2px 5px; border-radius: 4px; border: 1px solid var(--slate-300);">
+          <div>
+            <div style="font-size: 0.775rem; font-weight: 800; color: var(--navy-900);">APCR KARNATAKA</div>
+            <div style="font-size: 0.7rem; color: var(--slate-600);">Legal Aid &amp; Elector Guidance</div>
+          </div>
+        </div>
+        <label for="formatSelect" class="format-label">Select Application Format</label>
+        <select id="formatSelect" class="format-select">
+          <option value="scenario1">Scenario 1: Details Related to You/Your Relative Could Not Be Established</option>
+          <option value="scenario2">Scenario 2: Six or More Siblings When Linkage Is Correct</option>
+          <option value="scenario3">Scenario 3: Six or More Siblings When Linkage Is Incorrect</option>
+          <option value="scenario4">Scenario 4: Age Discrepancy — Parents (15 Years or Less / 50 Years or More) — Age Correctly Stated in 2002 SIR</option>
+          <option value="scenario5">Scenario 5: Age Discrepancy — Parents (15 Years or Less / 50 Years or More) — Age Incorrectly Stated in 2002 SIR</option>
+          <option value="scenario6">Scenario 6: Father's Name Mismatch Between Current Roll and Previous SIR Roll</option>
+          <option value="scenario7">Scenario 7: Age Discrepancy — Grandparents (40 Years) — Age Incorrectly Stated in SIR 2002</option>
+          <option value="scenario8">Scenario 8: Age Discrepancy — Grandparents (40 Years) — Age Correctly Stated in SIR 2002</option>
+          <option value="scenario9">Scenario 9: Self-Name Mismatch Between Current Roll and Previous SIR Roll</option>
+          <option value="scenario10">Scenario 10: Sibling Age Gap of Less Than 9 Months</option>
+          <option value="scenario11">Scenario 11: Deletion/Flagging on Ground of Alleged Non-Citizenship / "Doubtful" Status (New)</option>
+          <option value="scenario12">Scenario 12: Wrongful Deletion Despite Continued Domicile — Temporary Absence at Enumeration (New)</option>
+          <option value="format13">Format 13: Appeal Under Section 24, Representation of the People Act, 1950 (New)</option>
+        </select>
+      </div>
+
+      <div class="fields-scroll" id="dynamicFieldsContainer">
+        <!-- Rendered dynamically by JavaScript -->
+      </div>
+    </aside>
+
+    <!-- Right Document Preview Panel -->
+    <main class="preview-panel">
+      <div class="preview-toolbar">
+        <div><strong>Live Preview:</strong> As you type, the legal document is populated below.</div>
+        <div style="font-size: 0.775rem; color: #cbd5e1;">A4 Print Layout (Hard limit: max 2 pages)</div>
+      </div>
+
+      <div id="pdf-printable" class="paper-sheet">
+        <!-- Live document body populated by JS -->
+      </div>
+    </main>
+
+  </div>
+
+  <script>
+    // --- Application State & Field Values (preserved across format changes) ---
+    // All common fields are entered once and shared across ALL 13 formats without repetition.
+    const appState = {
+      // Common authority & jurisdiction
+      eroSalutation: 'Shri/Shrimati',
+      eroName: '',
+      constituencyNumber: '',
+      constituency: '',
+      district: '',
+
+      // Common elector credentials
+      applicantName: '',
+      epicNo: '',
+      partNo: '',
+      slNo: '',
+      address: '', // Unified address: populates both permanent residence and signature current address!
+
+      // Common document proofs & notice reference
+      aadhaarNo: '',
+      panNo: '',
+      passportNo: '',
+      birthCertAuthority: '',
+      aeroNoticeNo: '',
+
+      // Contact & verification details
+      mobileNo: '',
+      emailId: '',
+      place: '',
+      date: new Date().toISOString().split('T')[0],
+
+      // Specific fields for Scenarios
+      scenario2: {
+        fatherName: '',
+        fatherSlNo: '',
+        fatherEpicNo: '',
+        sibling1Name: '',
+        sibling1Epic: '',
+        sibling2Name: '',
+        sibling2Epic: '',
+        sibling3Name: '',
+        sibling3Epic: '',
+        otherSiblings: ''
+      },
+      scenario3: {
+        fatherName: '',
+        numChildren: '',
+        fatherPartNo: '',
+        fatherSlNo: '',
+        fatherEpicNo: '',
+        child1Name: '',
+        child1Epic: '',
+        child2Name: '',
+        child2Epic: '',
+        child3Name: '',
+        child3Epic: '',
+        child4Name: '',
+        child4Epic: '',
+        child5Name: '',
+        child5Epic: ''
+      },
+      scenario4: {
+        parentName: '',
+        parentEpicNo: '',
+        ageGapCondition: 'less than 15 years',
+        parentPartNo: '',
+        parentSlNo: '',
+        reason: 'early_marriage',
+        marriageDate: '',
+        parentDob: '',
+        applicantDob: '',
+        remarriageDate: '',
+        adoptionRef: '',
+        parentProofDoc: '',
+        parentProofNo: '',
+        applicantProofDoc: '',
+        applicantProofNo: '',
+        familyRecordDoc: '',
+        familyRecordNo: ''
+      },
+      scenario5: {
+        parentRollSlNo: '',
+        parentRollEpicNo: '',
+        parentRollName: '',
+        parentDocName: '',
+        parentDocNo: '',
+        parentActualDob: ''
+      },
+      scenario6: {
+        fatherTrueName: '',
+        fatherNameCurrent: '',
+        currentPartNo: '',
+        currentSlNo: '',
+        currentEpicNo: '',
+        fatherNamePrev: '',
+        prevPartNo: '',
+        prevSlNo: '',
+        prevEpicNo: '',
+        varianceReason: 'spelling',
+        fatherTrueEpic: '',
+        form8Ref: '',
+        fatherDocName: '',
+        fatherDocNo: '',
+        applicantRelDoc: '',
+        applicantRelDocNo: ''
+      },
+      scenario7: {
+        grandparentSlNo: '',
+        grandparentEpicNo: '',
+        grandparentName: '',
+        grandparentDocName: '',
+        grandparentDocNo: '',
+        grandparentActualDob: ''
+      },
+      scenario8: {
+        grandparentSlNo: '',
+        grandparentEpicNo: '',
+        grandparentName: '',
+        marriageDate: ''
+      },
+      scenario9: {
+        actualName: '',
+        selfNameCurrent: '',
+        currentPartNo: '',
+        currentSlNo: '',
+        currentEpicNo: '',
+        selfNamePrev: '',
+        prevPartNo: '',
+        prevSlNo: '',
+        prevEpicNo: '',
+        varianceReason: 'spelling',
+        selfTrueEpic: '',
+        form8Ref: '',
+        supportingDocName: '',
+        supportingDocNo: ''
+      },
+      scenario10: {
+        progenyName: '',
+        progenyEpicNo: '',
+        parentName: '',
+        parentEpicNo: '',
+        parentPartNo: '',
+        parentSlNo: '',
+        applicantDob: '',
+        applicantAge: '',
+        siblingDob: '',
+        siblingAge: '',
+        varianceReason: 'historical',
+        twinsDob: '',
+        clericalWhose: 'Myself',
+        adoptionDetails: '',
+        applicantProofDoc: '',
+        applicantProofNo: '',
+        siblingProofDoc: '',
+        siblingProofNo: '',
+        form8AckRef: '',
+        familyDeclarationDoc: '',
+        familyDeclarationNo: ''
+      },
+      scenario11: {
+        noticeOrPublication: 'notice',
+        publicationDate: '',
+        relativeName: '',
+        relativeEpicNo: '',
+        citizenshipBy: 'birth',
+        applicantDobPob: '',
+        fatherNameCitizenship: '',
+        fatherDoc: '',
+        motherNameCitizenship: '',
+        motherDoc: '',
+        priorRollDetails: '',
+        otherCitizenshipDocs: ''
+      },
+      scenario12: {
+        noticeOrDraft: 'notice',
+        absenceReason: 'employment',
+        employerNatureWork: '',
+        outstationAddress: '',
+        institutionName: '',
+        courseDuration: '',
+        marriageRegDate: '',
+        transferDetails: '',
+        medicalDetails: '',
+        otherAbsenceDetails: '',
+        ownershipDoc: '',
+        ownershipDocNo: '',
+        absenceDoc: '',
+        absenceDocNo: ''
+      },
+      format13: {
+        orderDate: '',
+        impugnedOfficer: 'Assistant Electoral Registration Officer',
+        noticeDate: '',
+        representationDate: '',
+        inwardNo: '',
+        orderStatus: 'passed',
+        daysElapsed: '',
+        retainDiscrepancyGround: true,
+        scenarioSpecificGround: ''
+      }
+    };
+
+    // Helper: format blank representation
+    function val(text, placeholder) {
+      if (text && String(text).trim().length > 0) {
+        return `<span class="blank-filled">${escapeHtml(String(text).trim())}</span>`;
+      }
+      return `<span class="blank-empty">[ ${placeholder} ]</span>`;
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // --- Dynamic Form Rendering ---
+    const formatSelect = document.getElementById('formatSelect');
+    const dynamicFieldsContainer = document.getElementById('dynamicFieldsContainer');
+    const previewContainer = document.getElementById('pdf-printable');
+
+    function renderFields() {
+      const format = formatSelect.value;
+      let html = '';
+
+      // Section 1: Universal Common Details (Entered once, never repeated!)
+      html += renderCommonFields();
+
+      // Section 2: Scenario Specific Details (Minimal, non-repeating!)
+      html += renderScenarioSpecificSection(format);
+
+      dynamicFieldsContainer.innerHTML = html;
+      bindInputListeners();
+      updatePreview();
+    }
+
+    // Universal Common Inputs: Elector, Authority & Notice Details
+    function renderCommonFields() {
+      return `
+        <div class="section-title">1. Common Elector &amp; Authority Details</div>
+        <div style="font-size:0.75rem; color:var(--slate-600); margin-bottom:0.75rem; background:#f8fafc; border:1px solid #e2e8f0; padding:6px 10px; border-radius:4px; line-height:1.4;">
+          <strong>Fill once:</strong> These details automatically populate all formats (Scenarios 1–12 and Format 13). You will never need to re-enter them when switching formats.
+        </div>
+
+        <!-- Addressed Officer & Jurisdiction -->
+        <div class="form-group">
+          <label>Addressed Officer / DEO</label>
+          <div style="display:flex; gap:0.5rem;">
+            <select id="eroSalutation" class="field-input" style="width: 140px;">
+              <option value="Shri/Shrimati" ${appState.eroSalutation === 'Shri/Shrimati' ? 'selected' : ''}>Shri/Shrimati</option>
+              <option value="Shri" ${appState.eroSalutation === 'Shri' ? 'selected' : ''}>Shri</option>
+              <option value="Shrimati" ${appState.eroSalutation === 'Shrimati' ? 'selected' : ''}>Shrimati</option>
+            </select>
+            <input type="text" id="eroName" value="${escapeHtml(appState.eroName)}" placeholder="Officer Name (optional)">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Constituency Number &amp; Name</label>
+          <div style="display:flex; gap:0.5rem;">
+            <input type="text" id="constituencyNumber" value="${escapeHtml(appState.constituencyNumber)}" placeholder="No. (e.g. 159)" style="width: 120px;">
+            <input type="text" id="constituency" value="${escapeHtml(appState.constituency)}" placeholder="Constituency Name (e.g. Pulakeshinagar)">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>District</label>
+          <input type="text" id="district" value="${escapeHtml(appState.district)}" placeholder="e.g. Bengaluru Urban">
+        </div>
+
+        <!-- Elector Identity -->
+        <div class="form-group">
+          <label>Full Name of Elector / Applicant</label>
+          <input type="text" id="applicantName" value="${escapeHtml(appState.applicantName)}" placeholder="e.g. Mohammed Farooq">
+        </div>
+
+        <div class="form-group">
+          <label>Voter ID (EPIC) Number</label>
+          <input type="text" id="epicNo" value="${escapeHtml(appState.epicNo)}" placeholder="e.g. XYZ1234567">
+        </div>
+
+        <div class="form-group">
+          <label>Part Number &amp; Serial Number (Sl. No.)</label>
+          <div style="display:flex; gap:0.5rem;">
+            <input type="text" id="partNo" value="${escapeHtml(appState.partNo)}" placeholder="Part No. (e.g. 45)">
+            <input type="text" id="slNo" value="${escapeHtml(appState.slNo)}" placeholder="Sl. No. (e.g. 412)">
+          </div>
+        </div>
+
+        <!-- Unified Address -->
+        <div class="form-group">
+          <label>Residential Address (Permanent &amp; Current)</label>
+          <textarea id="address" placeholder="Complete address (e.g. #12, 1st Cross, Tannery Road, Bengaluru)">${escapeHtml(appState.address)}</textarea>
+          <div class="field-hint">Unified field: Populates both permanent residence in petition body and current address in signature block.</div>
+        </div>
+
+        <!-- Notice Reference -->
+        <div class="form-group">
+          <label>AERO Notice Number</label>
+          <input type="text" id="aeroNoticeNo" value="${escapeHtml(appState.aeroNoticeNo)}" placeholder="e.g. AERO/PLK/2026/089">
+          <div class="field-hint">Automatically populates notice paragraph and prayer clause across all formats.</div>
+        </div>
+
+        <!-- Identity & Supporting Documents -->
+        <div class="form-group">
+          <label>Aadhaar No. (for identity/address verification)</label>
+          <input type="text" id="aadhaarNo" value="${escapeHtml(appState.aadhaarNo)}" placeholder="Enter 12-digit Aadhaar number">
+          <div class="field-hint">Furnished for identity/address only as clarified by SC; not standalone proof of citizenship.</div>
+        </div>
+
+        <div class="form-group">
+          <label>PAN No. &amp; Passport No.</label>
+          <div style="display:flex; gap:0.5rem;">
+            <input type="text" id="panNo" value="${escapeHtml(appState.panNo)}" placeholder="PAN No.">
+            <input type="text" id="passportNo" value="${escapeHtml(appState.passportNo)}" placeholder="Passport No. (if held)">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Birth Certificate Issuing Authority</label>
+          <input type="text" id="birthCertAuthority" value="${escapeHtml(appState.birthCertAuthority)}" placeholder="e.g. Registrar of Births &amp; Deaths / BBMP">
+        </div>
+
+        <!-- Contact & Verification -->
+        <div class="form-group">
+          <label>Mobile Number &amp; Email ID</label>
+          <div style="display:flex; gap:0.5rem;">
+            <input type="tel" id="mobileNo" value="${escapeHtml(appState.mobileNo)}" placeholder="Mobile No.">
+            <input type="email" id="emailId" value="${escapeHtml(appState.emailId)}" placeholder="Email ID">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Place &amp; Date of Verification</label>
+          <div style="display:flex; gap:0.5rem;">
+            <input type="text" id="place" value="${escapeHtml(appState.place)}" placeholder="Place (e.g. Bengaluru)">
+            <input type="date" id="date" value="${escapeHtml(appState.date)}">
+          </div>
+        </div>
+      `;
+    }
+
+    // Section 2: Scenario-Specific Fields (Only non-repeating unique inputs)
+    function renderScenarioSpecificSection(format) {
+      const selectedOptionText = formatSelect.options[formatSelect.selectedIndex].text;
+      let h = `<div class="section-title">2. ${escapeHtml(selectedOptionText)}</div>`;
+
+      switch (format) {
+        case 'scenario1':
+          h += `
+            <div style="font-size:0.8rem; color:var(--emerald-600); padding:10px 12px; background:var(--emerald-50); border:1px solid #a7f3d0; border-radius:5px; line-height:1.45;">
+              ✓ <strong>Complete:</strong> All details for Scenario 1 are supplied by Section 1 above. The standard grounds stating that details could not be established are automatically formatted in the preview.
+            </div>
+          `;
+          break;
+
+        case 'scenario2':
+          h += `
+            <div class="form-group">
+              <label>True Father's Name in SIR 2002 Roll</label>
+              <input type="text" id="s2_fatherName" value="${escapeHtml(appState.scenario2.fatherName)}" placeholder="e.g. Abdul Rahim">
+            </div>
+            <div class="form-group">
+              <label>Father's Serial Number &amp; EPIC in SIR 2002</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s2_fatherSlNo" value="${escapeHtml(appState.scenario2.fatherSlNo)}" placeholder="Serial No. in 2002 Roll">
+                <input type="text" id="s2_fatherEpicNo" value="${escapeHtml(appState.scenario2.fatherEpicNo)}" placeholder="Father's EPIC No.">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Sibling 1 Name &amp; EPIC</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s2_sibling1Name" value="${escapeHtml(appState.scenario2.sibling1Name)}" placeholder="Sibling 1 Name">
+                <input type="text" id="s2_sibling1Epic" value="${escapeHtml(appState.scenario2.sibling1Epic)}" placeholder="EPIC">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Sibling 2 Name &amp; EPIC</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s2_sibling2Name" value="${escapeHtml(appState.scenario2.sibling2Name)}" placeholder="Sibling 2 Name">
+                <input type="text" id="s2_sibling2Epic" value="${escapeHtml(appState.scenario2.sibling2Epic)}" placeholder="EPIC">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Sibling 3 Name &amp; EPIC</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s2_sibling3Name" value="${escapeHtml(appState.scenario2.sibling3Name)}" placeholder="Sibling 3 Name">
+                <input type="text" id="s2_sibling3Epic" value="${escapeHtml(appState.scenario2.sibling3Epic)}" placeholder="EPIC">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Additional Siblings (names &amp; EPICs)</label>
+              <textarea id="s2_otherSiblings" placeholder="e.g. Sibling 4: Name (EPIC), Sibling 5: Name (EPIC)...">${escapeHtml(appState.scenario2.otherSiblings)}</textarea>
+            </div>
+          `;
+          break;
+
+        case 'scenario3':
+          h += `
+            <div class="form-group">
+              <label>True Father's Name (Shri)</label>
+              <input type="text" id="s3_fatherName" value="${escapeHtml(appState.scenario3.fatherName)}" placeholder="e.g. Usman Khan">
+            </div>
+            <div class="form-group">
+              <label>Actual Number of Children (fewer than six)</label>
+              <input type="text" id="s3_numChildren" value="${escapeHtml(appState.scenario3.numChildren)}" placeholder="e.g. 3">
+            </div>
+            <div class="form-group">
+              <label>Father's Electoral Roll Details (Part No. / Sl No. / EPIC No.)</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s3_fatherPartNo" value="${escapeHtml(appState.scenario3.fatherPartNo || appState.partNo)}" placeholder="Part No.">
+                <input type="text" id="s3_fatherSlNo" value="${escapeHtml(appState.scenario3.fatherSlNo)}" placeholder="Sl. No.">
+                <input type="text" id="s3_fatherEpicNo" value="${escapeHtml(appState.scenario3.fatherEpicNo)}" placeholder="EPIC No.">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Child 1 Name &amp; EPIC</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s3_child1Name" value="${escapeHtml(appState.scenario3.child1Name || appState.applicantName)}" placeholder="Child 1 Name">
+                <input type="text" id="s3_child1Epic" value="${escapeHtml(appState.scenario3.child1Epic || appState.epicNo)}" placeholder="EPIC No.">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Child 2 Name &amp; EPIC</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s3_child2Name" value="${escapeHtml(appState.scenario3.child2Name)}" placeholder="Child 2 Name">
+                <input type="text" id="s3_child2Epic" value="${escapeHtml(appState.scenario3.child2Epic)}" placeholder="EPIC No.">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Child 3 Name &amp; EPIC</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s3_child3Name" value="${escapeHtml(appState.scenario3.child3Name)}" placeholder="Child 3 Name">
+                <input type="text" id="s3_child3Epic" value="${escapeHtml(appState.scenario3.child3Epic)}" placeholder="EPIC No.">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Child 4 (if applicable)</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s3_child4Name" value="${escapeHtml(appState.scenario3.child4Name)}" placeholder="Child 4 Name">
+                <input type="text" id="s3_child4Epic" value="${escapeHtml(appState.scenario3.child4Epic)}" placeholder="EPIC No.">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Child 5 (if applicable)</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s3_child5Name" value="${escapeHtml(appState.scenario3.child5Name)}" placeholder="Child 5 Name">
+                <input type="text" id="s3_child5Epic" value="${escapeHtml(appState.scenario3.child5Epic)}" placeholder="EPIC No.">
+              </div>
+            </div>
+          `;
+          break;
+
+        case 'scenario4':
+          h += `
+            <div class="form-group">
+              <label>Parent Name (Shri/Smt) &amp; EPIC No.</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s4_parentName" value="${escapeHtml(appState.scenario4.parentName)}" placeholder="Parent Name (e.g. Ramesh Kumar)">
+                <input type="text" id="s4_parentEpicNo" value="${escapeHtml(appState.scenario4.parentEpicNo)}" placeholder="Parent EPIC No.">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Age Gap Condition Cited in Notice</label>
+              <select id="s4_ageGapCondition" class="field-input">
+                <option value="less than 15 years" ${appState.scenario4.ageGapCondition === 'less than 15 years' ? 'selected' : ''}>less than 15 years</option>
+                <option value="more than 50 years" ${appState.scenario4.ageGapCondition === 'more than 50 years' ? 'selected' : ''}>more than 50 years</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Parent's SIR 2002 Roll Details (Part No. &amp; Sl. No.)</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s4_parentPartNo" value="${escapeHtml(appState.scenario4.parentPartNo || appState.partNo)}" placeholder="Part No.">
+                <input type="text" id="s4_parentSlNo" value="${escapeHtml(appState.scenario4.parentSlNo)}" placeholder="Sl. No.">
+              </div>
+              <div class="field-hint">EPIC is automatically linked from Parent EPIC above.</div>
+            </div>
+
+            <div class="form-group">
+              <label>Accounting for Anomaly (select applicable reason)</label>
+              <div class="checkbox-group">
+                <label class="checkbox-item">
+                  <input type="radio" name="s4_reason" value="early_marriage" ${appState.scenario4.reason === 'early_marriage' ? 'checked' : ''}>
+                  <span>Parental Age Gap Under 15 Years (Early / Customary Marriage)</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="radio" name="s4_reason" value="late_childbirth" ${appState.scenario4.reason === 'late_childbirth' ? 'checked' : ''}>
+                  <span>Parental Age Gap Over 50 Years (Late Childbirth / Advanced Parental Age)</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="radio" name="s4_reason" value="remarriage" ${appState.scenario4.reason === 'remarriage' ? 'checked' : ''}>
+                  <span>Remarriage / Later Progeny</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="radio" name="s4_reason" value="adoption" ${appState.scenario4.reason === 'adoption' ? 'checked' : ''}>
+                  <span>Legal Adoption / Step-Parentage</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Parents' Marriage Date (if early marriage)</label>
+              <input type="text" id="s4_marriageDate" value="${escapeHtml(appState.scenario4.marriageDate)}" placeholder="e.g. 15-05-1980">
+            </div>
+            <div class="form-group">
+              <label>Parent's DoB &amp; Applicant's DoB (if late childbirth)</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s4_parentDob" value="${escapeHtml(appState.scenario4.parentDob)}" placeholder="Parent's DoB">
+                <input type="text" id="s4_applicantDob" value="${escapeHtml(appState.scenario4.applicantDob)}" placeholder="Applicant's DoB">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Subsequent Marriage Date (if remarriage)</label>
+              <input type="text" id="s4_remarriageDate" value="${escapeHtml(appState.scenario4.remarriageDate)}" placeholder="e.g. 20-04-1995">
+            </div>
+            <div class="form-group">
+              <label>Adoption / Court Order Ref (if adoption)</label>
+              <input type="text" id="s4_adoptionRef" value="${escapeHtml(appState.scenario4.adoptionRef)}" placeholder="e.g. Court Order No. 45/2010">
+            </div>
+
+            <div class="form-group">
+              <label>Parent's Age/Identity Proof (Doc Name &amp; Number)</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s4_parentProofDoc" value="${escapeHtml(appState.scenario4.parentProofDoc)}" placeholder="Doc Name (e.g. Passport)">
+                <input type="text" id="s4_parentProofNo" value="${escapeHtml(appState.scenario4.parentProofNo)}" placeholder="Doc No.">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Applicant's Birth / School Proof (Doc Name &amp; Number)</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s4_applicantProofDoc" value="${escapeHtml(appState.scenario4.applicantProofDoc)}" placeholder="Doc Name (e.g. Birth Cert)">
+                <input type="text" id="s4_applicantProofNo" value="${escapeHtml(appState.scenario4.applicantProofNo)}" placeholder="Doc No.">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Family/Marriage/Relationship Record (if applicable)</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s4_familyRecordDoc" value="${escapeHtml(appState.scenario4.familyRecordDoc)}" placeholder="Doc Name">
+                <input type="text" id="s4_familyRecordNo" value="${escapeHtml(appState.scenario4.familyRecordNo)}" placeholder="Doc No.">
+              </div>
+            </div>
+          `;
+          break;
+
+        case 'scenario5':
+          h += `
+            <div class="form-group">
+              <label>Parent's Name in SIR 2002 Roll</label>
+              <input type="text" id="s5_parentRollName" value="${escapeHtml(appState.scenario5.parentRollName)}" placeholder="e.g. Syed Ahmed">
+            </div>
+            <div class="form-group">
+              <label>Parent's 2002 Roll Serial No. &amp; EPIC No.</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s5_parentRollSlNo" value="${escapeHtml(appState.scenario5.parentRollSlNo)}" placeholder="Serial No. in 2002 Roll">
+                <input type="text" id="s5_parentRollEpicNo" value="${escapeHtml(appState.scenario5.parentRollEpicNo)}" placeholder="EPIC No.">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Document Establishing Correct Age (Name &amp; Number)</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s5_parentDocName" value="${escapeHtml(appState.scenario5.parentDocName)}" placeholder="e.g. School Leaving Certificate">
+                <input type="text" id="s5_parentDocNo" value="${escapeHtml(appState.scenario5.parentDocNo)}" placeholder="Doc No.">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Parent's Actual Date of Birth (DoB)</label>
+              <input type="text" id="s5_parentActualDob" value="${escapeHtml(appState.scenario5.parentActualDob)}" placeholder="e.g. 12-08-1965">
+            </div>
+          `;
+          break;
+
+        case 'scenario6':
+          h += `
+            <div class="form-group">
+              <label>True Father's Name (Shri)</label>
+              <input type="text" id="s6_fatherTrueName" value="${escapeHtml(appState.scenario6.fatherTrueName)}" placeholder="e.g. Manjunath Swamy">
+            </div>
+            <div class="form-group">
+              <label>Father's Name in Current Roll vs Previous 2002 Roll</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s6_fatherNameCurrent" value="${escapeHtml(appState.scenario6.fatherNameCurrent)}" placeholder="Name in Current Roll">
+                <input type="text" id="s6_fatherNamePrev" value="${escapeHtml(appState.scenario6.fatherNamePrev)}" placeholder="Name in 2002 Roll">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Current Roll Details (Part / Sl / EPIC)</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s6_currentPartNo" value="${escapeHtml(appState.scenario6.currentPartNo || appState.partNo)}" placeholder="Part No.">
+                <input type="text" id="s6_currentSlNo" value="${escapeHtml(appState.scenario6.currentSlNo)}" placeholder="Sl. No.">
+                <input type="text" id="s6_currentEpicNo" value="${escapeHtml(appState.scenario6.currentEpicNo)}" placeholder="EPIC No.">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Previous 2002 Roll Details (Part / Sl / EPIC)</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s6_prevPartNo" value="${escapeHtml(appState.scenario6.prevPartNo)}" placeholder="Part No.">
+                <input type="text" id="s6_prevSlNo" value="${escapeHtml(appState.scenario6.prevSlNo)}" placeholder="Sl. No.">
+                <input type="text" id="s6_prevEpicNo" value="${escapeHtml(appState.scenario6.prevEpicNo)}" placeholder="EPIC No.">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Clarification of Variance (select applicable reason)</label>
+              <div class="checkbox-group">
+                <label class="checkbox-item">
+                  <input type="radio" name="s6_varianceReason" value="spelling" ${appState.scenario6.varianceReason === 'spelling' ? 'checked' : ''}>
+                  <span>Spelling/Phonetic Variation or typographical entry error in 2002 SIR list</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="radio" name="s6_varianceReason" value="initials" ${appState.scenario6.varianceReason === 'initials' ? 'checked' : ''}>
+                  <span>Initials/Middle Name - Expansion or omission of initials/middle name/surname</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="radio" name="s6_varianceReason" value="mislinkage" ${appState.scenario6.varianceReason === 'mislinkage' ? 'checked' : ''}>
+                  <span>Mis-linkage at Enumeration - Inadvertent linkage to another entry</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="radio" name="s6_varianceReason" value="form8" ${appState.scenario6.varianceReason === 'form8' ? 'checked' : ''}>
+                  <span>Correction Already Sought - Form 8 submitted</span>
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Father's True EPIC (if mis-linkage)</label>
+              <input type="text" id="s6_fatherTrueEpic" value="${escapeHtml(appState.scenario6.fatherTrueEpic)}" placeholder="e.g. KAR1122334">
+            </div>
+            <div class="form-group">
+              <label>Form 8 Ack Ref (if correction already sought)</label>
+              <input type="text" id="s6_form8Ref" value="${escapeHtml(appState.scenario6.form8Ref)}" placeholder="e.g. F8-2026-98124">
+            </div>
+            <div class="form-group">
+              <label>Father's Supporting Document (Doc Name &amp; Number)</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s6_fatherDocName" value="${escapeHtml(appState.scenario6.fatherDocName)}" placeholder="e.g. Aadhaar / EPIC">
+                <input type="text" id="s6_fatherDocNo" value="${escapeHtml(appState.scenario6.fatherDocNo)}" placeholder="Doc No.">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Applicant's Relationship Proof (Doc Name &amp; Number)</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s6_applicantRelDoc" value="${escapeHtml(appState.scenario6.applicantRelDoc)}" placeholder="e.g. Birth Certificate">
+                <input type="text" id="s6_applicantRelDocNo" value="${escapeHtml(appState.scenario6.applicantRelDocNo)}" placeholder="Doc No.">
+              </div>
+            </div>
+          `;
+          break;
+
+        case 'scenario7':
+          h += `
+            <div class="form-group">
+              <label>Grandparent's Name as Stated in 2002 Roll</label>
+              <input type="text" id="s7_grandparentName" value="${escapeHtml(appState.scenario7.grandparentName)}" placeholder="e.g. Gangamma">
+            </div>
+            <div class="form-group">
+              <label>Grandparent's 2002 Roll Serial No. &amp; EPIC No.</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s7_grandparentSlNo" value="${escapeHtml(appState.scenario7.grandparentSlNo)}" placeholder="Serial No. in 2002 Roll">
+                <input type="text" id="s7_grandparentEpicNo" value="${escapeHtml(appState.scenario7.grandparentEpicNo)}" placeholder="EPIC No.">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Grandparent's Proof Document (Doc Name &amp; Number)</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s7_grandparentDocName" value="${escapeHtml(appState.scenario7.grandparentDocName)}" placeholder="e.g. Pension Payment Order">
+                <input type="text" id="s7_grandparentDocNo" value="${escapeHtml(appState.scenario7.grandparentDocNo)}" placeholder="Doc No.">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Grandparent's Actual Date of Birth (DoB)</label>
+              <input type="text" id="s7_grandparentActualDob" value="${escapeHtml(appState.scenario7.grandparentActualDob)}" placeholder="e.g. 05-01-1945">
+            </div>
+          `;
+          break;
+
+        case 'scenario8':
+          h += `
+            <div class="form-group">
+              <label>Grandparent's Name as Stated in 2002 Roll</label>
+              <input type="text" id="s8_grandparentName" value="${escapeHtml(appState.scenario8.grandparentName)}" placeholder="e.g. Narayanappa">
+            </div>
+            <div class="form-group">
+              <label>Grandparent's 2002 Roll Serial No. &amp; EPIC No.</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s8_grandparentSlNo" value="${escapeHtml(appState.scenario8.grandparentSlNo)}" placeholder="Serial No. in 2002 Roll">
+                <input type="text" id="s8_grandparentEpicNo" value="${escapeHtml(appState.scenario8.grandparentEpicNo)}" placeholder="EPIC No.">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Grandparents' Marriage Date (married as minors)</label>
+              <input type="text" id="s8_marriageDate" value="${escapeHtml(appState.scenario8.marriageDate)}" placeholder="e.g. 10-06-1960">
+            </div>
+          `;
+          break;
+
+        case 'scenario9':
+          h += `
+            <div class="form-group">
+              <label>Actual True Name (Shri/Smt)</label>
+              <input type="text" id="s9_actualName" value="${escapeHtml(appState.scenario9.actualName || appState.applicantName)}" placeholder="Defaults to Applicant Name">
+              <div class="field-hint">Auto-synced with Elector Full Name if left blank.</div>
+            </div>
+            <div class="form-group">
+              <label>Self Name Recorded in Current Roll vs 2002 Roll</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s9_selfNameCurrent" value="${escapeHtml(appState.scenario9.selfNameCurrent)}" placeholder="Name in Current Roll">
+                <input type="text" id="s9_selfNamePrev" value="${escapeHtml(appState.scenario9.selfNamePrev)}" placeholder="Name in 2002 Roll">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Current Roll Details (Part / Sl / EPIC)</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s9_currentPartNo" value="${escapeHtml(appState.scenario9.currentPartNo || appState.partNo)}" placeholder="Part No.">
+                <input type="text" id="s9_currentSlNo" value="${escapeHtml(appState.scenario9.currentSlNo || appState.slNo)}" placeholder="Sl. No.">
+                <input type="text" id="s9_currentEpicNo" value="${escapeHtml(appState.scenario9.currentEpicNo || appState.epicNo)}" placeholder="EPIC No.">
+              </div>
+              <div class="field-hint">Defaults automatically to common elector credentials.</div>
+            </div>
+            <div class="form-group">
+              <label>Previous 2002 Roll Details (Part / Sl / EPIC)</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s9_prevPartNo" value="${escapeHtml(appState.scenario9.prevPartNo)}" placeholder="Part No.">
+                <input type="text" id="s9_prevSlNo" value="${escapeHtml(appState.scenario9.prevSlNo)}" placeholder="Sl. No.">
+                <input type="text" id="s9_prevEpicNo" value="${escapeHtml(appState.scenario9.prevEpicNo)}" placeholder="EPIC No.">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Clarification of Variance (select applicable reason)</label>
+              <div class="checkbox-group">
+                <label class="checkbox-item">
+                  <input type="radio" name="s9_varianceReason" value="spelling" ${appState.scenario9.varianceReason === 'spelling' ? 'checked' : ''}>
+                  <span>Spelling/Phonetic Variation or typographical error</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="radio" name="s9_varianceReason" value="initials" ${appState.scenario9.varianceReason === 'initials' ? 'checked' : ''}>
+                  <span>Expansion or omission of initials/middle name/surname</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="radio" name="s9_varianceReason" value="mislinkage" ${appState.scenario9.varianceReason === 'mislinkage' ? 'checked' : ''}>
+                  <span>Inadvertent linkage during enumeration to another entry</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="radio" name="s9_varianceReason" value="form8" ${appState.scenario9.varianceReason === 'form8' ? 'checked' : ''}>
+                  <span>Correction Already Sought - Form 8 submitted</span>
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Applicant's Own Correct EPIC (if mislinkage)</label>
+              <input type="text" id="s9_selfTrueEpic" value="${escapeHtml(appState.scenario9.selfTrueEpic)}" placeholder="e.g. KAR9988776">
+            </div>
+            <div class="form-group">
+              <label>Form 8 Ack Ref (if correction already sought)</label>
+              <input type="text" id="s9_form8Ref" value="${escapeHtml(appState.scenario9.form8Ref)}" placeholder="e.g. F8-2026-11029">
+            </div>
+            <div class="form-group">
+              <label>Supporting Document Establishing Identity (Doc Name &amp; Number)</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s9_supportingDocName" value="${escapeHtml(appState.scenario9.supportingDocName)}" placeholder="e.g. Passport / PAN">
+                <input type="text" id="s9_supportingDocNo" value="${escapeHtml(appState.scenario9.supportingDocNo)}" placeholder="Doc No.">
+              </div>
+            </div>
+          `;
+          break;
+
+        case 'scenario10':
+          h += `
+            <div class="form-group">
+              <label>Linked Sibling / Progeny's Name &amp; EPIC (Shri/Smt)</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s10_progenyName" value="${escapeHtml(appState.scenario10.progenyName)}" placeholder="Sibling Name">
+                <input type="text" id="s10_progenyEpicNo" value="${escapeHtml(appState.scenario10.progenyEpicNo)}" placeholder="Sibling EPIC No.">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Parent's Name &amp; EPIC</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s10_parentName" value="${escapeHtml(appState.scenario10.parentName)}" placeholder="Parent Name">
+                <input type="text" id="s10_parentEpicNo" value="${escapeHtml(appState.scenario10.parentEpicNo)}" placeholder="Parent EPIC">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Parent's Part No. &amp; Sl. No.</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s10_parentPartNo" value="${escapeHtml(appState.scenario10.parentPartNo || appState.partNo)}" placeholder="Part No.">
+                <input type="text" id="s10_parentSlNo" value="${escapeHtml(appState.scenario10.parentSlNo)}" placeholder="Sl. No.">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Applicant's Correct Date of Birth &amp; Age</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s10_applicantDob" value="${escapeHtml(appState.scenario10.applicantDob)}" placeholder="e.g. 14-03-1992">
+                <input type="text" id="s10_applicantAge" value="${escapeHtml(appState.scenario10.applicantAge)}" placeholder="Age (years)">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Linked Sibling's Correct Date of Birth &amp; Age</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s10_siblingDob" value="${escapeHtml(appState.scenario10.siblingDob)}" placeholder="e.g. 20-11-1993">
+                <input type="text" id="s10_siblingAge" value="${escapeHtml(appState.scenario10.siblingAge)}" placeholder="Age (years)">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Nature of Clarification (select applicable reason)</label>
+              <div class="checkbox-group">
+                <label class="checkbox-item">
+                  <input type="radio" name="s10_varianceReason" value="historical" ${appState.scenario10.varianceReason === 'historical' ? 'checked' : ''}>
+                  <span>Historical Documentation / Uncorrected Past Entry (affidavit attached)</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="radio" name="s10_varianceReason" value="twins" ${appState.scenario10.varianceReason === 'twins' ? 'checked' : ''}>
+                  <span>Twins / Multiple Birth (born on same date of birth)</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="radio" name="s10_varianceReason" value="clerical" ${appState.scenario10.varianceReason === 'clerical' ? 'checked' : ''}>
+                  <span>Clerical / Age Entry Error in Electoral Records</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="radio" name="s10_varianceReason" value="erroneous" ${appState.scenario10.varianceReason === 'erroneous' ? 'checked' : ''}>
+                  <span>Erroneous Linkage (not a biological/lawful sibling)</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="radio" name="s10_varianceReason" value="adoption" ${appState.scenario10.varianceReason === 'adoption' ? 'checked' : ''}>
+                  <span>Adoption / Step-Sibling (blended family)</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Twins Date of Birth (if twins)</label>
+              <input type="text" id="s10_twinsDob" value="${escapeHtml(appState.scenario10.twinsDob)}" placeholder="e.g. 14-03-1992">
+            </div>
+            <div class="form-group">
+              <label>Clerical Error For (if clerical error)</label>
+              <select id="s10_clericalWhose" class="field-input">
+                <option value="Myself" ${appState.scenario10.clericalWhose === 'Myself' ? 'selected' : ''}>Myself</option>
+                <option value="My sibling" ${appState.scenario10.clericalWhose === 'My sibling' ? 'selected' : ''}>My sibling</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Adoption / Step-Sibling Details (if applicable)</label>
+              <input type="text" id="s10_adoptionDetails" value="${escapeHtml(appState.scenario10.adoptionDetails)}" placeholder="e.g. Registered Adoption Deed dated...">
+            </div>
+
+            <div class="form-group">
+              <label>Applicant's Age/Birth Proof (Doc Name &amp; Number)</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s10_applicantProofDoc" value="${escapeHtml(appState.scenario10.applicantProofDoc)}" placeholder="Doc Name">
+                <input type="text" id="s10_applicantProofNo" value="${escapeHtml(appState.scenario10.applicantProofNo)}" placeholder="Doc No.">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Sibling's Age/Birth Proof (Doc Name &amp; Number)</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s10_siblingProofDoc" value="${escapeHtml(appState.scenario10.siblingProofDoc)}" placeholder="Doc Name">
+                <input type="text" id="s10_siblingProofNo" value="${escapeHtml(appState.scenario10.siblingProofNo)}" placeholder="Doc No.">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Proof of Corrective Application / Form 8 Ack Ref</label>
+              <input type="text" id="s10_form8AckRef" value="${escapeHtml(appState.scenario10.form8AckRef)}" placeholder="e.g. F8-2026-33910">
+            </div>
+            <div class="form-group">
+              <label>Relationship / Family Declaration Proof</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s10_familyDeclarationDoc" value="${escapeHtml(appState.scenario10.familyDeclarationDoc)}" placeholder="Doc Name (e.g. Ration Card)">
+                <input type="text" id="s10_familyDeclarationNo" value="${escapeHtml(appState.scenario10.familyDeclarationNo)}" placeholder="Doc No.">
+              </div>
+            </div>
+          `;
+          break;
+
+        case 'scenario11':
+          h += `
+            <div class="form-group">
+              <label>Notice / Discovery Manner</label>
+              <select id="s11_noticeOrPublication" class="field-input">
+                <option value="notice" ${appState.scenario11.noticeOrPublication === 'notice' ? 'selected' : ''}>Received AERO Notice</option>
+                <option value="publication" ${appState.scenario11.noticeOrPublication === 'publication' ? 'selected' : ''}>Aware upon Publication of List</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Publication List Date (if aware via published list)</label>
+              <input type="text" id="s11_publicationDate" value="${escapeHtml(appState.scenario11.publicationDate)}" placeholder="e.g. 15-08-2026">
+            </div>
+            <div class="form-group">
+              <label>Relative Name &amp; EPIC (if relative is flagged)</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s11_relativeName" value="${escapeHtml(appState.scenario11.relativeName)}" placeholder="Relative's Name">
+                <input type="text" id="s11_relativeEpicNo" value="${escapeHtml(appState.scenario11.relativeEpicNo)}" placeholder="Relative's EPIC">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Citizen of India by</label>
+              <select id="s11_citizenshipBy" class="field-input">
+                <option value="birth" ${appState.scenario11.citizenshipBy === 'birth' ? 'selected' : ''}>birth</option>
+                <option value="descent" ${appState.scenario11.citizenshipBy === 'descent' ? 'selected' : ''}>descent</option>
+                <option value="registration" ${appState.scenario11.citizenshipBy === 'registration' ? 'selected' : ''}>registration</option>
+                <option value="naturalisation" ${appState.scenario11.citizenshipBy === 'naturalisation' ? 'selected' : ''}>naturalisation</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Applicant's Date &amp; Place of Birth</label>
+              <input type="text" id="s11_applicantDobPob" value="${escapeHtml(appState.scenario11.applicantDobPob)}" placeholder="e.g. 05-02-1988 at Bengaluru, Karnataka">
+            </div>
+            <div class="form-group">
+              <label>Father's Name &amp; Citizenship Status (with Document)</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s11_fatherNameCitizenship" value="${escapeHtml(appState.scenario11.fatherNameCitizenship)}" placeholder="Father's Name &amp; Status">
+                <input type="text" id="s11_fatherDoc" value="${escapeHtml(appState.scenario11.fatherDoc)}" placeholder="Doc Relied On">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Mother's Name &amp; Citizenship Status (with Document)</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s11_motherNameCitizenship" value="${escapeHtml(appState.scenario11.motherNameCitizenship)}" placeholder="Mother's Name &amp; Status">
+                <input type="text" id="s11_motherDoc" value="${escapeHtml(appState.scenario11.motherDoc)}" placeholder="Doc Relied On">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Prior Inclusion in Electoral Roll (Part No./Sl. No./EPIC No. and year)</label>
+              <textarea id="s11_priorRollDetails" placeholder="e.g. Part No. 45, Sl. No. 310, EPIC KAR0987654 (2002 SIR and 2024 General Roll)">${escapeHtml(appState.scenario11.priorRollDetails)}</textarea>
+            </div>
+            <div class="form-group">
+              <label>Other Documents Establishing Citizenship</label>
+              <textarea id="s11_otherCitizenshipDocs" placeholder="e.g. Valid Indian Passport, Birth Certificate issued by municipal authority, School Records...">${escapeHtml(appState.scenario11.otherCitizenshipDocs)}</textarea>
+            </div>
+          `;
+          break;
+
+        case 'scenario12':
+          h += `
+            <div class="form-group">
+              <label>Notice / Discovery Manner</label>
+              <select id="s12_noticeOrDraft" class="field-input">
+                <option value="notice" ${appState.scenario12.noticeOrDraft === 'notice' ? 'selected' : ''}>Received AERO Notice</option>
+                <option value="draft" ${appState.scenario12.noticeOrDraft === 'draft' ? 'selected' : ''}>Found deleted upon publication of draft roll</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Ground for Temporary Absence (select applicable reason)</label>
+              <div class="checkbox-group">
+                <label class="checkbox-item">
+                  <input type="radio" name="s12_absenceReason" value="employment" ${appState.scenario12.absenceReason === 'employment' ? 'checked' : ''}>
+                  <span>Employment/Livelihood Outside Constituency</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="radio" name="s12_absenceReason" value="education" ${appState.scenario12.absenceReason === 'education' ? 'checked' : ''}>
+                  <span>Education Outside Constituency</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="radio" name="s12_absenceReason" value="marriage" ${appState.scenario12.absenceReason === 'marriage' ? 'checked' : ''}>
+                  <span>Recently Married</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="radio" name="s12_absenceReason" value="transfer" ${appState.scenario12.absenceReason === 'transfer' ? 'checked' : ''}>
+                  <span>Residence Transfer in Progress</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="radio" name="s12_absenceReason" value="medical" ${appState.scenario12.absenceReason === 'medical' ? 'checked' : ''}>
+                  <span>Medical Treatment / Care of Family Elsewhere</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="radio" name="s12_absenceReason" value="other" ${appState.scenario12.absenceReason === 'other' ? 'checked' : ''}>
+                  <span>Other Bona Fide Temporary Absence</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Employer &amp; Nature of Work / Outstation Address</label>
+              <input type="text" id="s12_employerNatureWork" value="${escapeHtml(appState.scenario12.employerNatureWork)}" placeholder="e.g. Software Consultant at TechCorp">
+              <input type="text" id="s12_outstationAddress" value="${escapeHtml(appState.scenario12.outstationAddress)}" placeholder="e.g. Pune, Maharashtra" style="margin-top:0.35rem;">
+            </div>
+            <div class="form-group">
+              <label>Education Institution &amp; Course/Expected Duration</label>
+              <input type="text" id="s12_institutionName" value="${escapeHtml(appState.scenario12.institutionName)}" placeholder="e.g. Delhi University">
+              <input type="text" id="s12_courseDuration" value="${escapeHtml(appState.scenario12.courseDuration)}" placeholder="e.g. M.Sc. (2025-2027)" style="margin-top:0.35rem;">
+            </div>
+            <div class="form-group">
+              <label>Marriage Registration / Date (if recently married)</label>
+              <input type="text" id="s12_marriageRegDate" value="${escapeHtml(appState.scenario12.marriageRegDate)}" placeholder="e.g. Reg. No. 445/2026, dated 12-01-2026">
+            </div>
+            <div class="form-group">
+              <label>Residence Transfer Details (if in progress)</label>
+              <input type="text" id="s12_transferDetails" value="${escapeHtml(appState.scenario12.transferDetails)}" placeholder="e.g. Renovation underway, temporary stay at relative's house">
+            </div>
+            <div class="form-group">
+              <label>Medical Treatment / Care of Family Details</label>
+              <input type="text" id="s12_medicalDetails" value="${escapeHtml(appState.scenario12.medicalDetails)}" placeholder="e.g. Attending to hospitalized parent">
+            </div>
+            <div class="form-group">
+              <label>Other Bona Fide Temporary Absence Details</label>
+              <input type="text" id="s12_otherAbsenceDetails" value="${escapeHtml(appState.scenario12.otherAbsenceDetails)}" placeholder="Specify nature of temporary absence">
+            </div>
+
+            <div class="form-group">
+              <label>Proof of Ownership/Tenancy at Registered Address</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s12_ownershipDoc" value="${escapeHtml(appState.scenario12.ownershipDoc)}" placeholder="Doc Name (e.g. Rent Deed / Tax Receipt)">
+                <input type="text" id="s12_ownershipDocNo" value="${escapeHtml(appState.scenario12.ownershipDocNo)}" placeholder="Doc No.">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Proof Explaining Temporary Absence</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s12_absenceDoc" value="${escapeHtml(appState.scenario12.absenceDoc)}" placeholder="Doc Name (e.g. Employment Letter)">
+                <input type="text" id="s12_absenceDocNo" value="${escapeHtml(appState.scenario12.absenceDocNo)}" placeholder="Doc No.">
+              </div>
+            </div>
+          `;
+          break;
+
+        case 'format13':
+          const f = appState.format13;
+          h += `
+            <div style="font-size:0.75rem; color:var(--slate-600); margin-bottom:0.75rem; background:#f8fafc; border:1px solid #e2e8f0; padding:6px 10px; border-radius:4px; line-height:1.4;">
+              Appellant credentials, voter ID, part/serial number, district, and contact details are automatically drawn from Section 1 above.
+            </div>
+
+            <div class="form-group">
+              <label>Impugned Order Date</label>
+              <input type="text" id="f13_orderDate" value="${escapeHtml(f.orderDate)}" placeholder="e.g. 10-09-2026">
+            </div>
+            <div class="form-group">
+              <label>Passed by Officer</label>
+              <select id="f13_impugnedOfficer" class="field-input">
+                <option value="Assistant Electoral Registration Officer" ${f.impugnedOfficer.includes('Assistant') ? 'selected' : ''}>Assistant Electoral Registration Officer (AERO)</option>
+                <option value="District Election Officer" ${f.impugnedOfficer.includes('District') ? 'selected' : ''}>District Election Officer (DEO)</option>
+                <option value="Electoral Registration Officer" ${!f.impugnedOfficer.includes('Assistant') && !f.impugnedOfficer.includes('District') ? 'selected' : ''}>Electoral Registration Officer (ERO)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>AERO Notice Date</label>
+              <input type="text" id="f13_noticeDate" value="${escapeHtml(f.noticeDate)}" placeholder="e.g. 15-08-2026">
+            </div>
+            <div class="form-group">
+              <label>Representation Filed Date</label>
+              <input type="text" id="f13_representationDate" value="${escapeHtml(f.representationDate)}" placeholder="e.g. 25-08-2026">
+            </div>
+            <div class="form-group">
+              <label>Inward / Acknowledgment Diary Number</label>
+              <input type="text" id="f13_inwardNo" value="${escapeHtml(f.inwardNo)}" placeholder="e.g. DIARY-4512/ERO">
+            </div>
+            <div class="form-group">
+              <label>Order Status Citing</label>
+              <select id="f13_orderStatus" class="field-input">
+                <option value="passed" ${f.orderStatus === 'passed' ? 'selected' : ''}>By order dated [Order Date] (enclosed Annexure B)</option>
+                <option value="uncommunicated" ${f.orderStatus === 'uncommunicated' ? 'selected' : ''}>Despite lapse of [Days] days without any order communicated</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Lapse of Days (if order was uncommunicated)</label>
+              <input type="text" id="f13_daysElapsed" value="${escapeHtml(f.daysElapsed)}" placeholder="e.g. 21">
+            </div>
+            <div class="form-group">
+              <label class="checkbox-item" style="font-weight:600;">
+                <input type="checkbox" id="f13_retainDiscrepancyGround" ${f.retainDiscrepancyGround ? 'checked' : ''}>
+                <span>Include Ground: "The specific field, record, or database discrepancy underlying the AERO Notice was never particularised..."</span>
+              </label>
+            </div>
+            <div class="form-group">
+              <label>Scenario-Specific Ground of Appeal</label>
+              <textarea id="f13_scenarioSpecificGround" placeholder="e.g. Documentary proof of true parentage and 2002 roll extract was duly submitted but completely ignored in the impugned order...">${escapeHtml(f.scenarioSpecificGround)}</textarea>
+            </div>
+          `;
+          break;
+      }
+
+      return h;
+    }
+
+    // --- Synchronize Inputs to appState & Live Preview ---
+    function bindInputListeners() {
+      const inputs = dynamicFieldsContainer.querySelectorAll('input, select, textarea');
+      inputs.forEach(el => {
+        el.addEventListener('input', handleFieldInput);
+        el.addEventListener('change', handleFieldInput);
+      });
+    }
+
+    function handleFieldInput(e) {
+      const id = e.target.id;
+      const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+
+      // Update common state
+      if (id in appState) {
+        appState[id] = value;
+      }
+
+      // Check scenario namespaces
+      if (id.startsWith('s2_')) appState.scenario2[id.replace('s2_', '')] = value;
+      if (id.startsWith('s3_')) appState.scenario3[id.replace('s3_', '')] = value;
+      if (id.startsWith('s4_')) {
+        const key = id.replace('s4_', '');
+        if (e.target.name === 's4_reason') {
+          appState.scenario4.reason = value;
+        } else {
+          appState.scenario4[key] = value;
+        }
+      }
+      if (id.startsWith('s5_')) appState.scenario5[id.replace('s5_', '')] = value;
+      if (id.startsWith('s6_')) {
+        const key = id.replace('s6_', '');
+        if (e.target.name === 's6_varianceReason') {
+          appState.scenario6.varianceReason = value;
+        } else {
+          appState.scenario6[key] = value;
+        }
+      }
+      if (id.startsWith('s7_')) appState.scenario7[id.replace('s7_', '')] = value;
+      if (id.startsWith('s8_')) appState.scenario8[id.replace('s8_', '')] = value;
+      if (id.startsWith('s9_')) {
+        const key = id.replace('s9_', '');
+        if (e.target.name === 's9_varianceReason') {
+          appState.scenario9.varianceReason = value;
+        } else {
+          appState.scenario9[key] = value;
+        }
+      }
+      if (id.startsWith('s10_')) {
+        const key = id.replace('s10_', '');
+        if (e.target.name === 's10_varianceReason') {
+          appState.scenario10.varianceReason = value;
+        } else {
+          appState.scenario10[key] = value;
+        }
+      }
+      if (id.startsWith('s11_')) appState.scenario11[id.replace('s11_', '')] = value;
+      if (id.startsWith('s12_')) {
+        const key = id.replace('s12_', '');
+        if (e.target.name === 's12_absenceReason') {
+          appState.scenario12.absenceReason = value;
+        } else {
+          appState.scenario12[key] = value;
+        }
+      }
+      if (id.startsWith('f13_')) appState.format13[id.replace('f13_', '')] = value;
+
+      updatePreview();
+    }
+
+    // --- Document Templates Generation ---
+    function updatePreview() {
+      const format = formatSelect.value;
+      let docHtml = '';
+
+      if (format === 'format13') {
+        docHtml = buildFormat13Html();
+      } else {
+        docHtml = buildStandardScenarioHtml(format);
+      }
+
+      previewContainer.innerHTML = docHtml;
+      checkPageLength();
+    }
+
+    function buildStandardScenarioHtml(format) {
+      const s = appState;
+      const eroSal = s.eroName ? `${s.eroSalutation} ${s.eroName}` : s.eroSalutation;
+
+      // Common header with District Election Officer
+      let h = `
+        <div class="pet-header">
+          <div class="pet-to">
+            To<br>
+            ${val(eroSal, 'Shri/Shrimati')}<br>
+            District Election Officer<br>
+            Constituency Number: ${val(s.constituencyNumber, 'Constituency Number')}<br>
+            Constituency: ${val(s.constituency, 'Constituency')}<br>
+            District: ${val(s.district, 'District')}<br>
+            Karnataka
+          </div>
+
+          <div class="pet-salutation">Dear Sir/Madam,</div>
+
+          <p>
+            I am a citizen of India by birth, permanent resident of ${val(s.address, 'Registered Address')}, Part No. ${val(s.partNo, 'Part No.')} constituency (${val(s.constituency, 'Constituency')}) and have been voting therein regularly, including in 2024. I am the rightful occupant of my registered address. This deletion will deprive me of my constitutional right under Article 326 of the Constitution of India.
+          </p>
+
+          <p>
+            My Aadhaar no. is ${val(s.aadhaarNo, 'Aadhaar No.')}, PAN No. is ${val(s.panNo, 'PAN No.')} and Passport No. is ${val(s.passportNo, 'Passport No.')}. I also hold a Birth Certificate issued by the ${val(s.birthCertAuthority, 'Authority')} and a School Certificate. Given that the BLO application limits document submission to a single attachment, the official document numbers cited above are tendered herewith as additional supporting evidence to verify my electoral credentials. (Aadhaar is furnished for identity/address verification, as clarified by the Hon'ble Supreme Court; it is not tendered as standalone proof of citizenship.)
+          </p>
+
+          <p>
+            My name (or that of my relative, as the case may be) has consistently formed part of the electoral roll prior to this Special Intensive Revision, and its existing inclusion raises a rebuttable presumption of continued eligibility that cannot be displaced merely by an unexplained algorithmic/anomaly flag. This position is affirmed by the Hon'ble Supreme Court in <em>Association for Democratic Reforms &amp; Ors. v. Election Commission of India</em>, W.P.(C) No. 640/2025 (judgment dated 27.05.2026), and is consistent with the settled law in <em>Lal Babu Hussein v. Electoral Registration Officer</em>, (1995) 3 SCC 100, that no name already on the roll may be excluded without due notice, an intelligible statement of the specific discrepancy relied upon, and a reasonable opportunity of being heard.
+          </p>
+        </div>
+      `;
+
+      // Specific notice body
+      h += buildScenarioNoticeBody(format);
+
+      // Common standard prayers
+      h += `
+        <div class="pet-prayer-title">I Pray that:</div>
+        <ol class="pet-prayers">
+          <li>Drop and close the proposed deletion/inquiry proceedings initiated under AERO Notice No. ${val(s.aeroNoticeNo, 'AERO Notice No.')} and direct the uninterrupted retention/confirmation of the Applicant's name in the Electoral Roll for ${val(s.constituency, 'Constituency')} Constituency (Part No. ${val(s.partNo, 'Part No.')}, Sl. No. ${val(s.slNo, 'Sl. No.')}, Voter ID Card ${val(s.epicNo, 'EPIC No.')}).</li>
+          <li>Validate and rectify the Applicant's record/linkage details in the electoral database in accordance with the supporting documents submitted herewith.</li>
+          <li>Direct the issuance of an updated/corrected Physical EPIC or E-EPIC reflecting the accurate particulars.</li>
+      `;
+
+      // Extra prayers for Scenarios 11 & 12
+      if (format === 'scenario11') {
+        h += `
+          <li>Not treat the Applicant (or the Applicant's relative named herein) as a non-citizen or "doubtful"/"D-category" voter without a reasoned finding recorded after notice and a personal hearing, and without the matter being referred to the competent authority within the timeline directed by the Hon'ble Supreme Court;</li>
+          <li>In the alternative, treat this representation and the accompanying documents as the Applicant's preliminary written submission for the purpose of any such referral proceeding, and grant a further opportunity of personal hearing before any final determination on citizenship is made;</li>
+          <li>Restore the Applicant's name to the electoral roll forthwith upon a finding, at any stage, that the Applicant is a citizen of India.</li>
+        `;
+      } else if (format === 'scenario12') {
+        h += `
+          <li>Restore/retain the Applicant's name in the electoral roll notwithstanding temporary bona fide absence at the time of house-to-house enumeration, there being no change in the Applicant's domicile or ordinary residence;</li>
+        `;
+      }
+
+      h += `
+          <li>Furnish, if not already provided, an intelligible written statement of the specific field, record, or database discrepancy underlying the AERO Notice, so as to enable an effective and meaningful response.</li>
+          <li>In the event this representation is not accepted in full, pass a reasoned/speaking order under Rule 21A of the Registration of Electors Rules, 1960, only after affording the Applicant a personal hearing with reasonable advance notice, in keeping with the safeguards affirmed by the Hon'ble Supreme Court in <em>Association for Democratic Reforms v. Election Commission of India (supra)</em>.</li>
+        </ol>
+      `;
+
+      // Verification and signature with unified address!
+      const appName = s.applicantName || '';
+      h += `
+        <div class="pet-verification">
+          I, ${val(appName, 'Applicant Full Name')}, the Noticee herein, do hereby declare and verify that the contents of this representation are true and correct to the best of my knowledge, information, and belief, and nothing material has been concealed therefrom.
+        </div>
+
+        <div class="pet-meta-row">
+          <div>
+            <strong>Date:</strong> ${val(s.date, 'Date')}<br>
+            <strong>Place:</strong> ${val(s.place, 'Place')}
+          </div>
+          <div class="pet-sig-inner">
+            Yours faithfully,<br><br>
+            <strong>(Signature)</strong><br>
+            Full Name: ${val(appName, 'Full Name')}<br>
+            Voter ID (EPIC) No.: ${val(s.epicNo, 'EPIC No.')}<br>
+            Part No. &amp; Serial No.: ${val((s.partNo ? 'Part ' + s.partNo : '') + (s.slNo ? ', Sl ' + s.slNo : ''), 'Part & Serial No.')}<br>
+            Mobile No.: ${val(s.mobileNo, 'Mobile No.')}<br>
+            Email ID: ${val(s.emailId, 'Email ID')}<br>
+            Current Address: ${val(s.address, 'Current Address')}
+          </div>
+        </div>
+      `;
+
+      return h;
+    }
+
+    function buildScenarioNoticeBody(format) {
+      const s = appState;
+      let h = '';
+
+      switch (format) {
+        case 'scenario1':
+          h = `
+            <p>
+              I have received AERO notice no. ${val(s.aeroNoticeNo, 'AERO Notice No.')} from the AERO on grounds that the details related to me/my relative could not be established.
+            </p>
+            <p>
+              I reserve the right to raise additional grounds of appeal and produce more documents at the later stage of the SIR process if the need arises, and to be heard in person before any adverse order is passed.
+            </p>
+          `;
+          break;
+
+        case 'scenario2':
+          const s2 = s.scenario2;
+          let siblingsText = '';
+          if (s2.sibling1Name) siblingsText += `${val(s2.sibling1Name, 'Sibling 1')} (EPIC ${val(s2.sibling1Epic, 'EPIC')})`;
+          if (s2.sibling2Name) siblingsText += `, ${val(s2.sibling2Name, 'Sibling 2')} (EPIC ${val(s2.sibling2Epic, 'EPIC')})`;
+          if (s2.sibling3Name) siblingsText += `, ${val(s2.sibling3Name, 'Sibling 3')} (EPIC ${val(s2.sibling3Epic, 'EPIC')})`;
+          if (s2.otherSiblings) siblingsText += `, ${val(s2.otherSiblings, 'Other siblings')}`;
+          if (!siblingsText) siblingsText = '[ Names and EPICs of all siblings ]';
+
+          h = `
+            <p>
+              I received AERO Notice No. ${val(s.aeroNoticeNo, 'AERO Notice No.')} citing 'linked as the son/daughter of a person who is also shown as the father of six other individuals'.
+            </p>
+            <p>
+              I am submitting documentary proof of my linkage to my true father (named as ${val(s2.fatherName, 'Father Name')} in SIR 2002 Electoral Roll, serial number ${val(s2.fatherSlNo, 'Serial No.')}, EPIC No. ${val(s2.fatherEpicNo, 'Father EPIC')}). My true siblings' names are ${siblingsText}.
+            </p>
+            <p>
+              I reserve the right to raise additional grounds of appeal and produce more documents at the later stage of the SIR process if the need arises, and to be heard in person before any adverse order is passed.
+            </p>
+          `;
+          break;
+
+        case 'scenario3':
+          const s3 = s.scenario3;
+          h = `
+            <p>
+              I received AERO Notice No. ${val(s.aeroNoticeNo, 'AERO Notice No.')} raising an anomaly regarding my father, Shri ${val(s3.fatherName, "Father's Name")}, being linked to six or more individuals in the electoral records. I place the following facts on record:
+            </p>
+            <ul style="margin-left: 1.5rem; margin-bottom: 0.5rem;">
+              <li><strong>Genuine Parentage:</strong> Shri ${val(s3.fatherName, "Father's Name")} is my true and lawful father.</li>
+              <li><strong>Actual Family Size:</strong> My father has only ${val(s3.numChildren, 'No. of children')} children (fewer than six), including myself.</li>
+              <li><strong>Wrongful/Erroneous Linkage:</strong> Any other individual(s) appearing in the electoral roll or notice under my father's name is not his child and has no familial relationship with our household. Such linkage is either a clerical error or an unauthorized entry.</li>
+            </ul>
+            <p>
+              I am submitting documentary proof verifying my legitimate linkage to my father (details: Electoral Roll Part No. ${val(s3.fatherPartNo || s.partNo, 'Part No.')}, Serial No. ${val(s3.fatherSlNo, 'Serial No.')}, EPIC No. ${val(s3.fatherEpicNo, 'EPIC No.')}), along with the complete and true list of all his children:
+            </p>
+            <ul style="margin-left: 1.5rem; margin-bottom: 0.5rem; list-style-type: none;">
+              <li>Child 1: ${val(s3.child1Name || s.applicantName, 'Child 1 Name')} (EPIC No. ${val(s3.child1Epic || s.epicNo, 'EPIC')})</li>
+              <li>Child 2: ${val(s3.child2Name, 'Child 2 Name')} (EPIC No. ${val(s3.child2Epic, 'EPIC')})</li>
+              <li>Child 3: ${val(s3.child3Name, 'Child 3 Name')} (EPIC No. ${val(s3.child3Epic, 'EPIC')})</li>
+              ${s3.child4Name ? `<li>Child 4 (if applicable): ${val(s3.child4Name, 'Child 4 Name')} (EPIC No. ${val(s3.child4Epic, 'EPIC')})</li>` : ''}
+              ${s3.child5Name ? `<li>Child 5 (if applicable): ${val(s3.child5Name, 'Child 5 Name')} (EPIC No. ${val(s3.child5Epic, 'EPIC')})</li>` : ''}
+            </ul>
+            <p>
+              The unauthorized individual(s) cited in the notice must be delinked from my father's record, and such erroneous entries should not prejudice my valid electoral registration.
+            </p>
+            <p>
+              I reserve the right to submit additional records or present oral evidence during personal hearing proceedings if required.
+            </p>
+          `;
+          break;
+
+        case 'scenario4':
+          const s4 = s.scenario4;
+          const isEarly = s4.reason === 'early_marriage';
+          const isLate = s4.reason === 'late_childbirth';
+          const isRemarriage = s4.reason === 'remarriage';
+          const isAdoption = s4.reason === 'adoption';
+
+          h = `
+            <p>
+              I have received AERO Notice No. ${val(s.aeroNoticeNo, 'AERO Notice No.')} citing an apparent biological anomaly regarding the age difference between myself and my parent (Shri/Smt ${val(s4.parentName, 'Parent Name')}, EPIC No. ${val(s4.parentEpicNo, 'Parent EPIC')}) being [${s4.ageGapCondition === 'less than 15 years' ? 'X' : '&nbsp;'}] less than 15 years / [${s4.ageGapCondition === 'more than 50 years' ? 'X' : '&nbsp;'}] more than 50 years.
+            </p>
+            <p>
+              My parent's name is recorded in the SIR 2002 Electoral Roll (Part No. ${val(s4.parentPartNo || s.partNo, 'Part No.')}, Sl. No. ${val(s4.parentSlNo, 'Sl. No.')}, EPIC No. ${val(s4.parentEpicNo, 'EPIC No.')}). The age records in the baseline roll are factually correct, and the apparent anomaly is accounted for as follows (check applicable):
+            </p>
+            <ul style="margin-left: 1.5rem; margin-bottom: 0.5rem; list-style-type: none;">
+              <li>[${isEarly ? 'X' : '&nbsp;'}] <strong>Parental Age Gap Under 15 Years (Early / Customary Marriage)</strong> — The narrow recorded age gap reflects historical family circumstances, as my parents were married on ${val(s4.marriageDate, 'Marriage Date')}.</li>
+              <li>[${isLate ? 'X' : '&nbsp;'}] <strong>Parental Age Gap Over 50 Years (Late Childbirth / Advanced Parental Age)</strong> — The Noticee was born when the parent was at an advanced biological age (Parent's DoB: ${val(s4.parentDob, "Parent's DoB")}, Applicant's DoB: ${val(s4.applicantDob, "Applicant's DoB")}).</li>
+              <li>[${isRemarriage ? 'X' : '&nbsp;'}] <strong>Remarriage / Later Progeny</strong> — The Noticee was born to the parent during a subsequent/later marriage entered on ${val(s4.remarriageDate, 'Remarriage Date')}.</li>
+              <li>[${isAdoption ? 'X' : '&nbsp;'}] <strong>Legal Adoption / Step-Parentage</strong> — The Noticee is the lawful adopted/step-child of the named parent (Adoption/Court Order Ref: ${val(s4.adoptionRef, 'Adoption Ref')}).</li>
+            </ul>
+            <p>
+              To substantiate the above, I am submitting the following supporting documents establishing true parentage and dates of birth:<br>
+              Parent's Age/Identity Proof: ${val(s4.parentProofDoc, 'Document Name')} (Doc No. ${val(s4.parentProofNo, 'Doc No.')})<br>
+              Applicant's Birth Certificate/School Records/any other document: ${val(s4.applicantProofDoc, 'Document Name')} (Doc No. ${val(s4.applicantProofNo, 'Doc No.')})<br>
+              Family/Marriage/Relationship Record (if applicable): ${val(s4.familyRecordDoc, 'Document Name')} (Doc No. ${val(s4.familyRecordNo, 'Doc No.')})
+            </p>
+            <p>
+              I reserve the right to submit additional records or present oral evidence during personal hearing proceedings if required.
+            </p>
+          `;
+          break;
+
+        case 'scenario5':
+          const s5 = s.scenario5;
+          h = `
+            <p>
+              I have received AERO notice no. ${val(s.aeroNoticeNo, 'AERO Notice No.')} from the AERO on grounds that the age difference between me and parent is less than 15 years / more than 50 years.
+            </p>
+            <p>
+              My father's/mother's name is included in the SIR 2002 Electoral Roll in serial number ${val(s5.parentRollSlNo, 'Serial No.')} (EPIC No. ${val(s5.parentRollEpicNo, 'EPIC No.')}) named as ${val(s5.parentRollName, 'Parent Name')}. The age in the 2002 SIR is incorrect, and I have produced documents to establish my parents' correct age as below:<br>
+              Father's/Mother's Document Name: ${val(s5.parentDocName, 'Document Name')}<br>
+              Father's/Mother's Document Number: ${val(s5.parentDocNo, 'Document Number')}<br>
+              Father's/Mother's Actual DoB: ${val(s5.parentActualDob, 'Actual DoB')}
+            </p>
+            <p>
+              I reserve the right to raise additional grounds of appeal and produce more documents at the later stage of the SIR process if the need arises, and to be heard in person before any adverse order is passed.
+            </p>
+          `;
+          break;
+
+        case 'scenario6':
+          const s6 = s.scenario6;
+          h = `
+            <p>
+              I have received AERO Notice No. ${val(s.aeroNoticeNo, 'AERO Notice No.')} citing an anomaly regarding a mismatch between the name of my father as given in the current electoral rolls and as given in the electoral rolls prepared during the previous SIR, indicating an incorrect record linkage.
+            </p>
+            <p>I place the following facts on record to establish the correct linkage and parentage:</p>
+            <ul style="margin-left: 1.5rem; margin-bottom: 0.5rem; list-style-type: none;">
+              <li><strong>Genuine Parentage:</strong> Shri ${val(s6.fatherTrueName, 'True Father Name')} is my true and lawful father.</li>
+              <li><strong>Details in Current Electoral Roll:</strong> Father's Name is recorded as ${val(s6.fatherNameCurrent, 'Current Name')}, Part No. ${val(s6.currentPartNo || s.partNo, 'Part No.')}, Sl. No. ${val(s6.currentSlNo, 'Sl. No.')} (EPIC No. ${val(s6.currentEpicNo, 'EPIC No.')}).</li>
+              <li><strong>Details in Previous SIR Electoral Roll:</strong> Father's Name appears in the previous SIR roll (Part No. ${val(s6.prevPartNo, 'Part No.')}, Sl. No. ${val(s6.prevSlNo, 'Sl. No.')}, EPIC No. ${val(s6.prevEpicNo, 'EPIC No.')}) as ${val(s6.fatherNamePrev, 'Previous Roll Name')}.</li>
+            </ul>
+            <p>Clarification of Variance: The difference between the two records is strictly due to (check applicable):</p>
+            <ul style="margin-left: 1.5rem; margin-bottom: 0.5rem; list-style-type: none;">
+              <li>[${s6.varianceReason === 'spelling' ? 'X' : '&nbsp;'}] <strong>Spelling/Phonetic Variation</strong> — Spelling/phonetic variation or typographical entry error in 2002 SIR list.</li>
+              <li>[${s6.varianceReason === 'initials' ? 'X' : '&nbsp;'}] <strong>Initials/Middle Name</strong> — Expansion or omission of initials/middle name/surname.</li>
+              <li>[${s6.varianceReason === 'mislinkage' ? 'X' : '&nbsp;'}] <strong>Mis-linkage at Enumeration</strong> — Inadvertent linkage during enumeration to another entry rather than my father's true record (EPIC No. ${val(s6.fatherTrueEpic, 'True Father EPIC')}).</li>
+              <li>[${s6.varianceReason === 'form8' ? 'X' : '&nbsp;'}] <strong>Correction Already Sought</strong> — Spelling/phonetic variation in the existing voter card for which Form 8 Ack Ref ${val(s6.form8Ref, 'Form 8 Ref')} has been submitted for correction.</li>
+            </ul>
+            <p>
+              Both entries refer to one and the same individual, who is my father. To substantiate this, I am submitting the following supporting documents establishing my relationship and correct father's name:<br>
+              Father's Supporting Document: ${val(s6.fatherDocName, 'Document Name')} (Document No. ${val(s6.fatherDocNo, 'Document No.')})<br>
+              Applicant's Relationship Proof (Birth Certificate/School Records): ${val(s6.applicantRelDoc, 'Document Name')} (Document No. ${val(s6.applicantRelDocNo, 'Document No.')})
+            </p>
+            <p>
+              I reserve the right to raise additional grounds of appeal and produce more documents at the later stage of the SIR process if the need arises, and to be heard in person before any adverse order is passed.
+            </p>
+          `;
+          break;
+
+        case 'scenario7':
+          const s7 = s.scenario7;
+          h = `
+            <p>
+              I have received AERO notice no. ${val(s.aeroNoticeNo, 'AERO Notice No.')} from the AERO on grounds that the age difference between me and grandparent is less than 40 years.
+            </p>
+            <p>
+              My grandfather's/grandmother's name is included in the SIR 2002 Electoral Roll in serial number ${val(s7.grandparentSlNo, 'Serial No.')} (EPIC No. ${val(s7.grandparentEpicNo, 'EPIC No.')}) named as ${val(s7.grandparentName, 'Grandparent Name')}. The age in the 2002 SIR is incorrect, and I have produced documents to establish my grandparents' correct age as below:<br>
+              Grandfather's/Grandmother's Document Name: ${val(s7.grandparentDocName, 'Document Name')}<br>
+              Grandfather's/Grandmother's Document Number: ${val(s7.grandparentDocNo, 'Document Number')}<br>
+              Grandfather's/Grandmother's Actual DoB: ${val(s7.grandparentActualDob, 'Actual DoB')}
+            </p>
+            <p>
+              I reserve the right to raise additional grounds of appeal and produce more documents at the later stage of the SIR process if the need arises, and to be heard in person before any adverse order is passed.
+            </p>
+          `;
+          break;
+
+        case 'scenario8':
+          const s8 = s.scenario8;
+          h = `
+            <p>
+              I have received AERO notice no. ${val(s.aeroNoticeNo, 'AERO Notice No.')} from the AERO on grounds that the age difference between me and grandparent is less than 40 years.
+            </p>
+            <p>
+              My grandfather's/grandmother's name is included in the SIR 2002 Electoral Roll in serial number ${val(s8.grandparentSlNo, 'Serial No.')} (EPIC No. ${val(s8.grandparentEpicNo, 'EPIC No.')}) named as ${val(s8.grandparentName, 'Grandparent Name')}. The age in the 2002 SIR is correct, as my grandparents were married as minors on ${val(s8.marriageDate, 'Marriage Date')}.
+            </p>
+            <p>
+              I reserve the right to raise additional grounds of appeal and produce more documents at the later stage of the SIR process if the need arises, and to be heard in person before any adverse order is passed.
+            </p>
+          `;
+          break;
+
+        case 'scenario9':
+          const s9 = s.scenario9;
+          const trueActualName = s9.actualName || s.applicantName;
+          h = `
+            <p>
+              I have received AERO Notice No. ${val(s.aeroNoticeNo, 'AERO Notice No.')} citing an anomaly regarding a mismatch between my own name as given in the current electoral rolls and as given in the electoral rolls prepared during the previous SIR, indicating an incorrect record linkage.
+            </p>
+            <p>I place the following facts on record to establish the correct linkage with self:</p>
+            <ul style="margin-left: 1.5rem; margin-bottom: 0.5rem; list-style-type: none;">
+              <li><strong>Actual Name:</strong> Shri/Smt. ${val(trueActualName, 'Actual Name')}</li>
+              <li><strong>Details in Current Electoral Roll:</strong> Self Name is recorded as ${val(s9.selfNameCurrent, 'Current Name')}, Part No. ${val(s9.currentPartNo || s.partNo, 'Part No.')}, Sl. No. ${val(s9.currentSlNo || s.slNo, 'Sl. No.')} (EPIC No. ${val(s9.currentEpicNo || s.epicNo, 'EPIC No.')}).</li>
+              <li><strong>Details in Previous SIR Electoral Roll:</strong> Self Name appears as ${val(s9.selfNamePrev, 'Previous Roll Name')} in the previous SIR roll (Part No. ${val(s9.prevPartNo, 'Part No.')}, Sl. No. ${val(s9.prevSlNo, 'Sl. No.')}, EPIC No. ${val(s9.prevEpicNo, 'EPIC No.')}).</li>
+            </ul>
+            <p>Clarification of Variance: The difference between the two records is strictly due to (check applicable):</p>
+            <ul style="margin-left: 1.5rem; margin-bottom: 0.5rem; list-style-type: none;">
+              <li>[${s9.varianceReason === 'spelling' ? 'X' : '&nbsp;'}] <strong>Spelling/Phonetic Variation</strong> — Spelling/phonetic variation or typographical entry error in 2002 SIR list.</li>
+              <li>[${s9.varianceReason === 'initials' ? 'X' : '&nbsp;'}] <strong>Initials/Middle Name</strong> — Expansion or omission of initials/middle name/surname.</li>
+              <li>[${s9.varianceReason === 'mislinkage' ? 'X' : '&nbsp;'}] <strong>Mis-linkage at Enumeration</strong> — Inadvertent linkage during enumeration to another entry rather than my own correct record (EPIC No. ${val(s9.selfTrueEpic, 'Own Correct EPIC')}).</li>
+              <li>[${s9.varianceReason === 'form8' ? 'X' : '&nbsp;'}] <strong>Correction Already Sought</strong> — Spelling/phonetic variation in the existing voter card for which Form 8 Ack Ref ${val(s9.form8Ref, 'Form 8 Ref')} has been submitted for correction.</li>
+            </ul>
+            <p>
+              Both entries refer to one and the same individual, i.e. myself. To substantiate this, I am submitting the following supporting documents establishing my identity:<br>
+              Supporting Document: ${val(s9.supportingDocName, 'Document Name')} (Document No. ${val(s9.supportingDocNo, 'Document No.')})
+            </p>
+            <p>
+              I reserve the right to raise additional grounds of appeal and produce more documents at the later stage of the SIR process if the need arises, and to be heard in person before any adverse order is passed.
+            </p>
+          `;
+          break;
+
+        case 'scenario10':
+          const s10 = s.scenario10;
+          h = `
+            <p>
+              I have received AERO Notice No. ${val(s.aeroNoticeNo, 'AERO Notice No.')} citing an anomaly regarding an alleged biological/age impossibility, stating that the age gap between myself and another progeny (Shri/Smt ${val(s10.progenyName, 'Progeny Name')}, EPIC No. ${val(s10.progenyEpicNo, 'Progeny EPIC')}) linked to the same parent (Shri/Smt ${val(s10.parentName, 'Parent Name')}, EPIC No. ${val(s10.parentEpicNo, 'Parent EPIC')}) in the electoral roll/previous SIR is less than 9 months.
+            </p>
+            <p>I place the following facts on record to clarify the record and resolve the discrepancy:</p>
+            <p><strong>1. Parentage &amp; Linkage Details</strong><br>
+              Parent's Name: ${val(s10.parentName, 'Parent Name')} (EPIC No. ${val(s10.parentEpicNo, 'Parent EPIC')}, Part No. ${val(s10.parentPartNo || s.partNo, 'Part No.')}, Sl. No. ${val(s10.parentSlNo, 'Sl. No.')})<br>
+              Applicant's Correct Date of Birth/Age: ${val(s10.applicantDob, 'Applicant DoB')} (Age: ${val(s10.applicantAge, 'Age')} years)<br>
+              Linked Sibling's Correct Date of Birth/Age: ${val(s10.siblingDob, 'Sibling DoB')} (Age: ${val(s10.siblingAge, 'Age')} years)
+            </p>
+            <p><strong>2. Nature of Clarification (check applicable)</strong></p>
+            <ul style="margin-left: 1.5rem; margin-bottom: 0.5rem; list-style-type: none;">
+              <li>[${s10.varianceReason === 'historical' ? 'X' : '&nbsp;'}] <strong>Historical Documentation / Uncorrected Past Entry</strong> — The actual biological age difference between both siblings is more than 9 months. However, an incorrect Date of Birth was erroneously entered in legacy documentation in the past and remained uncorrected in subsequent records. Corrective steps have now been undertaken to rectify the official records (e.g., registered affidavit sworn before a magistrate, attached).</li>
+              <li>[${s10.varianceReason === 'twins' ? 'X' : '&nbsp;'}] <strong>Twins / Multiple Birth</strong> — The linked individual and I are biological twins/triplets born to the same parents on the same date of birth (Date of Birth: ${val(s10.twinsDob, 'Twins DoB')}).</li>
+              <li>[${s10.varianceReason === 'clerical' ? 'X' : '&nbsp;'}] <strong>Clerical / Age Entry Error in Electoral Records</strong> — The actual biological age gap between us is 9 months or more. The age recorded in the previous SIR/current roll for [${s10.clericalWhose === 'Myself' ? 'X' : '&nbsp;'}] Myself / [${s10.clericalWhose === 'My sibling' ? 'X' : '&nbsp;'}] My sibling is incorrect due to a typographical or enumeration error.</li>
+              <li>[${s10.varianceReason === 'erroneous' ? 'X' : '&nbsp;'}] <strong>Erroneous Linkage</strong> — The individual cited in the notice is not my biological/lawful sibling and has been erroneously linked to my parent's record due to clerical or enumeration error.</li>
+              <li>[${s10.varianceReason === 'adoption' ? 'X' : '&nbsp;'}] <strong>Adoption / Step-Sibling</strong> — The age gap is legally valid due to legal adoption or blended family/step-sibling relationship (Details: ${val(s10.adoptionDetails, 'Details')}).</li>
+            </ul>
+            <p><strong>3. Supporting Documents Submitted</strong><br>
+              Applicant's Age/Birth Proof &amp; Corrective Record: ${val(s10.applicantProofDoc, 'Document Name')} (Doc No. ${val(s10.applicantProofNo, 'Doc No.')})<br>
+              Sibling's Age/Birth Proof &amp; Corrective Record: ${val(s10.siblingProofDoc, 'Document Name')} (Doc No. ${val(s10.siblingProofNo, 'Doc No.')})<br>
+              Proof of Corrective Application/Form 8 Ack Ref: ${val(s10.form8AckRef, 'Form 8 Ref')}<br>
+              Relationship/Family Declaration Proof: ${val(s10.familyDeclarationDoc, 'Document Name')} (Doc No. ${val(s10.familyDeclarationNo, 'Doc No.')})
+            </p>
+            <p>
+              The apparent discrepancy in the electoral database is attributable to uncorrected historical entries or clerical records, and should not prejudice my valid electoral registration.
+            </p>
+            <p>
+              I reserve the right to raise additional grounds of appeal and produce more documents at the later stage of the SIR process if the need arises, and to be heard in person before any adverse order is passed.
+            </p>
+          `;
+          break;
+
+        case 'scenario11':
+          const s11 = s.scenario11;
+          const noticePhrase = s11.noticeOrPublication === 'notice'
+            ? `I have received AERO Notice No. ${val(s.aeroNoticeNo, 'AERO Notice No.')}`
+            : `I have become aware, upon publication of the list dated ${val(s11.publicationDate, 'Publication Date')}`;
+          const relativePhrase = s11.relativeName
+            ? `(or that of my relative, Shri/Smt. ${val(s11.relativeName, 'Relative Name')}, EPIC No. ${val(s11.relativeEpicNo, 'Relative EPIC')})`
+            : `(or that of my relative)`;
+
+          h = `
+            <p>
+              ${noticePhrase}, that my name ${relativePhrase} has been proposed for deletion / marked as a "doubtful" or "D-category" entry on the stated or apparent ground of unresolved or doubtful citizenship.
+            </p>
+            <p>
+              I categorically state that I am a citizen of India by [${s11.citizenshipBy === 'birth' ? 'X' : '&nbsp;'}] birth / [${s11.citizenshipBy === 'descent' ? 'X' : '&nbsp;'}] descent / [${s11.citizenshipBy === 'registration' ? 'X' : '&nbsp;'}] registration / [${s11.citizenshipBy === 'naturalisation' ? 'X' : '&nbsp;'}] naturalisation (strike out whichever is inapplicable), and place the following facts and documents on record:
+            </p>
+            <ul style="margin-left: 1.5rem; margin-bottom: 0.5rem; list-style-type: none;">
+              <li><strong>Applicant's Date &amp; Place of Birth:</strong> ${val(s11.applicantDobPob, 'Date & Place of Birth')}</li>
+              <li><strong>Father's Name &amp; Citizenship Status:</strong> ${val(s11.fatherNameCitizenship, "Father's Name & Status")} (Document relied on: ${val(s11.fatherDoc, 'Document Relied On')})</li>
+              <li><strong>Mother's Name &amp; Citizenship Status:</strong> ${val(s11.motherNameCitizenship, "Mother's Name & Status")} (Document relied on: ${val(s11.motherDoc, 'Document Relied On')})</li>
+              <li><strong>Prior inclusion in Electoral Roll (Part No./Sl. No./EPIC No. and year):</strong> ${val(s11.priorRollDetails, 'Prior roll details')}</li>
+              <li><strong>Other documents establishing citizenship (Passport/Birth Certificate/School Records/NRC where applicable/etc.):</strong> ${val(s11.otherCitizenshipDocs, 'Other citizenship documents')}</li>
+            </ul>
+            <p>
+              The Hon'ble Supreme Court has specifically directed, in <em>Association for Democratic Reforms v. Election Commission of India (supra)</em>, that: (a) no person may be treated as excluded merely upon an unresolved citizenship doubt without a reasoned finding; (b) all such cases must be referred by the Election Commission to the competent authority under the Citizenship Act, 1955 within four weeks of such a finding; (c) the resulting determination must be preceded by notice and hearing and concluded before the next general/Assembly/local body election; and (d) upon a finding of citizenship, the name must be restored to the electoral roll. I respectfully request that this representation and the accompanying documents be treated as my written submission for the purposes of any such referral, and that I be granted notice and a personal hearing before any adverse determination is made regarding my/my relative's citizenship status.
+            </p>
+            <p>
+              I reserve the right to submit additional records or present oral evidence during personal hearing proceedings if required.
+            </p>
+          `;
+          break;
+
+        case 'scenario12':
+          const s12 = s.scenario12;
+          const s12Intro = s12.noticeOrDraft === 'notice'
+            ? `I have received AERO Notice No. ${val(s.aeroNoticeNo, 'AERO Notice No.')}`
+            : `I have found, upon publication of the draft roll, that my name has been deleted or proposed for deletion`;
+
+          h = `
+            <p>
+              ${s12Intro} on the ground that I was found "absent" or "shifted" at the time of house-to-house enumeration.
+            </p>
+            <p>
+              I continue to be domiciled and ordinarily resident within ${val(s.constituency, 'Constituency')} Constituency, Part No. ${val(s.partNo, 'Part No.')} at the address recorded in the electoral roll, and place the following facts on record explaining my temporary and bona fide absence at the time of enumeration (check applicable):
+            </p>
+            <ul style="margin-left: 1.5rem; margin-bottom: 0.5rem; list-style-type: none;">
+              <li>[${s12.absenceReason === 'employment' ? 'X' : '&nbsp;'}] <strong>Employment/Livelihood Outside the Constituency</strong> — Employer/nature of work: ${val(s12.employerNatureWork, 'Employer & Nature of Work')}; present outstation address: ${val(s12.outstationAddress, 'Present Outstation Address')}</li>
+              <li>[${s12.absenceReason === 'education' ? 'X' : '&nbsp;'}] <strong>Education Outside the Constituency</strong> — Institution: ${val(s12.institutionName, 'Institution')}; course &amp; expected duration: ${val(s12.courseDuration, 'Course & Duration')}</li>
+              <li>[${s12.absenceReason === 'marriage' ? 'X' : '&nbsp;'}] <strong>Recently Married</strong> — Marriage registration/date: ${val(s12.marriageRegDate, 'Marriage Registration/Date')}</li>
+              <li>[${s12.absenceReason === 'transfer' ? 'X' : '&nbsp;'}] <strong>Residence Transfer in Progress</strong> — Details: ${val(s12.transferDetails, 'Transfer Details')}</li>
+              <li>[${s12.absenceReason === 'medical' ? 'X' : '&nbsp;'}] <strong>Medical Treatment / Care of Family Elsewhere</strong> — Details: ${val(s12.medicalDetails, 'Medical Details')}</li>
+              <li>[${s12.absenceReason === 'other' ? 'X' : '&nbsp;'}] <strong>Other Bona Fide Temporary Absence</strong> — Specify: ${val(s12.otherAbsenceDetails, 'Absence Details')}</li>
+            </ul>
+            <p>
+              I confirm that I have not acquired ordinary residence, nor sought or obtained registration as an elector, in any other constituency, and I continue to retain, and intend to retain, my domicile at the above address. I am submitting the following documents in support:<br>
+              Proof of continued ownership/tenancy/residence at the registered address: ${val(s12.ownershipDoc, 'Document Name')} (Doc No. ${val(s12.ownershipDocNo, 'Doc No.')})<br>
+              Proof explaining temporary absence (employment letter/institution ID/hospital record, etc.): ${val(s12.absenceDoc, 'Document Name')} (Doc No. ${val(s12.absenceDocNo, 'Doc No.')})
+            </p>
+            <p>
+              This request is made in accordance with the Hon'ble Supreme Court's direction, in <em>Association for Democratic Reforms v. Election Commission of India (supra)</em>, that persons found to be domiciled within the constituency but wrongly deleted merely on the ground of absence at the time of enumeration are entitled to submit representations for restoration of their names.
+            </p>
+            <p>
+              I reserve the right to submit additional records or present oral evidence during personal hearing proceedings if required.
+            </p>
+          `;
+          break;
+      }
+
+      return h;
+    }
+
+    function buildFormat13Html() {
+      const s = appState;
+      const f = appState.format13;
+
+      const orderSnippet = f.orderStatus === 'passed'
+        ? `By order dated ${val(f.orderDate, 'Order Date')} (true copy enclosed as Annexure B)`
+        : `[OR: despite the lapse of ${val(f.daysElapsed, 'No. of')} days without any order being communicated]`;
+
+      return `
+        <div class="pet-header">
+          <div style="font-size:0.85em; color:#475569; border-bottom:1px solid #cbd5e1; padding-bottom:6px; margin-bottom:10px;">
+            <strong>Statutory Appeal</strong> under Section 24(a), Representation of the People Act, 1950 before the Designated Appellate Authority.
+          </div>
+
+          <div class="pet-to">
+            To,<br>
+            The Designated Appellate Authority<br>
+            under Section 24, Representation of the People Act, 1950<br>
+            ${val(s.district, 'District')} District, Karnataka
+          </div>
+
+          <div class="pet-subject">
+            <strong>Subject:</strong> Appeal against Order dated ${val(f.orderDate, 'Order Date')} passed by the ${val(f.impugnedOfficer, 'Officer')}, ${val(s.constituency, 'Constituency')} Constituency, in respect of AERO Notice No. ${val(s.aeroNoticeNo, 'Notice No.')} (Appellant: ${val(s.applicantName, 'Appellant Name')}, EPIC No. ${val(s.epicNo, 'EPIC No.')}, Part No. ${val(s.partNo, 'Part No.')}, Sl. No. ${val(s.slNo, 'Sl. No.')})
+          </div>
+
+          <div class="pet-salutation">Dear Sir/Madam,</div>
+
+          <ol style="margin-left: 1.25rem; padding-left: 0.5rem; margin-bottom: 0.65rem;">
+            <li style="margin-bottom:0.4rem; text-align:justify;">
+              The Appellant is a citizen of India and was, until the impugned order, an elector on the roll of ${val(s.constituency, 'Constituency')} Constituency, Part No. ${val(s.partNo, 'Part No.')}, Sl. No. ${val(s.slNo, 'Sl. No.')}, EPIC No. ${val(s.epicNo, 'EPIC No.')}.
+            </li>
+            <li style="margin-bottom:0.4rem; text-align:justify;">
+              The Appellant received AERO Notice No. ${val(s.aeroNoticeNo, 'Notice No.')} dated ${val(f.noticeDate, 'Notice Date')}, and duly filed a representation dated ${val(f.representationDate, 'Representation Date')} (Acknowledgment/Inward No. ${val(f.inwardNo, 'Inward No.')}) along with supporting documents, a true copy whereof is enclosed as Annexure A.
+            </li>
+            <li style="margin-bottom:0.4rem; text-align:justify;">
+              ${orderSnippet}, the AERO/ERO has rejected / failed to dispose of the Appellant's representation, and the Appellant's name stands deleted/excluded from the electoral roll.
+            </li>
+            <li style="margin-bottom:0.4rem; text-align:justify;">
+              <strong>Grounds of Appeal:</strong>
+              <ul style="margin-left:1.25rem; margin-top:0.35rem; list-style-type:disc;">
+                <li style="margin-bottom:0.3rem;">The impugned order is not a reasoned/speaking order as required under Rule 21A of the Registration of Electors Rules, 1960, and fails to record independent application of mind to the documents furnished by the Appellant, contrary to the standard affirmed in <em>Lal Babu Hussein v. Electoral Registration Officer</em>, (1995) 3 SCC 100, and <em>Association for Democratic Reforms v. Election Commission of India</em>, W.P.(C) No. 640/2025 (judgment dated 27.05.2026).</li>
+                <li style="margin-bottom:0.3rem;">No personal hearing, or adequate advance notice of hearing, was afforded to the Appellant before the impugned order, in violation of the principles of natural justice and the safeguards directed by the Hon'ble Supreme Court in the judgment cited above.</li>
+                ${f.retainDiscrepancyGround ? `<li style="margin-bottom:0.3rem;">The specific field, record, or database discrepancy underlying the AERO Notice was never particularised to the Appellant despite request, denying a meaningful opportunity to respond.</li>` : ''}
+                <li style="margin-bottom:0.3rem;">The Appellant's name has, at all material times prior to this SIR, continuously appeared on the electoral roll, raising a presumption of correctness and continued eligibility that has not been displaced by any cogent, reasoned finding.</li>
+                ${f.scenarioSpecificGround ? `<li style="margin-bottom:0.3rem;">${val(f.scenarioSpecificGround, 'Scenario-specific grounds')}</li>` : `<li>[Insert scenario-specific ground e.g., documentary proof of parentage/age/residence was not considered; alleged citizenship doubt was not referred to the competent authority as directed by the Hon'ble Supreme Court; etc.]</li>`}
+              </ul>
+            </li>
+            <li style="margin-bottom:0.4rem; text-align:justify;">
+              In view of the extremely compressed timelines of the ongoing Special Intensive Revision, and the Hon'ble Supreme Court's directions (in the West Bengal SIR proceedings arising from the same batch of matters) that appellate tribunals/authorities accord out-of-turn/expedited hearing to persons excluded from the electoral roll, the Appellant respectfully prays that this Appeal be heard and disposed of on an urgent/out-of-turn basis, given the proximity of the qualifying date and finalisation of the electoral roll.
+            </li>
+          </ol>
+
+          <div class="pet-prayer-title">I Pray that:</div>
+          <ol class="pet-prayers">
+            <li>Set aside the impugned order dated ${val(f.orderDate, 'Order Date')} and/or direct disposal of the pending representation forthwith;</li>
+            <li>Direct restoration/inclusion of the Appellant's name in the electoral roll of ${val(s.constituency, 'Constituency')} Constituency, Part No. ${val(s.partNo, 'Part No.')}, Sl. No. ${val(s.slNo, 'Sl. No.')};</li>
+            <li>In the alternative, remand the matter to the AERO/ERO for fresh consideration after grant of a personal hearing and a reasoned order under Rule 21A;</li>
+            <li>List and dispose of this Appeal on an urgent/out-of-turn basis, having regard to the compressed timelines of the SIR exercise;</li>
+            <li>Pass such other order(s) as this Hon'ble Authority may deem fit and proper in the interest of justice.</li>
+          </ol>
+
+          <div class="pet-verification">
+            I, ${val(s.applicantName, 'Appellant Full Name')}, the Appellant herein, do hereby declare and verify that the contents of this Appeal are true and correct to the best of my knowledge, information, and belief, and nothing material has been concealed therefrom.
+          </div>
+
+          <div class="pet-meta-row">
+            <div>
+              <strong>Date:</strong> ${val(s.date, 'Date')}<br>
+              <strong>Place:</strong> ${val(s.place, 'Place')}
+            </div>
+            <div class="pet-sig-inner">
+              Yours faithfully,<br><br>
+              <strong>(Signature)</strong><br>
+              Full Name: ${val(s.applicantName, 'Full Name')}<br>
+              Voter ID (EPIC) No.: ${val(s.epicNo, 'EPIC No.')}<br>
+              Mobile No.: ${val(s.mobileNo, 'Mobile No.')}<br>
+              Email ID: ${val(s.emailId, 'Email ID')}
+            </div>
+          </div>
+
+          <div class="pet-annexures">
+            <strong>List of Annexures</strong><br>
+            Annexure A: Copy of representation filed before the AERO/ERO, with acknowledgment, and supporting documents.<br>
+            Annexure B: Copy of the impugned order, or proof/record of non-disposal (e.g., follow-up correspondence).<br>
+            Annexure C: Any additional documents relied upon at the appellate stage.
+          </div>
+        </div>
+      `;
+    }
+
+    // --- Strict 2-Page Verification & Auto-Fit Engine ---
+    function checkPageLength() {
+      const sheet = document.getElementById('pdf-printable');
+      const gauge = document.getElementById('pageGauge');
+      if (!sheet || !gauge) return;
+
+      // Reset compact class first
+      sheet.classList.remove('compact-fit');
+
+      // A4 printable height at 96 DPI: 1 page is ~1040px, 2 pages is ~2080px
+      const height = sheet.scrollHeight;
+
+      if (height > 2000) {
+        // Automatically apply compact layout to guarantee content fits in 2 pages
+        sheet.classList.add('compact-fit');
+      }
+
+      const finalHeight = sheet.scrollHeight;
+      const pages = Math.ceil(finalHeight / 1020);
+
+      if (pages <= 2) {
+        gauge.textContent = `📄 PDF Length: ${pages} of 2 A4 Pages (Optimal)`;
+        gauge.className = 'page-gauge ok';
+      } else {
+        gauge.textContent = `⚠️ PDF Length: ${pages} Pages (Adjusting...)`;
+        gauge.className = 'page-gauge';
+        sheet.classList.add('compact-fit');
+      }
+    }
+
+    // --- PDF Export Handler using html2pdf.js ---
+    document.getElementById('btnPdf').addEventListener('click', async function () {
+      const btn = this;
+      const originalText = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = `<span>Preparing PDF...</span>`;
+
+      const element = document.getElementById('pdf-printable');
+      const formatId = formatSelect.value;
+      const electorName = (appState.applicantName || 'Elector').replace(/[^a-zA-Z0-9]/g, '_');
+      const filename = `SIR_Karnataka_${formatId}_${electorName}.pdf`;
+
+      // Enforce compact mode for PDF export to guarantee strict 2-page limit
+      if (element.scrollHeight > 1850) {
+        element.classList.add('compact-fit');
+      }
+
+      const opt = {
+        margin: [8, 12, 8, 12], // mm: top, right, bottom, left
+        filename: filename,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true, letterRendering: true, logging: false },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak: { mode: ['css', 'legacy'] }
+      };
+
+      try {
+        await html2pdf().set(opt).from(element).save();
+        btn.innerHTML = `<span>✓ PDF Downloaded</span>`;
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+        }, 2200);
+      } catch (err) {
+        console.error('PDF Generation Error:', err);
+        alert('An error occurred during PDF generation. Using browser print as fallback.');
+        window.print();
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
+    });
+
+    document.getElementById('btnPrint').addEventListener('click', () => {
+      window.print();
+    });
+
+    // Handle Format Selection & URL Query Param (e.g., ?format=scenario4)
+    formatSelect.addEventListener('change', () => {
+      renderFields();
+    });
+
+    function initFromUrl() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const requestedFormat = urlParams.get('format');
+      if (requestedFormat) {
+        const optionExists = Array.from(formatSelect.options).some(opt => opt.value === requestedFormat);
+        if (optionExists) {
+          formatSelect.value = requestedFormat;
+        }
+      }
+      renderFields();
+    }
+
+    // Initialize on load
+    window.addEventListener('DOMContentLoaded', initFromUrl);
+  </script>
+</body>
+</html>

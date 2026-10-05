@@ -347,72 +347,38 @@
       font-size: 0.825rem;
     }
 
-    /* Printable Pages & Clean 2-Page Layout */
-    .pdf-container {
-      width: 790px;
-      max-width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    .pdf-page {
-      width: 790px;
+    /* Natural Continuous Flowing Legal Sheet */
+    .paper-sheet {
+      width: 760px;
       max-width: 100%;
       background: #ffffff;
       box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
       border-radius: 2px;
-      padding: 30px 38px;
+      padding: 30px 38px 16px;
       color: #0f172a;
       font-family: Charter, Cambria, Georgia, "Times New Roman", serif;
-      font-size: 13px;
-      line-height: 1.36;
+      font-size: 12.5px;
+      line-height: 1.34;
       position: relative;
       box-sizing: border-box;
-      min-height: 880px; /* Gives realistic A4 paper proportions in preview */
     }
 
-    .pdf-page.compact-fit {
-      font-size: 12px;
-      line-height: 1.3;
-      padding: 22px 30px;
+    .paper-sheet.compact-fit {
+      font-size: 11.5px;
+      line-height: 1.28;
+      padding: 22px 30px 10px;
     }
 
-    .page-indicator-badge {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: #64748b;
-      margin-bottom: 0.75rem;
-      padding-bottom: 0.35rem;
-      border-bottom: 1px dashed #cbd5e1;
-      width: 100%;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    .paper-sheet p {
+      margin-bottom: 0.32rem;
     }
 
-    .html2pdf__page-break {
-      page-break-before: always !important;
-      break-before: page !important;
-      height: 0;
-      margin: 0;
-      padding: 0;
-      border: none;
+    .paper-sheet.compact-fit p {
+      margin-bottom: 0.24rem;
     }
 
-    .pdf-page p {
-      margin-bottom: 0.4rem;
-    }
-
-    .pdf-page.compact-fit p {
-      margin-bottom: 0.3rem;
-    }
-
-    /* Prevent breaking inside elements across pages */
-    p, li, .pet-meta-row, .pet-verification, .pet-sig-inner, .pet-to, .pet-prayer-title, .pet-annexures, .pet-prayers li {
+    /* Prevent slicing through text lines and signature block */
+    p, li, .pet-meta-row, .pet-verification, .pet-sig-inner, .pet-to, .pet-header, .pet-prayer-title, .pet-annexures, .pet-prayers li {
       page-break-inside: avoid !important;
       break-inside: avoid !important;
     }
@@ -502,7 +468,7 @@
       body {
         background: #ffffff;
       }
-      .top-bar, header, .form-panel, .preview-toolbar, .page-indicator-badge {
+      .top-bar, header, .form-panel, .preview-toolbar {
         display: none !important;
       }
       .app-container {
@@ -514,21 +480,13 @@
         padding: 0;
         overflow: visible;
       }
-      .pdf-container {
-        width: 100% !important;
-        gap: 0 !important;
-      }
-      .pdf-page {
+      .paper-sheet {
         box-shadow: none !important;
         border: none !important;
         width: 100% !important;
-        min-height: auto !important;
-        padding: 12mm 15mm !important;
+        padding: 10mm 15mm !important;
         margin: 0 !important;
-      }
-      .pdf-page.page-2 {
-        page-break-before: always !important;
-        break-before: page !important;
+        font-size: 11pt !important;
       }
     }
 
@@ -630,7 +588,7 @@
         <div style="font-size: 0.775rem; color: #cbd5e1;">A4 Print Layout (Hard limit: max 2 pages)</div>
       </div>
 
-      <div id="pdf-printable" class="pdf-container">
+      <div id="pdf-printable" class="paper-sheet">
         <!-- Live document body populated by JS -->
       </div>
     </main>
@@ -1801,12 +1759,8 @@
       const s = appState;
       const eroSal = s.eroName ? `${s.eroSalutation} ${s.eroName}` : s.eroSalutation;
 
-      // Page 1: Authority, Elector Credentials, Constitutional Basis, Notice Details & Factual Grounds
-      let page1Html = `
-        <div class="page-indicator-badge">
-          <span>Page 1 of 2 — Statement of Facts &amp; Grounds</span>
-          <span>A4 Sheet 1</span>
-        </div>
+      // Common header with District Election Officer
+      let h = `
         <div class="pet-header">
           <div class="pet-to">
             To<br>
@@ -1832,40 +1786,42 @@
             My name (or that of my relative, as the case may be) has consistently formed part of the electoral roll prior to this Special Intensive Revision, and its existing inclusion raises a rebuttable presumption of continued eligibility that cannot be displaced merely by an unexplained algorithmic/anomaly flag. This position is affirmed by the Hon'ble Supreme Court in <em>Association for Democratic Reforms &amp; Ors. v. Election Commission of India</em>, W.P.(C) No. 640/2025 (judgment dated 27.05.2026), and is consistent with the settled law in <em>Lal Babu Hussein v. Electoral Registration Officer</em>, (1995) 3 SCC 100, that no name already on the roll may be excluded without due notice, an intelligible statement of the specific discrepancy relied upon, and a reasonable opportunity of being heard.
           </p>
         </div>
-
-        ${buildScenarioNoticeBody(format)}
       `;
 
-      // Page 2: Prayers, Verification, Date/Place, Signature Block
-      let extraPrayers = '';
-      if (format === 'scenario11') {
-        extraPrayers = `
-          <li>Not treat the Applicant (or the Applicant's relative named herein) as a non-citizen or "doubtful"/"D-category" voter without a reasoned finding recorded after notice and a personal hearing, and without the matter being referred to the competent authority within the timeline directed by the Hon'ble Supreme Court;</li>
-          <li>In the alternative, treat this representation and the accompanying documents as the Applicant's preliminary written submission for the purpose of any such referral proceeding, and grant a further opportunity of personal hearing before any final determination on citizenship is made;</li>
-          <li>Restore the Applicant's name to the electoral roll forthwith upon a finding, at any stage, that the Applicant is a citizen of India.</li>
-        `;
-      } else if (format === 'scenario12') {
-        extraPrayers = `
-          <li>Restore/retain the Applicant's name in the electoral roll notwithstanding temporary bona fide absence at the time of house-to-house enumeration, there being no change in the Applicant's domicile or ordinary residence;</li>
-        `;
-      }
+      // Specific notice body
+      h += buildScenarioNoticeBody(format);
 
-      const appName = s.applicantName || '';
-      let page2Html = `
-        <div class="page-indicator-badge">
-          <span>Page 2 of 2 — Standing Prayers, Verification &amp; Signature</span>
-          <span>A4 Sheet 2</span>
-        </div>
+      // Common standard prayers
+      h += `
         <div class="pet-prayer-title">I Pray that:</div>
         <ol class="pet-prayers">
           <li>Drop and close the proposed deletion/inquiry proceedings initiated under AERO Notice No. ${val(s.aeroNoticeNo, 'AERO Notice No.')} and direct the uninterrupted retention/confirmation of the Applicant's name in the Electoral Roll for ${val(s.constituency, 'Constituency')} Constituency (Part No. ${val(s.partNo, 'Part No.')}, Sl. No. ${val(s.slNo, 'Sl. No.')}, Voter ID Card ${val(s.epicNo, 'EPIC No.')}).</li>
           <li>Validate and rectify the Applicant's record/linkage details in the electoral database in accordance with the supporting documents submitted herewith.</li>
           <li>Direct the issuance of an updated/corrected Physical EPIC or E-EPIC reflecting the accurate particulars.</li>
-          ${extraPrayers}
+      `;
+
+      // Extra prayers for Scenarios 11 & 12
+      if (format === 'scenario11') {
+        h += `
+          <li>Not treat the Applicant (or the Applicant's relative named herein) as a non-citizen or "doubtful"/"D-category" voter without a reasoned finding recorded after notice and a personal hearing, and without the matter being referred to the competent authority within the timeline directed by the Hon'ble Supreme Court;</li>
+          <li>In the alternative, treat this representation and the accompanying documents as the Applicant's preliminary written submission for the purpose of any such referral proceeding, and grant a further opportunity of personal hearing before any final determination on citizenship is made;</li>
+          <li>Restore the Applicant's name to the electoral roll forthwith upon a finding, at any stage, that the Applicant is a citizen of India.</li>
+        `;
+      } else if (format === 'scenario12') {
+        h += `
+          <li>Restore/retain the Applicant's name in the electoral roll notwithstanding temporary bona fide absence at the time of house-to-house enumeration, there being no change in the Applicant's domicile or ordinary residence;</li>
+        `;
+      }
+
+      h += `
           <li>Furnish, if not already provided, an intelligible written statement of the specific field, record, or database discrepancy underlying the AERO Notice, so as to enable an effective and meaningful response.</li>
           <li>In the event this representation is not accepted in full, pass a reasoned/speaking order under Rule 21A of the Registration of Electors Rules, 1960, only after affording the Applicant a personal hearing with reasonable advance notice, in keeping with the safeguards affirmed by the Hon'ble Supreme Court in <em>Association for Democratic Reforms v. Election Commission of India (supra)</em>.</li>
         </ol>
+      `;
 
+      // Verification and signature with unified address!
+      const appName = s.applicantName || '';
+      h += `
         <div class="pet-verification">
           I, ${val(appName, 'Applicant Full Name')}, the Noticee herein, do hereby declare and verify that the contents of this representation are true and correct to the best of my knowledge, information, and belief, and nothing material has been concealed therefrom.
         </div>
@@ -1888,15 +1844,7 @@
         </div>
       `;
 
-      return `
-        <div class="pdf-page page-1">
-          ${page1Html}
-        </div>
-        <div class="html2pdf__page-break"></div>
-        <div class="pdf-page page-2">
-          ${page2Html}
-        </div>
-      `;
+      return h;
     }
 
     function buildScenarioNoticeBody(format) {
@@ -2224,11 +2172,7 @@
         ? `By order dated ${val(f.orderDate, 'Order Date')} (true copy enclosed as Annexure B)`
         : `[OR: despite the lapse of ${val(f.daysElapsed, 'No. of')} days without any order being communicated]`;
 
-      let page1Html = `
-        <div class="page-indicator-badge">
-          <span>Page 1 of 2 — Statutory Grounds of Appeal</span>
-          <span>A4 Sheet 1</span>
-        </div>
+      return `
         <div class="pet-header">
           <div style="font-size:0.85em; color:#475569; border-bottom:1px solid #cbd5e1; padding-bottom:6px; margin-bottom:10px;">
             <strong>Statutory Appeal</strong> under Section 24(a), Representation of the People Act, 1950 before the Designated Appellate Authority.
@@ -2271,83 +2215,72 @@
               In view of the extremely compressed timelines of the ongoing Special Intensive Revision, and the Hon'ble Supreme Court's directions (in the West Bengal SIR proceedings arising from the same batch of matters) that appellate tribunals/authorities accord out-of-turn/expedited hearing to persons excluded from the electoral roll, the Appellant respectfully prays that this Appeal be heard and disposed of on an urgent/out-of-turn basis, given the proximity of the qualifying date and finalisation of the electoral roll.
             </li>
           </ol>
-        </div>
-      `;
 
-      let page2Html = `
-        <div class="page-indicator-badge">
-          <span>Page 2 of 2 — Standing Prayers, Verification, Signature &amp; Annexures</span>
-          <span>A4 Sheet 2</span>
-        </div>
-        <div class="pet-prayer-title">I Pray that:</div>
-        <ol class="pet-prayers">
-          <li>Set aside the impugned order dated ${val(f.orderDate, 'Order Date')} and/or direct disposal of the pending representation forthwith;</li>
-          <li>Direct restoration/inclusion of the Appellant's name in the electoral roll of ${val(s.constituency, 'Constituency')} Constituency, Part No. ${val(s.partNo, 'Part No.')}, Sl. No. ${val(s.slNo, 'Sl. No.')};</li>
-          <li>In the alternative, remand the matter to the AERO/ERO for fresh consideration after grant of a personal hearing and a reasoned order under Rule 21A;</li>
-          <li>List and dispose of this Appeal on an urgent/out-of-turn basis, having regard to the compressed timelines of the SIR exercise;</li>
-          <li>Pass such other order(s) as this Hon'ble Authority may deem fit and proper in the interest of justice.</li>
-        </ol>
+          <div class="pet-prayer-title">I Pray that:</div>
+          <ol class="pet-prayers">
+            <li>Set aside the impugned order dated ${val(f.orderDate, 'Order Date')} and/or direct disposal of the pending representation forthwith;</li>
+            <li>Direct restoration/inclusion of the Appellant's name in the electoral roll of ${val(s.constituency, 'Constituency')} Constituency, Part No. ${val(s.partNo, 'Part No.')}, Sl. No. ${val(s.slNo, 'Sl. No.')};</li>
+            <li>In the alternative, remand the matter to the AERO/ERO for fresh consideration after grant of a personal hearing and a reasoned order under Rule 21A;</li>
+            <li>List and dispose of this Appeal on an urgent/out-of-turn basis, having regard to the compressed timelines of the SIR exercise;</li>
+            <li>Pass such other order(s) as this Hon'ble Authority may deem fit and proper in the interest of justice.</li>
+          </ol>
 
-        <div class="pet-verification">
-          I, ${val(s.applicantName, 'Appellant Full Name')}, the Appellant herein, do hereby declare and verify that the contents of this Appeal are true and correct to the best of my knowledge, information, and belief, and nothing material has been concealed therefrom.
-        </div>
-
-        <div class="pet-meta-row">
-          <div>
-            <strong>Date:</strong> ${val(s.date, 'Date')}<br>
-            <strong>Place:</strong> ${val(s.place, 'Place')}
+          <div class="pet-verification">
+            I, ${val(s.applicantName, 'Appellant Full Name')}, the Appellant herein, do hereby declare and verify that the contents of this Appeal are true and correct to the best of my knowledge, information, and belief, and nothing material has been concealed therefrom.
           </div>
-          <div class="pet-sig-inner">
-            Yours faithfully,<br><br>
-            <strong>(Signature)</strong><br>
-            Full Name: ${val(s.applicantName, 'Full Name')}<br>
-            Voter ID (EPIC) No.: ${val(s.epicNo, 'EPIC No.')}<br>
-            Mobile No.: ${val(s.mobileNo, 'Mobile No.')}<br>
-            Email ID: ${val(s.emailId, 'Email ID')}
+
+          <div class="pet-meta-row">
+            <div>
+              <strong>Date:</strong> ${val(s.date, 'Date')}<br>
+              <strong>Place:</strong> ${val(s.place, 'Place')}
+            </div>
+            <div class="pet-sig-inner">
+              Yours faithfully,<br><br>
+              <strong>(Signature)</strong><br>
+              Full Name: ${val(s.applicantName, 'Full Name')}<br>
+              Voter ID (EPIC) No.: ${val(s.epicNo, 'EPIC No.')}<br>
+              Mobile No.: ${val(s.mobileNo, 'Mobile No.')}<br>
+              Email ID: ${val(s.emailId, 'Email ID')}
+            </div>
           </div>
-        </div>
 
-        <div class="pet-annexures">
-          <strong>List of Annexures</strong><br>
-          Annexure A: Copy of representation filed before the AERO/ERO, with acknowledgment, and supporting documents.<br>
-          Annexure B: Copy of the impugned order, or proof/record of non-disposal (e.g., follow-up correspondence).<br>
-          Annexure C: Any additional documents relied upon at the appellate stage.
-        </div>
-      `;
-
-      return `
-        <div class="pdf-page page-1">
-          ${page1Html}
-        </div>
-        <div class="html2pdf__page-break"></div>
-        <div class="pdf-page page-2">
-          ${page2Html}
+          <div class="pet-annexures">
+            <strong>List of Annexures</strong><br>
+            Annexure A: Copy of representation filed before the AERO/ERO, with acknowledgment, and supporting documents.<br>
+            Annexure B: Copy of the impugned order, or proof/record of non-disposal (e.g., follow-up correspondence).<br>
+            Annexure C: Any additional documents relied upon at the appellate stage.
+          </div>
         </div>
       `;
     }
 
     // --- Strict 2-Page Verification & Auto-Fit Engine ---
     function checkPageLength() {
-      const container = document.getElementById('pdf-printable');
+      const sheet = document.getElementById('pdf-printable');
       const gauge = document.getElementById('pageGauge');
-      if (!container || !gauge) return;
+      if (!sheet || !gauge) return;
 
-      const pages = container.querySelectorAll('.pdf-page');
-      let needsCompact = false;
+      sheet.classList.remove('compact-fit');
 
-      pages.forEach(p => {
-        p.classList.remove('compact-fit');
-        if (p.scrollHeight > 940) {
-          needsCompact = true;
-        }
-      });
+      // A4 printable height at 96 DPI: 1 page is ~1020px, 2 pages is ~2040px
+      const height = sheet.scrollHeight;
 
-      if (needsCompact) {
-        pages.forEach(p => p.classList.add('compact-fit'));
+      if (height > 1650) {
+        sheet.classList.add('compact-fit');
       }
 
-      gauge.textContent = `📄 PDF Length: Exact 2 A4 Pages (Verified)`;
-      gauge.className = 'page-gauge ok';
+      const finalHeight = sheet.scrollHeight;
+      const pages = Math.ceil(finalHeight / 1020);
+
+      if (pages <= 2) {
+        gauge.textContent = `📄 PDF Length: ${pages} of 2 A4 Pages (Optimal)`;
+        gauge.className = 'page-gauge ok';
+      } else {
+        sheet.classList.add('compact-fit');
+        const recheckPages = Math.ceil(sheet.scrollHeight / 1020);
+        gauge.textContent = `📄 PDF Length: ${recheckPages} of 2 A4 Pages (Fit)`;
+        gauge.className = 'page-gauge ok';
+      }
     }
 
     // --- PDF Export Handler using html2pdf.js ---
@@ -2362,12 +2295,20 @@
       const electorName = (appState.applicantName || 'Elector').replace(/[^a-zA-Z0-9]/g, '_');
       const filename = `SIR_Karnataka_${formatId}_${electorName}.pdf`;
 
-      // Hide preview indicator badges during PDF export so they do not show in final PDF
-      const badges = element.querySelectorAll('.page-indicator-badge');
-      badges.forEach(b => b.style.display = 'none');
+      // Auto-fit check: if total height is very long, enable compact fit so it strictly fits within 2 pages
+      const wasCompact = element.classList.contains('compact-fit');
+      if (element.scrollHeight > 1600) {
+        element.classList.add('compact-fit');
+      }
+
+      // Temporarily clear bottom padding/margin on container so no 1px spill creates a blank 3rd page
+      const prevPadBottom = element.style.paddingBottom;
+      const prevMargBottom = element.style.marginBottom;
+      element.style.paddingBottom = '0px';
+      element.style.marginBottom = '0px';
 
       const opt = {
-        margin: [10, 12, 10, 12], // mm: top, right, bottom, left
+        margin: [8, 12, 8, 12], // mm: [top, right, bottom, left]
         filename: filename,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: {
@@ -2379,9 +2320,8 @@
         },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
         pagebreak: {
-          mode: ['css', 'legacy'],
-          before: '.html2pdf__page-break',
-          avoid: ['p', 'li', 'ol', 'ul', '.pet-meta-row', '.pet-verification', '.pet-sig-inner', '.pet-to', '.pet-prayer-title']
+          mode: ['avoid-all', 'css', 'legacy'],
+          avoid: ['p', 'li', 'ol', 'ul', '.pet-meta-row', '.pet-verification', '.pet-sig-inner', '.pet-to', '.pet-header', '.pet-prayer-title', '.pet-annexures']
         }
       };
 
@@ -2399,7 +2339,11 @@
         btn.innerHTML = originalText;
         btn.disabled = false;
       } finally {
-        badges.forEach(b => b.style.display = 'flex');
+        element.style.paddingBottom = prevPadBottom;
+        element.style.marginBottom = prevMargBottom;
+        if (!wasCompact && element.scrollHeight <= 1600) {
+          element.classList.remove('compact-fit');
+        }
       }
     });
 

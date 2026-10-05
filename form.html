@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SIR Karnataka Application Builder — Representation & Appeal Generator</title>
-  <!-- html2pdf.js CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
   <style>
     :root {
       --navy-950: #0a1322;
@@ -533,18 +532,13 @@
     </div>
 
     <div class="header-actions">
-      <div id="pageGauge" class="page-gauge ok">📄 PDF Length: Fits in 2 A4 Pages</div>
       <button id="btnPrint" class="btn btn-secondary">
         <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4H7v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
         <span>Print</span>
       </button>
-      <button id="btnWord" class="btn btn-secondary" style="border-color: rgba(59, 130, 246, 0.4); background-color: rgba(59, 130, 246, 0.15); color: #93c5fd;">
-        <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm4 18H6V4h7v5h5v11zM7.5 17l1.5-6h1.2l1.1 4.5 1.1-4.5h1.2l1.5 6h-1.1l-.9-4-1.1 4h-1.1l-1.1-4-.9 4H7.5z"/></svg>
-        <span>Download as Word</span>
-      </button>
-      <button id="btnPdf" class="btn btn-primary">
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-        <span>Download as PDF</span>
+      <button id="btnWord" class="btn btn-primary">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm4 18H6V4h7v5h5v11zM7.5 17l1.5-6h1.2l1.1 4.5 1.1-4.5h1.2l1.5 6h-1.1l-.9-4-1.1 4h-1.1l-1.1-4-.9 4H7.5z"/></svg>
+        <span>Download as Word (.doc)</span>
       </button>
     </div>
   </header>
@@ -589,7 +583,7 @@
     <main class="preview-panel">
       <div class="preview-toolbar">
         <div><strong>Live Preview:</strong> As you type, the legal document is populated below.</div>
-        <div style="font-size: 0.775rem; color: #cbd5e1;">A4 Print Layout (Hard limit: max 2 pages)</div>
+        <div style="font-size: 0.775rem; color: #cbd5e1;">A4 Format (Print &amp; Word Document Layout)</div>
       </div>
 
       <div id="pdf-printable" class="paper-sheet">
@@ -2261,97 +2255,15 @@
     // --- Strict 2-Page Verification & Auto-Fit Engine ---
     function checkPageLength() {
       const sheet = document.getElementById('pdf-printable');
-      const gauge = document.getElementById('pageGauge');
-      if (!sheet || !gauge) return;
+      if (!sheet) return;
 
       sheet.classList.remove('compact-fit');
-
-      // A4 printable height at 96 DPI: 1 page is ~1020px, 2 pages is ~2040px
-      const height = sheet.scrollHeight;
-
-      if (height > 1650) {
+      if (sheet.scrollHeight > 1650) {
         sheet.classList.add('compact-fit');
-      }
-
-      const finalHeight = sheet.scrollHeight;
-      const pages = Math.ceil(finalHeight / 1020);
-
-      if (pages <= 2) {
-        gauge.textContent = `📄 PDF Length: ${pages} of 2 A4 Pages (Optimal)`;
-        gauge.className = 'page-gauge ok';
-      } else {
-        sheet.classList.add('compact-fit');
-        const recheckPages = Math.ceil(sheet.scrollHeight / 1020);
-        gauge.textContent = `📄 PDF Length: ${recheckPages} of 2 A4 Pages (Fit)`;
-        gauge.className = 'page-gauge ok';
       }
     }
 
-    // --- PDF Export Handler using html2pdf.js ---
-    document.getElementById('btnPdf').addEventListener('click', async function () {
-      const btn = this;
-      const originalText = btn.innerHTML;
-      btn.disabled = true;
-      btn.innerHTML = `<span>Preparing PDF...</span>`;
-
-      const element = document.getElementById('pdf-printable');
-      const formatId = formatSelect.value;
-      const electorName = (appState.applicantName || 'Elector').replace(/[^a-zA-Z0-9]/g, '_');
-      const filename = `SIR_Karnataka_${formatId}_${electorName}.pdf`;
-
-      // Auto-fit check: if total height is very long, enable compact fit so it strictly fits within 2 pages
-      const wasCompact = element.classList.contains('compact-fit');
-      if (element.scrollHeight > 1600) {
-        element.classList.add('compact-fit');
-      }
-
-      // Temporarily clear bottom padding/margin on container so no 1px spill creates a blank 3rd page
-      const prevPadBottom = element.style.paddingBottom;
-      const prevMargBottom = element.style.marginBottom;
-      element.style.paddingBottom = '0px';
-      element.style.marginBottom = '0px';
-
-      const opt = {
-        margin: [8, 12, 8, 12], // mm: [top, right, bottom, left]
-        filename: filename,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: {
-          scale: 2,
-          useCORS: true,
-          letterRendering: true,
-          logging: false,
-          scrollY: 0
-        },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-        pagebreak: {
-          mode: ['avoid-all', 'css', 'legacy'],
-          avoid: ['p', 'li', 'ol', 'ul', '.pet-meta-row', '.pet-verification', '.pet-sig-inner', '.pet-to', '.pet-header', '.pet-prayer-title', '.pet-annexures']
-        }
-      };
-
-      try {
-        await html2pdf().set(opt).from(element).save();
-        btn.innerHTML = `<span>✓ PDF Downloaded</span>`;
-        setTimeout(() => {
-          btn.innerHTML = originalText;
-          btn.disabled = false;
-        }, 2200);
-      } catch (err) {
-        console.error('PDF Generation Error:', err);
-        alert('An error occurred during PDF generation. Using browser print as fallback.');
-        window.print();
-        btn.innerHTML = originalText;
-        btn.disabled = false;
-      } finally {
-        element.style.paddingBottom = prevPadBottom;
-        element.style.marginBottom = prevMargBottom;
-        if (!wasCompact && element.scrollHeight <= 1600) {
-          element.classList.remove('compact-fit');
-        }
-      }
-    });
-
-    // --- MS Word (.doc) Export Handler ---
+// --- MS Word (.doc) Export Handler ---
     document.getElementById('btnWord').addEventListener('click', function () {
       const btn = this;
       const originalText = btn.innerHTML;

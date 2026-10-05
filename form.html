@@ -538,6 +538,10 @@
         <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4H7v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
         <span>Print</span>
       </button>
+      <button id="btnWord" class="btn btn-secondary" style="border-color: rgba(59, 130, 246, 0.4); background-color: rgba(59, 130, 246, 0.15); color: #93c5fd;">
+        <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm4 18H6V4h7v5h5v11zM7.5 17l1.5-6h1.2l1.1 4.5 1.1-4.5h1.2l1.5 6h-1.1l-.9-4-1.1 4h-1.1l-1.1-4-.9 4H7.5z"/></svg>
+        <span>Download as Word</span>
+      </button>
       <button id="btnPdf" class="btn btn-primary">
         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
         <span>Download as PDF</span>
@@ -2345,6 +2349,147 @@
           element.classList.remove('compact-fit');
         }
       }
+    });
+
+    // --- MS Word (.doc) Export Handler ---
+    document.getElementById('btnWord').addEventListener('click', function () {
+      const btn = this;
+      const originalText = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = `<span>Exporting Word...</span>`;
+
+      const element = document.getElementById('pdf-printable');
+      const formatId = formatSelect.value;
+      const electorName = (appState.applicantName || 'Elector').replace(/[^a-zA-Z0-9]/g, '_');
+      const filename = `SIR_Karnataka_${formatId}_${electorName}.doc`;
+
+      let contentHtml = element.innerHTML;
+
+      // Convert two-column signature layout from flex div to an HTML table for Word compatibility
+      contentHtml = contentHtml.replace(
+        /<div class="pet-meta-row">([\s\S]*?)<div>([\s\S]*?)<\/div>\s*<div class="pet-sig-inner">([\s\S]*?)<\/div>\s*<\/div>/i,
+        `<table width="100%" style="width:100%; margin-top:18pt; border-collapse:collapse; border:none;">
+          <tr>
+            <td width="42%" style="vertical-align:top; text-align:left; font-family:'Times New Roman', serif; font-size:12pt; line-height:1.4;">
+              $2
+            </td>
+            <td width="58%" style="vertical-align:top; text-align:left; font-family:'Times New Roman', serif; font-size:12pt; line-height:1.4; padding-left:18pt;">
+              $3
+            </td>
+          </tr>
+        </table>`
+      );
+
+      const wordDocHtml = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+<meta charset='utf-8'>
+<title>${filename}</title>
+<!--[if gte mso 9]>
+<xml>
+<w:WordDocument>
+<w:View>Print</w:View>
+<w:Zoom>100</w:Zoom>
+<w:DoNotOptimizeForBrowser/>
+</w:WordDocument>
+</xml>
+<![endif]-->
+<style>
+@page Section1 {
+  size: 210mm 297mm; /* A4 */
+  margin: 20mm 20mm 20mm 20mm;
+  mso-header-margin: 35.4pt;
+  mso-footer-margin: 35.4pt;
+  mso-paper-source: 0;
+}
+div.Section1 {
+  page: Section1;
+}
+body {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 12pt;
+  line-height: 1.35;
+  color: #000000;
+}
+p {
+  margin: 0 0 6pt 0;
+  text-align: justify;
+  line-height: 1.35;
+}
+ol, ul {
+  margin-top: 0;
+  margin-bottom: 6pt;
+  padding-left: 22pt;
+}
+li {
+  margin-bottom: 4pt;
+  text-align: justify;
+  line-height: 1.35;
+}
+.pet-header {
+  margin-bottom: 10pt;
+}
+.pet-to {
+  margin-bottom: 10pt;
+  line-height: 1.35;
+}
+.pet-subject {
+  font-weight: bold;
+  margin: 8pt 0;
+  text-align: justify;
+}
+.pet-salutation {
+  margin: 8pt 0;
+  font-weight: bold;
+}
+.pet-prayer-title {
+  font-weight: bold;
+  margin: 10pt 0 4pt 0;
+}
+.pet-verification {
+  margin: 10pt 0 6pt 0;
+  text-align: justify;
+}
+.blank-filled {
+  font-weight: bold;
+  text-decoration: underline;
+}
+.blank-empty {
+  font-style: italic;
+  color: #444444;
+}
+.pet-annexures {
+  margin-top: 12pt;
+  padding-top: 6pt;
+  border-top: 1pt dashed #999999;
+  font-size: 11pt;
+}
+</style>
+</head>
+<body>
+<div class="Section1">
+${contentHtml}
+</div>
+</body>
+</html>`;
+
+      const blob = new Blob(['\ufeff', wordDocHtml], {
+        type: 'application/msword;charset=utf-8'
+      });
+
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      btn.innerHTML = `<span>✓ Word Downloaded</span>`;
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }, 2200);
     });
 
     document.getElementById('btnPrint').addEventListener('click', () => {

@@ -535,62 +535,44 @@
         margin-bottom: 1.5rem;
       }
     }
-    /* Visitor Counter Badge & Card */
-    .visitor-counter-badge {
+    /* 9-Digit Top Visitor Counter Panel */
+    .top-visitor-panel {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      background-color: rgba(255, 255, 255, 0.08);
+      gap: 7px;
+      background: rgba(255, 255, 255, 0.06);
       border: 1px solid rgba(255, 255, 255, 0.16);
-      padding: 0.2rem 0.55rem;
-      border-radius: 12px;
-      font-size: 0.75rem;
-      color: #cbd5e1;
-      letter-spacing: 0.02em;
-    }
-    .visitor-counter-badge strong {
-      color: #fef08a;
-      font-variant-numeric: tabular-nums;
-      font-weight: 700;
-    }
-
-    .footer-visitor-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 3px 8px;
       border-radius: 6px;
-      padding: 10px 12px;
-      margin-top: 6px;
-      display: inline-block;
     }
-    .v-counter-label {
-      display: flex;
+    .top-visitor-panel .panel-label {
+      display: inline-flex;
       align-items: center;
-      gap: 5px;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: #94a3b8;
-      margin-bottom: 5px;
+      gap: 4px;
+      font-size: 0.725rem;
       font-weight: 700;
+      letter-spacing: 0.03em;
+      color: #cbd5e1;
     }
-    .visitor-digits {
-      display: flex;
-      gap: 3px;
-      margin-bottom: 4px;
+    .visitor-digits-9 {
+      display: inline-flex;
+      gap: 2px;
+      align-items: center;
     }
     .v-digit {
       display: inline-block;
       background: #020617;
       color: #fef08a;
       font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-      font-size: 1.05rem;
+      font-size: 0.85rem;
       font-weight: 800;
-      padding: 2px 6px;
+      padding: 1px 4.5px;
       border-radius: 3px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
-      min-width: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.75);
+      min-width: 15px;
       text-align: center;
+      line-height: 1.25;
     }
   </style>
 </head>
@@ -603,9 +585,14 @@
       <span><strong>Special Intensive Revision (SIR) Karnataka</strong> | Claims, Objections &amp; Appeals</span>
     </div>
     <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
-      <div class="visitor-counter-badge" title="Total Website Visitors">
-        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-        <span>Visitors: <strong id="top-visitor-count">1,248</strong></span>
+      <div class="top-visitor-panel" title="Total Website Visitors">
+        <div class="panel-label">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+          <span>Visitors:</span>
+        </div>
+        <div class="visitor-digits-9" id="top-visitor-digits">
+          <span class="v-digit">0</span><span class="v-digit">0</span><span class="v-digit">0</span><span class="v-digit">0</span><span class="v-digit">0</span><span class="v-digit">0</span><span class="v-digit">0</span><span class="v-digit">0</span><span class="v-digit">0</span>
+        </div>
       </div>
       <div><a href="mailto:apcrkarnataka.sir26@gmail.com">apcrkarnataka.sir26@gmail.com</a></div>
     </div>
@@ -991,19 +978,6 @@
         <p>Email: <a href="mailto:apcrkarnataka.sir26@gmail.com" style="color: #cbd5e1; text-decoration: none;">apcrkarnataka.sir26@gmail.com</a></p>
       </div>
       <div class="footer-col">
-        <strong>Visitor Counter</strong>
-        <div class="footer-visitor-card">
-          <div class="v-counter-label">
-            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-            <span>Total Visitors</span>
-          </div>
-          <div class="visitor-digits" id="footer-visitor-digits">
-            <span class="v-digit">0</span><span class="v-digit">0</span><span class="v-digit">1</span><span class="v-digit">2</span><span class="v-digit">4</span><span class="v-digit">8</span>
-          </div>
-          <div style="font-size: 0.72rem; color: #64748b;">sirappeals.apcrkarnataka.org</div>
-        </div>
-      </div>
-      <div class="footer-col">
         <strong>Quick Navigation</strong>
         <p><a href="form.html" style="color: var(--amber-500); text-decoration: none; font-weight: 600;">Go to Application Builder &rarr;</a></p>
       </div>
@@ -1011,31 +985,27 @@
   </footer>
 
   <script>
-    // --- Live Visitor Counter ---
+    // --- 9-Digit Live Visitor Counter (Starting from 0) ---
     async function initVisitorCounter() {
-      const topCountEl = document.getElementById('top-visitor-count');
-      const footerDigitsEl = document.getElementById('footer-visitor-digits');
+      const digitsContainer = document.getElementById('top-visitor-digits');
+      if (!digitsContainer) return;
 
-      function updateDisplays(count) {
-        const num = Number(count) || 1248;
-        if (topCountEl) {
-          topCountEl.textContent = num.toLocaleString();
-        }
-        if (footerDigitsEl) {
-          const padded = String(num).padStart(6, '0');
-          footerDigitsEl.innerHTML = padded
-            .split('')
-            .map(d => `<span class="v-digit">${d}</span>`)
-            .join('');
-        }
+      function renderDigits(num) {
+        const countInt = Math.max(0, parseInt(num, 10) || 0);
+        const padded = String(countInt).padStart(9, '0');
+        digitsContainer.innerHTML = padded
+          .split('')
+          .map(d => `<span class="v-digit">${d}</span>`)
+          .join('');
       }
 
-      const baseCount = 1248;
-      let count = parseInt(localStorage.getItem('apcr_sir_visitors') || baseCount, 10);
-      updateDisplays(count);
+      // Start strictly from 0
+      let stored = localStorage.getItem('apcr_visitors_9digit_v3');
+      let count = stored !== null ? parseInt(stored, 10) : 0;
+      renderDigits(count);
 
       try {
-        const isNewSession = !sessionStorage.getItem('apcr_sir_session_tracked');
+        const isNewSession = !sessionStorage.getItem('apcr_session_9digit_v3');
         const endpoint = isNewSession
           ? 'https://api.counterapi.dev/v1/sirappeals-apcrkarnataka/visits/up'
           : 'https://api.counterapi.dev/v1/sirappeals-apcrkarnataka/visits';
@@ -1044,10 +1014,10 @@
         if (res.ok) {
           const data = await res.json();
           if (data && typeof data.count === 'number') {
-            const liveCount = baseCount + data.count;
-            localStorage.setItem('apcr_sir_visitors', liveCount);
-            sessionStorage.setItem('apcr_sir_session_tracked', 'true');
-            updateDisplays(liveCount);
+            const liveCount = data.count;
+            localStorage.setItem('apcr_visitors_9digit_v3', liveCount);
+            sessionStorage.setItem('apcr_session_9digit_v3', 'true');
+            renderDigits(liveCount);
             return;
           }
         }
@@ -1055,11 +1025,11 @@
         // Fallback gracefully on local/offline
       }
 
-      if (!sessionStorage.getItem('apcr_sir_session_tracked')) {
+      if (!sessionStorage.getItem('apcr_session_9digit_v3')) {
         count += 1;
-        sessionStorage.setItem('apcr_sir_session_tracked', 'true');
-        localStorage.setItem('apcr_sir_visitors', count);
-        updateDisplays(count);
+        sessionStorage.setItem('apcr_session_9digit_v3', 'true');
+        localStorage.setItem('apcr_visitors_9digit_v3', count);
+        renderDigits(count);
       }
     }
 

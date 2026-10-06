@@ -620,7 +620,6 @@
           <option value="scenario10">Scenario 10: Sibling Age Gap of Less Than 9 Months</option>
           <option value="scenario11">Scenario 11: Deletion/Flagging on Ground of Alleged Non-Citizenship / "Doubtful" Status (New)</option>
           <option value="scenario12">Scenario 12: Wrongful Deletion Despite Continued Domicile — Temporary Absence at Enumeration (New)</option>
-          <option value="format13">Format 13: Appeal Under Section 24, Representation of the People Act, 1950 (New)</option>
         </select>
       </div>
 
@@ -831,17 +830,6 @@
         ownershipDocNo: '',
         absenceDoc: '',
         absenceDocNo: ''
-      },
-      format13: {
-        orderDate: '',
-        impugnedOfficer: 'Assistant Electoral Registration Officer',
-        noticeDate: '',
-        representationDate: '',
-        inwardNo: '',
-        orderStatus: 'passed',
-        daysElapsed: '',
-        retainDiscrepancyGround: true,
-        scenarioSpecificGround: ''
       }
     };
 
@@ -888,7 +876,7 @@
       return `
         <div class="section-title">1. Common Elector &amp; Authority Details</div>
         <div style="font-size:0.75rem; color:var(--slate-600); margin-bottom:0.75rem; background:#f8fafc; border:1px solid #e2e8f0; padding:6px 10px; border-radius:4px; line-height:1.4;">
-          <strong>Fill once:</strong> These details automatically populate all formats (Scenarios 1–12 and Format 13). You will never need to re-enter them when switching formats.
+          <strong>Fill once:</strong> These details automatically populate all formats (Scenarios 1–12). You will never need to re-enter them when switching formats.
         </div>
 
         <!-- Addressed Officer & Jurisdiction -->
@@ -1658,62 +1646,7 @@
             </div>
           `;
           break;
-
-        case 'format13':
-          const f = appState.format13;
-          h += `
-            <div style="font-size:0.75rem; color:var(--slate-600); margin-bottom:0.75rem; background:#f8fafc; border:1px solid #e2e8f0; padding:6px 10px; border-radius:4px; line-height:1.4;">
-              Appellant credentials, voter ID, part/serial number, district, and contact details are automatically drawn from Section 1 above.
-            </div>
-
-            <div class="form-group">
-              <label>Impugned Order Date</label>
-              <input type="text" id="f13_orderDate" value="${escapeHtml(f.orderDate)}" placeholder="e.g. 10-09-2026">
-            </div>
-            <div class="form-group">
-              <label>Passed by Officer</label>
-              <select id="f13_impugnedOfficer" class="field-input">
-                <option value="Assistant Electoral Registration Officer" ${f.impugnedOfficer.includes('Assistant') ? 'selected' : ''}>Assistant Electoral Registration Officer (AERO)</option>
-                <option value="District Election Officer" ${f.impugnedOfficer.includes('District') ? 'selected' : ''}>District Election Officer (DEO)</option>
-                <option value="Electoral Registration Officer" ${!f.impugnedOfficer.includes('Assistant') && !f.impugnedOfficer.includes('District') ? 'selected' : ''}>Electoral Registration Officer (ERO)</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>AERO Notice Date</label>
-              <input type="text" id="f13_noticeDate" value="${escapeHtml(f.noticeDate)}" placeholder="e.g. 15-08-2026">
-            </div>
-            <div class="form-group">
-              <label>Representation Filed Date</label>
-              <input type="text" id="f13_representationDate" value="${escapeHtml(f.representationDate)}" placeholder="e.g. 25-08-2026">
-            </div>
-            <div class="form-group">
-              <label>Inward / Acknowledgment Diary Number</label>
-              <input type="text" id="f13_inwardNo" value="${escapeHtml(f.inwardNo)}" placeholder="e.g. DIARY-4512/ERO">
-            </div>
-            <div class="form-group">
-              <label>Order Status Citing</label>
-              <select id="f13_orderStatus" class="field-input">
-                <option value="passed" ${f.orderStatus === 'passed' ? 'selected' : ''}>By order dated [Order Date] (enclosed Annexure B)</option>
-                <option value="uncommunicated" ${f.orderStatus === 'uncommunicated' ? 'selected' : ''}>Despite lapse of [Days] days without any order communicated</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Lapse of Days (if order was uncommunicated)</label>
-              <input type="text" id="f13_daysElapsed" value="${escapeHtml(f.daysElapsed)}" placeholder="e.g. 21">
-            </div>
-            <div class="form-group">
-              <label class="checkbox-item" style="font-weight:600;">
-                <input type="checkbox" id="f13_retainDiscrepancyGround" ${f.retainDiscrepancyGround ? 'checked' : ''}>
-                <span>Include Ground: "The specific field, record, or database discrepancy underlying the AERO Notice was never particularised..."</span>
-              </label>
-            </div>
-            <div class="form-group">
-              <label>Scenario-Specific Ground of Appeal</label>
-              <textarea id="f13_scenarioSpecificGround" placeholder="e.g. Documentary proof of true parentage and 2002 roll extract was duly submitted but completely ignored in the impugned order...">${escapeHtml(f.scenarioSpecificGround)}</textarea>
-            </div>
-          `;
-          break;
-      }
+}
 
       return h;
     }
@@ -1783,7 +1716,6 @@
           appState.scenario12[key] = value;
         }
       }
-      if (id.startsWith('f13_')) appState.format13[id.replace('f13_', '')] = value;
 
       updatePreview();
     }
@@ -1793,11 +1725,7 @@
       const format = formatSelect.value;
       let docHtml = '';
 
-      if (format === 'format13') {
-        docHtml = buildFormat13Html();
-      } else {
-        docHtml = buildStandardScenarioHtml(format);
-      }
+      docHtml = buildStandardScenarioHtml(format);
 
       previewContainer.innerHTML = docHtml;
       checkPageLength();
@@ -2210,96 +2138,6 @@
       }
 
       return h;
-    }
-
-    function buildFormat13Html() {
-      const s = appState;
-      const f = appState.format13;
-
-      const orderSnippet = f.orderStatus === 'passed'
-        ? `By order dated ${val(f.orderDate, 'Order Date')} (true copy enclosed as Annexure B)`
-        : `[OR: despite the lapse of ${val(f.daysElapsed, 'No. of')} days without any order being communicated]`;
-
-      return `
-        <div class="pet-header">
-          <div style="font-size:0.85em; color:#475569; border-bottom:1px solid #cbd5e1; padding-bottom:6px; margin-bottom:10px;">
-            <strong>Statutory Appeal</strong> under Section 24(a), Representation of the People Act, 1950 before the Designated Appellate Authority.
-          </div>
-
-          <div class="pet-to">
-            To,<br>
-            The Designated Appellate Authority<br>
-            under Section 24, Representation of the People Act, 1950<br>
-            ${val(s.district, 'District')} District, Karnataka
-          </div>
-
-          <div class="pet-subject">
-            <strong>Subject:</strong> Appeal against Order dated ${val(f.orderDate, 'Order Date')} passed by the ${val(f.impugnedOfficer, 'Officer')}, ${val(s.constituency, 'Constituency')} Constituency, in respect of AERO Notice No. ${val(s.aeroNoticeNo, 'Notice No.')} (Appellant: ${val(s.applicantName, 'Appellant Name')}, EPIC No. ${val(s.epicNo, 'EPIC No.')}, Part No. ${val(s.partNo, 'Part No.')}, Sl. No. ${val(s.slNo, 'Sl. No.')})
-          </div>
-
-          <div class="pet-salutation">Dear Sir/Madam,</div>
-
-          <ol style="margin-left: 1.25rem; padding-left: 0.5rem; margin-bottom: 0.65rem;">
-            <li style="margin-bottom:0.4rem; text-align:justify;">
-              The Appellant is a citizen of India and was, until the impugned order, an elector on the roll of ${val(s.constituency, 'Constituency')} Constituency, Part No. ${val(s.partNo, 'Part No.')}, Sl. No. ${val(s.slNo, 'Sl. No.')}, EPIC No. ${val(s.epicNo, 'EPIC No.')}.
-            </li>
-            <li style="margin-bottom:0.4rem; text-align:justify;">
-              The Appellant received AERO Notice No. ${val(s.aeroNoticeNo, 'Notice No.')} dated ${val(f.noticeDate, 'Notice Date')}, and duly filed a representation dated ${val(f.representationDate, 'Representation Date')} (Acknowledgment/Inward No. ${val(f.inwardNo, 'Inward No.')}) along with supporting documents, a true copy whereof is enclosed as Annexure A.
-            </li>
-            <li style="margin-bottom:0.4rem; text-align:justify;">
-              ${orderSnippet}, the AERO/ERO has rejected / failed to dispose of the Appellant's representation, and the Appellant's name stands deleted/excluded from the electoral roll.
-            </li>
-            <li style="margin-bottom:0.4rem; text-align:justify;">
-              <strong>Grounds of Appeal:</strong>
-              <ul style="margin-left:1.25rem; margin-top:0.35rem; list-style-type:disc;">
-                <li style="margin-bottom:0.3rem;">The impugned order is not a reasoned/speaking order as required under Rule 21A of the Registration of Electors Rules, 1960, and fails to record independent application of mind to the documents furnished by the Appellant, contrary to the standard affirmed in <em>Lal Babu Hussein v. Electoral Registration Officer</em>, (1995) 3 SCC 100, and <em>Association for Democratic Reforms v. Election Commission of India</em>, W.P.(C) No. 640/2025 (judgment dated 27.05.2026).</li>
-                <li style="margin-bottom:0.3rem;">No personal hearing, or adequate advance notice of hearing, was afforded to the Appellant before the impugned order, in violation of the principles of natural justice and the safeguards directed by the Hon'ble Supreme Court in the judgment cited above.</li>
-                ${f.retainDiscrepancyGround ? `<li style="margin-bottom:0.3rem;">The specific field, record, or database discrepancy underlying the AERO Notice was never particularised to the Appellant despite request, denying a meaningful opportunity to respond.</li>` : ''}
-                <li style="margin-bottom:0.3rem;">The Appellant's name has, at all material times prior to this SIR, continuously appeared on the electoral roll, raising a presumption of correctness and continued eligibility that has not been displaced by any cogent, reasoned finding.</li>
-                ${f.scenarioSpecificGround ? `<li style="margin-bottom:0.3rem;">${val(f.scenarioSpecificGround, 'Scenario-specific grounds')}</li>` : `<li>[Insert scenario-specific ground e.g., documentary proof of parentage/age/residence was not considered; alleged citizenship doubt was not referred to the competent authority as directed by the Hon'ble Supreme Court; etc.]</li>`}
-              </ul>
-            </li>
-            <li style="margin-bottom:0.4rem; text-align:justify;">
-              In view of the extremely compressed timelines of the ongoing Special Intensive Revision, and the Hon'ble Supreme Court's directions (in the West Bengal SIR proceedings arising from the same batch of matters) that appellate tribunals/authorities accord out-of-turn/expedited hearing to persons excluded from the electoral roll, the Appellant respectfully prays that this Appeal be heard and disposed of on an urgent/out-of-turn basis, given the proximity of the qualifying date and finalisation of the electoral roll.
-            </li>
-          </ol>
-
-          <div class="pet-prayer-title">I Pray that:</div>
-          <ol class="pet-prayers">
-            <li>Set aside the impugned order dated ${val(f.orderDate, 'Order Date')} and/or direct disposal of the pending representation forthwith;</li>
-            <li>Direct restoration/inclusion of the Appellant's name in the electoral roll of ${val(s.constituency, 'Constituency')} Constituency, Part No. ${val(s.partNo, 'Part No.')}, Sl. No. ${val(s.slNo, 'Sl. No.')};</li>
-            <li>In the alternative, remand the matter to the AERO/ERO for fresh consideration after grant of a personal hearing and a reasoned order under Rule 21A;</li>
-            <li>List and dispose of this Appeal on an urgent/out-of-turn basis, having regard to the compressed timelines of the SIR exercise;</li>
-            <li>Pass such other order(s) as this Hon'ble Authority may deem fit and proper in the interest of justice.</li>
-          </ol>
-
-          <div class="pet-verification">
-            I, ${val(s.applicantName, 'Appellant Full Name')}, the Appellant herein, do hereby declare and verify that the contents of this Appeal are true and correct to the best of my knowledge, information, and belief, and nothing material has been concealed therefrom.
-          </div>
-
-          <div class="pet-meta-row">
-            <div>
-              <strong>Date:</strong> ${val(s.date, 'Date')}<br>
-              <strong>Place:</strong> ${val(s.place, 'Place')}
-            </div>
-            <div class="pet-sig-inner">
-              Yours faithfully,<br><br>
-              <strong>(Signature)</strong><br>
-              Full Name: ${val(s.applicantName, 'Full Name')}<br>
-              Voter ID (EPIC) No.: ${val(s.epicNo, 'EPIC No.')}<br>
-              Mobile No.: ${val(s.mobileNo, 'Mobile No.')}<br>
-              Email ID: ${val(s.emailId, 'Email ID')}
-            </div>
-          </div>
-
-          <div class="pet-annexures">
-            <strong>List of Annexures</strong><br>
-            Annexure A: Copy of representation filed before the AERO/ERO, with acknowledgment, and supporting documents.<br>
-            Annexure B: Copy of the impugned order, or proof/record of non-disposal (e.g., follow-up correspondence).<br>
-            Annexure C: Any additional documents relied upon at the appellate stage.
-          </div>
-        </div>
-      `;
     }
 
     // --- Strict 2-Page Verification & Auto-Fit Engine ---

@@ -504,6 +504,24 @@
         width: 100%;
       }
     }
+    /* Visitor Counter Badge */
+    .visitor-counter-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background-color: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      padding: 0.2rem 0.55rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      color: #cbd5e1;
+      letter-spacing: 0.02em;
+    }
+    .visitor-counter-badge strong {
+      color: #fef08a;
+      font-variant-numeric: tabular-nums;
+      font-weight: 700;
+    }
   </style>
 </head>
 <body>
@@ -514,7 +532,13 @@
       <img src="APCR Logo.png" alt="APCR Logo" style="height: 20px; width: auto; background: #fff; padding: 1px 3px; border-radius: 3px;">
       <span><strong>SIR (Karnataka): Claims, Objections &amp; Appeals</strong> | Application Builder</span>
     </div>
-    <div><a href="mailto:apcrkarnataka.sir26@gmail.com">apcrkarnataka.sir26@gmail.com</a></div>
+    <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+      <div class="visitor-counter-badge" title="Total Website Visitors">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+        <span>Visitors: <strong id="top-visitor-count">1,248</strong></span>
+      </div>
+      <div><a href="mailto:apcrkarnataka.sir26@gmail.com">apcrkarnataka.sir26@gmail.com</a></div>
+    </div>
   </div>
 
   <!-- App Header -->
@@ -2425,8 +2449,49 @@ ${contentHtml}
       renderFields();
     }
 
+    // --- Live Visitor Counter ---
+    async function initVisitorCounter() {
+      const topCountEl = document.getElementById('top-visitor-count');
+      function updateDisplays(count) {
+        const num = Number(count) || 1248;
+        if (topCountEl) topCountEl.textContent = num.toLocaleString();
+      }
+
+      const baseCount = 1248;
+      let count = parseInt(localStorage.getItem('apcr_sir_visitors') || baseCount, 10);
+      updateDisplays(count);
+
+      try {
+        const isNewSession = !sessionStorage.getItem('apcr_sir_session_tracked');
+        const endpoint = isNewSession
+          ? 'https://api.counterapi.dev/v1/sirappeals-apcrkarnataka/visits/up'
+          : 'https://api.counterapi.dev/v1/sirappeals-apcrkarnataka/visits';
+
+        const res = await fetch(endpoint, { method: 'GET', mode: 'cors' });
+        if (res.ok) {
+          const data = await res.json();
+          if (data && typeof data.count === 'number') {
+            const liveCount = baseCount + data.count;
+            localStorage.setItem('apcr_sir_visitors', liveCount);
+            sessionStorage.setItem('apcr_sir_session_tracked', 'true');
+            updateDisplays(liveCount);
+            return;
+          }
+        }
+      } catch (e) {
+        // Fallback gracefully on local/offline
+      }
+
+      if (!sessionStorage.getItem('apcr_sir_session_tracked')) {
+        count += 1;
+        sessionStorage.setItem('apcr_sir_session_tracked', 'true');
+        localStorage.setItem('apcr_sir_visitors', count);
+        updateDisplays(count);
+      }
+    }
+
     // Initialize on load
-    window.addEventListener('DOMContentLoaded', initFromUrl);
+    window.addEventListener('DOMContentLoaded', () => { initFromUrl(); initVisitorCounter(); });
   </script>
 </body>
 </html>

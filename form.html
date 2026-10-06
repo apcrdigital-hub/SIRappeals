@@ -543,6 +543,35 @@
       text-align: center;
       line-height: 1.25;
     }
+    /* Legal Disclaimer Box */
+    .legal-disclaimer-box {
+      background-color: #fffdf7;
+      border: 1px solid #fed7aa;
+      border-left: 4px solid var(--amber-500);
+      border-radius: 6px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.775rem;
+      line-height: 1.45;
+      color: var(--slate-700);
+    }
+    .disclaimer-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 800;
+      color: var(--amber-600);
+      font-size: 0.775rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.4rem;
+    }
+    .legal-disclaimer-box p {
+      margin-bottom: 0.4rem;
+    }
+    .legal-disclaimer-box p:last-child {
+      margin-bottom: 0;
+    }
   </style>
 </head>
 <body>
@@ -874,6 +903,20 @@
     // Universal Common Inputs: Elector, Authority & Notice Details
     function renderCommonFields() {
       return `
+        <!-- Legal Advisory & Disclaimer Box -->
+        <div class="legal-disclaimer-box">
+          <div class="disclaimer-header">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            <span>Legal Disclaimer &amp; Advisory</span>
+          </div>
+          <p>
+            These representation templates and notice scenarios are developed based on the empirical experience and on-the-ground interventions of the <strong>Association for Protection of Civil Rights (APCR)</strong> in Special Intensive Revision (SIR) proceedings across various states.
+          </p>
+          <p>
+            <strong>Mandatory Review:</strong> These formats serve as reference models for guidance and do not constitute formal legal counsel. Every draft and representation should be reviewed properly by an expert who understands the legalities and procedural requirements, and must be customized and tweaked based on individual appellant and elector scenarios.
+          </p>
+        </div>
+
         <div class="section-title">1. Common Elector &amp; Authority Details</div>
         <div style="font-size:0.75rem; color:var(--slate-600); margin-bottom:0.75rem; background:#f8fafc; border:1px solid #e2e8f0; padding:6px 10px; border-radius:4px; line-height:1.4;">
           <strong>Fill once:</strong> These details automatically populate all formats (Scenarios 1–12). You will never need to re-enter them when switching formats.

@@ -651,6 +651,48 @@
           <option value="scenario12">Scenario 12: Wrongful Deletion Despite Continued Domicile — Temporary Absence at Enumeration (New)</option>
           <option value="scenario13">Scenario 13: Wrongful Deletion on Fraudulent / Unauthorized Form 7 (Illegal Objection Filed by Third Party)</option>
         </select>
+
+        <div style="margin-top: 0.85rem;">
+          <label for="topStateSelect" class="format-label">Select State / Union Territory</label>
+          <select id="topStateSelect" class="format-select">
+            <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+            <option value="Andhra Pradesh">Andhra Pradesh</option>
+            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+            <option value="Assam">Assam</option>
+            <option value="Bihar">Bihar</option>
+            <option value="Chandigarh">Chandigarh</option>
+            <option value="Chhattisgarh">Chhattisgarh</option>
+            <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+            <option value="Delhi (NCT)">Delhi (NCT)</option>
+            <option value="Goa">Goa</option>
+            <option value="Gujarat">Gujarat</option>
+            <option value="Haryana">Haryana</option>
+            <option value="Himachal Pradesh">Himachal Pradesh</option>
+            <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+            <option value="Jharkhand">Jharkhand</option>
+            <option value="Karnataka" selected>Karnataka</option>
+            <option value="Kerala">Kerala</option>
+            <option value="Ladakh">Ladakh</option>
+            <option value="Lakshadweep">Lakshadweep</option>
+            <option value="Madhya Pradesh">Madhya Pradesh</option>
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="Manipur">Manipur</option>
+            <option value="Meghalaya">Meghalaya</option>
+            <option value="Mizoram">Mizoram</option>
+            <option value="Nagaland">Nagaland</option>
+            <option value="Odisha">Odisha</option>
+            <option value="Puducherry">Puducherry</option>
+            <option value="Punjab">Punjab</option>
+            <option value="Rajasthan">Rajasthan</option>
+            <option value="Sikkim">Sikkim</option>
+            <option value="Tamil Nadu">Tamil Nadu</option>
+            <option value="Telangana">Telangana</option>
+            <option value="Tripura">Tripura</option>
+            <option value="Uttar Pradesh">Uttar Pradesh</option>
+            <option value="Uttarakhand">Uttarakhand</option>
+            <option value="West Bengal">West Bengal</option>
+          </select>
+        </div>
       </div>
 
       <div class="fields-scroll" id="dynamicFieldsContainer">
@@ -673,6 +715,17 @@
   </div>
 
   <script>
+    // All 28 States and 8 Union Territories of India
+    const INDIAN_STATES = [
+      "Andaman and Nicobar Islands", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar",
+      "Chandigarh", "Chhattisgarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi (NCT)",
+      "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand",
+      "Karnataka", "Kerala", "Ladakh", "Lakshadweep", "Madhya Pradesh", "Maharashtra",
+      "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Puducherry", "Punjab",
+      "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh",
+      "Uttarakhand", "West Bengal"
+    ];
+
     // --- Application State & Field Values (preserved across format changes) ---
     // All common fields are entered once and shared across ALL 13 formats without repetition.
     const appState = {
@@ -682,6 +735,7 @@
       constituencyNumber: '',
       constituency: '',
       district: '',
+      state: 'Karnataka',
 
       // Common elector credentials
       applicantName: '',
@@ -962,6 +1016,14 @@
         <div class="form-group">
           <label>District</label>
           <input type="text" id="district" value="${escapeHtml(appState.district)}" placeholder="e.g. Bengaluru Urban">
+        </div>
+
+        <div class="form-group">
+          <label>State / Union Territory</label>
+          <select id="state" class="field-input">
+            ${INDIAN_STATES.map(st => `<option value="${escapeHtml(st)}" ${appState.state === st ? 'selected' : ''}>${escapeHtml(st)}</option>`).join('')}
+          </select>
+          <div class="field-hint">Select Indian State or UT (defaults to Karnataka). Applies across all 13 scenarios.</div>
         </div>
 
         <!-- Elector Identity -->
@@ -1811,6 +1873,10 @@
       // Update common state
       if (id in appState) {
         appState[id] = value;
+        if (id === 'state') {
+          const topSel = document.getElementById('topStateSelect');
+          if (topSel) topSel.value = value;
+        }
       }
 
       // Check scenario namespaces
@@ -1897,7 +1963,7 @@
             Constituency Number: ${val(s.constituencyNumber, 'Constituency Number')}<br>
             Constituency: ${val(s.constituency, 'Constituency')}<br>
             District: ${val(s.district, 'District')}<br>
-            Karnataka
+            State: ${val(s.state, 'State')}
           </div>
 
           <div class="pet-salutation">Dear Sir/Madam,</div>
@@ -2523,6 +2589,16 @@ ${contentHtml}
       renderFields();
     });
 
+    const topStateSelect = document.getElementById('topStateSelect');
+    if (topStateSelect) {
+      topStateSelect.addEventListener('change', (e) => {
+        appState.state = e.target.value;
+        const bottomSelect = document.getElementById('state');
+        if (bottomSelect) bottomSelect.value = e.target.value;
+        updatePreview();
+      });
+    }
+
     function initFromUrl() {
       const urlParams = new URLSearchParams(window.location.search);
       const requestedFormat = urlParams.get('format');
@@ -2531,6 +2607,9 @@ ${contentHtml}
         if (optionExists) {
           formatSelect.value = requestedFormat;
         }
+      }
+      if (topStateSelect) {
+        topStateSelect.value = appState.state;
       }
       renderFields();
     }
@@ -2584,6 +2663,7 @@ ${contentHtml}
     }
 
     // Initialize on load
+    initFromUrl();
     window.addEventListener('DOMContentLoaded', () => { initFromUrl(); initVisitorCounter(); });
   </script>
 </body>

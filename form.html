@@ -649,6 +649,7 @@
           <option value="scenario10">Scenario 10: Sibling Age Gap of Less Than 9 Months</option>
           <option value="scenario11">Scenario 11: Deletion/Flagging on Ground of Alleged Non-Citizenship / "Doubtful" Status (New)</option>
           <option value="scenario12">Scenario 12: Wrongful Deletion Despite Continued Domicile — Temporary Absence at Enumeration (New)</option>
+          <option value="scenario13">Scenario 13: Wrongful Deletion on Fraudulent / Unauthorized Form 7 (Illegal Objection Filed by Third Party)</option>
         </select>
       </div>
 
@@ -859,6 +860,21 @@
         ownershipDocNo: '',
         absenceDoc: '',
         absenceDocNo: ''
+      },
+      scenario13: {
+        form7RefNo: '',
+        objectorName: '',
+        dateDiscovered: '',
+        discoveryManner: 'final_list',
+        fraudNature: 'unauthorized_impersonation',
+        violationZeroNotice: true,
+        violationNoHearing: true,
+        violationNoInquiry: true,
+        residenceProofDoc: '',
+        residenceProofNo: '',
+        affidavitDoc: '',
+        affidavitDocNo: '',
+        complaintParticulars: ''
       }
     };
 
@@ -919,7 +935,7 @@
 
         <div class="section-title">1. Common Elector &amp; Authority Details</div>
         <div style="font-size:0.75rem; color:var(--slate-600); margin-bottom:0.75rem; background:#f8fafc; border:1px solid #e2e8f0; padding:6px 10px; border-radius:4px; line-height:1.4;">
-          <strong>Fill once:</strong> These details automatically populate all formats (Scenarios 1–12). You will never need to re-enter them when switching formats.
+          <strong>Fill once:</strong> These details automatically populate all formats (Scenarios 1–13). You will never need to re-enter them when switching formats.
         </div>
 
         <!-- Addressed Officer & Jurisdiction -->
@@ -1689,7 +1705,92 @@
             </div>
           `;
           break;
-}
+
+        case 'scenario13':
+          const s13 = appState.scenario13;
+          h += `
+            <div class="form-group">
+              <label>Manner of Discovery</label>
+              <select id="s13_discoveryManner" class="field-input">
+                <option value="final_list" ${s13.discoveryManner === 'final_list' ? 'selected' : ''}>Found deleted upon publication of Final Electoral Roll</option>
+                <option value="notice" ${s13.discoveryManner === 'notice' ? 'selected' : ''}>Received show-cause / hearing notice citing Form 7</option>
+                <option value="portal" ${s13.discoveryManner === 'portal' ? 'selected' : ''}>Discovered deletion via online Voters' Services Portal / BLO verification</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Date Deletion / Form 7 Came to Notice</label>
+              <input type="text" id="s13_dateDiscovered" value="${escapeHtml(s13.dateDiscovered)}" placeholder="e.g. 15-09-2026">
+            </div>
+            <div class="form-group">
+              <label>Form 7 Application / Reference No. (if disclosed / known)</label>
+              <input type="text" id="s13_form7RefNo" value="${escapeHtml(s13.form7RefNo)}" placeholder="e.g. F7-2026-88124 or Unknown / Not Furnished">
+              <div class="field-hint">If not provided in notice or record, enter "Unknown / Not Disclosed by ERO".</div>
+            </div>
+            <div class="form-group">
+              <label>Name of Alleged Objector / Applicant in Form 7 (if known)</label>
+              <input type="text" id="s13_objectorName" value="${escapeHtml(s13.objectorName)}" placeholder="e.g. Name of third party, or Unknown Unauthorized Individual">
+              <div class="field-hint">State if the objector is an unknown person who has no familial or household connection.</div>
+            </div>
+
+            <div class="form-group">
+              <label>Nature of Fraudulent Objection (select primary ground)</label>
+              <div class="checkbox-group">
+                <label class="checkbox-item">
+                  <input type="radio" name="s13_fraudNature" value="unauthorized_impersonation" ${s13.fraudNature === 'unauthorized_impersonation' ? 'checked' : ''}>
+                  <span><strong>Fraudulent Impersonation / Forgery:</strong> Form 7 was falsely submitted in my name or without my consent/signature.</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="radio" name="s13_fraudNature" value="false_third_party" ${s13.fraudNature === 'false_third_party' ? 'checked' : ''}>
+                  <span><strong>False Third-Party Objection:</strong> Filed by an unauthorized third party with zero locus standi, falsely alleging I am dead/shifted.</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="radio" name="s13_fraudNature" value="malafide_mass" ${s13.fraudNature === 'malafide_mass' ? 'checked' : ''}>
+                  <span><strong>Malafide Disenfranchisement:</strong> Vested interests filed illegal bulk/mass objections to disenfranchise genuine electors.</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Procedural Violations (Select applicable grounds)</label>
+              <div class="checkbox-group">
+                <label class="checkbox-item">
+                  <input type="checkbox" id="s13_violationZeroNotice" ${s13.violationZeroNotice ? 'checked' : ''}>
+                  <span><strong>Zero Notice Served:</strong> No statutory show-cause notice regarding the Form 7 objection was served at the registered address.</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" id="s13_violationNoHearing" ${s13.violationNoHearing ? 'checked' : ''}>
+                  <span><strong>No Hearing Afforded:</strong> No opportunity or personal hearing was scheduled to rebut the objection.</span>
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" id="s13_violationNoInquiry" ${s13.violationNoInquiry ? 'checked' : ''}>
+                  <span><strong>Absence of Bonafide Inquiry:</strong> Mandatory field verification was either omitted or conducted without inspecting the registered household.</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Proof of Continuous Residence &amp; Physical Possession (Doc Name &amp; Number)</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s13_residenceProofDoc" value="${escapeHtml(s13.residenceProofDoc)}" placeholder="Doc Name (e.g. Property Tax / Electricity Bill / Rent Deed)">
+                <input type="text" id="s13_residenceProofNo" value="${escapeHtml(s13.residenceProofNo)}" placeholder="Doc No.">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Sworn Affidavit / Complaint Ref (Doc Name &amp; Number)</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="s13_affidavitDoc" value="${escapeHtml(s13.affidavitDoc)}" placeholder="Doc Name (e.g. Notarized Affidavit on solemn oath)">
+                <input type="text" id="s13_affidavitDocNo" value="${escapeHtml(s13.affidavitDocNo)}" placeholder="Doc / Notary No.">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Specific Particulars of Complaint &amp; Absence of Due Process</label>
+              <textarea id="s13_complaintParticulars" placeholder="e.g. No notice of the Form 7 objection was ever served upon me; no field inquiry or hearing was conducted before deleting my name; I continue to reside at the registered address and voted regularly...">${escapeHtml(s13.complaintParticulars)}</textarea>
+            </div>
+          `;
+          break;
+      }
 
       return h;
     }
@@ -1759,6 +1860,14 @@
           appState.scenario12[key] = value;
         }
       }
+      if (id.startsWith('s13_')) {
+        const key = id.replace('s13_', '');
+        if (e.target.name === 's13_fraudNature') {
+          appState.scenario13.fraudNature = value;
+        } else {
+          appState.scenario13[key] = value;
+        }
+      }
 
       updatePreview();
     }
@@ -1801,9 +1910,11 @@
             My Aadhaar no. is ${val(s.aadhaarNo, 'Aadhaar No.')}, PAN No. is ${val(s.panNo, 'PAN No.')} and Passport No. is ${val(s.passportNo, 'Passport No.')}. I also hold a Birth Certificate issued by the ${val(s.birthCertAuthority, 'Authority')} and a School Certificate. Given that the BLO application limits document submission to a single attachment, the official document numbers cited above are tendered herewith as additional supporting evidence to verify my electoral credentials. (Aadhaar is furnished for identity/address verification, as clarified by the Hon'ble Supreme Court; it is not tendered as standalone proof of citizenship.)
           </p>
 
+          ${format !== 'scenario13' ? `
           <p>
             My name (or that of my relative, as the case may be) has consistently formed part of the electoral roll prior to this Special Intensive Revision, and its existing inclusion raises a rebuttable presumption of continued eligibility that cannot be displaced merely by an unexplained algorithmic/anomaly flag. This position is affirmed by the Hon'ble Supreme Court in <em>Association for Democratic Reforms &amp; Ors. v. Election Commission of India</em>, W.P.(C) No. 640/2025 (judgment dated 27.05.2026), and is consistent with the settled law in <em>Lal Babu Hussein v. Electoral Registration Officer</em>, (1995) 3 SCC 100, that no name already on the roll may be excluded without due notice, an intelligible statement of the specific discrepancy relied upon, and a reasonable opportunity of being heard.
           </p>
+          ` : ''}
         </div>
       `;
 
@@ -1829,6 +1940,12 @@
       } else if (format === 'scenario12') {
         h += `
           <li>Restore/retain the Applicant's name in the electoral roll notwithstanding temporary bona fide absence at the time of house-to-house enumeration, there being no change in the Applicant's domicile or ordinary residence;</li>
+        `;
+      } else if (format === 'scenario13') {
+        h += `
+          <li>Set aside and declare null and void the wrongful and illegal deletion of the Applicant's name executed on the basis of fraudulent/unauthorized Form 7, and direct the immediate restoration and uninterrupted re-inclusion of the Applicant's name in the Electoral Roll for ${val(s.constituency, 'Constituency')} Constituency (Part No. ${val(s.partNo, 'Part No.')}, Sl. No. ${val(s.slNo, 'Sl. No.')}, Voter ID Card ${val(s.epicNo, 'EPIC No.')});</li>
+          <li>Disclose and furnish certified copies of the impugned Form 7 application, along with the full identity, address, and electoral particulars of the objector/applicant who submitted it, and the Booth Level Officer (BLO) field verification report;</li>
+          <li>Initiate immediate statutory penal proceedings and lodge a criminal complaint/FIR under Section 31 of the Representation of the People Act, 1950 and applicable penal provisions for forgery and false declaration against the person(s) who filed the fraudulent Form 7;</li>
         `;
       }
 
@@ -2175,6 +2292,68 @@
             </p>
             <p>
               I reserve the right to submit additional records or present oral evidence during personal hearing proceedings if required.
+            </p>
+          `;
+          break;
+
+        case 'scenario13':
+          const s13 = s.scenario13;
+          let discText = '';
+          if (s13.discoveryManner === 'final_list') {
+            discText = `upon publication of the Final Electoral Roll (dated ${val(s13.dateDiscovered, 'Date of Discovery')}), that my name has been wrongfully deleted`;
+          } else if (s13.discoveryManner === 'notice') {
+            discText = `upon receipt of communication dated ${val(s13.dateDiscovered, 'Date')}, that proceedings have been executed for deletion of my name`;
+          } else {
+            discText = `upon checking the official Voters' Services Portal on ${val(s13.dateDiscovered, 'Date')}, that my name stands deleted`;
+          }
+
+          let fraudDesc = '';
+          if (s13.fraudNature === 'unauthorized_impersonation') {
+            fraudDesc = 'fraudulent impersonation and forgery, wherein Form 7 was submitted without my knowledge, signature, or consent, falsely purporting to be an application for deletion of my own entry';
+          } else if (s13.fraudNature === 'false_third_party') {
+            fraudDesc = `a false, baseless, and unauthorized third-party objection (Form 7) filed by an individual named ${val(s13.objectorName, 'Objector Name')}, who has no familial or household connection to me and holds no locus standi`;
+          } else {
+            fraudDesc = 'a malafide, concerted attempt by unauthorized persons to disenfranchise genuine resident electors through bulk, automated, or fabricated Form 7 deletion requests';
+          }
+
+          h = `
+            <p>
+              I place this formal statutory complaint and representation on record, having discovered ${discText} from the electoral roll for ${val(s.constituency, 'Constituency')} Constituency (Part No. ${val(s.partNo, 'Part No.')}, Sl. No. ${val(s.slNo, 'Sl. No.')}, EPIC No. ${val(s.epicNo, 'EPIC No.')}), purportedly pursuant to an objection filed under Form 7 (Reference/Ack No. ${val(s13.form7RefNo, 'Form 7 Ref No.')}).
+            </p>
+            <p>
+              <strong>1. Solemn Declaration on Oath &amp; Denial of Form 7:</strong><br>
+              I categorically and unequivocally state on solemn affirmation that <strong>I have never executed, signed, submitted, nor authorized any individual or agent to file Form 7 seeking the deletion of my name from the electoral roll</strong>. The impugned Form 7 is a completely bogus, forged, and fraudulent document designed to disenfranchise me illegally. The objection arises out of ${fraudDesc}.
+            </p>
+            <p>
+              <strong>2. Violation of Mandatory Procedural Safeguards (Rule 21A &amp; Natural Justice):</strong><br>
+              Under Section 22 of the Representation of the People Act, 1950 read with Rule 21A and Rule 26 of the Registration of Electors Rules, 1960, no entry may be deleted without affording the affected elector a reasonable opportunity to show cause. In the present case:
+            </p>
+            ${(() => {
+              let items = '';
+              if (s13.violationZeroNotice) {
+                items += '<li><strong>Zero Notice Served:</strong> No statutory show-cause notice regarding the Form 7 objection was served at the registered address.</li>';
+              }
+              if (s13.violationNoHearing) {
+                items += '<li><strong>No Hearing Afforded:</strong> No opportunity or personal hearing was scheduled to rebut the objection.</li>';
+              }
+              if (s13.violationNoInquiry) {
+                items += '<li><strong>Absence of Bonafide Inquiry:</strong> Mandatory field verification was either omitted or conducted without inspecting the registered household.</li>';
+              }
+              return items ? `<ul style="margin-left: 1.5rem; margin-bottom: 0.5rem;">${items}</ul>` : '';
+            })()}
+            <p>
+              <strong>3. Continued Domicile, Physical Possession &amp; Elector Qualifications:</strong><br>
+              I continue to be a bonafide citizen of India, permanently domiciled and ordinarily resident at ${val(s.address, 'Registered Address')}. I have continuously voted in previous elections, including the 2024 General Elections. I have not acquired residence nor sought registration in any other constituency. To establish my continuous physical residence, I submit the following corroborative evidence:<br>
+              Proof of Continued Residence: ${val(s13.residenceProofDoc, 'Document Name')} (Doc No. ${val(s13.residenceProofNo, 'Doc No.')})<br>
+              Affidavit / Sworn Declaration: ${val(s13.affidavitDoc, 'Document Name')} (Doc No. ${val(s13.affidavitDocNo, 'Doc No.')})<br>
+              ${s13.complaintParticulars ? `Particulars of Grievance: ${val(s13.complaintParticulars, 'Particulars')}<br>` : ''}
+            </p>
+            <p>
+              <strong>4. Invocation of Penal Action under Section 31, RP Act 1950:</strong><br>
+              Section 31 of the Representation of the People Act, 1950 specifically prescribes that making any false declaration in connection with the preparation, revision, or correction of an electoral roll is a cognizable penal offense punishable with imprisonment up to one year, or fine, or both. The submission of a forged or malicious Form 7 constitutes an aggravated electoral offense.
+            </p>
+            <p>
+              I reserve the right to initiate formal criminal proceedings against the fraudulent objector/applicant and to present oral evidence and original records during personal hearing.
             </p>
           `;
           break;

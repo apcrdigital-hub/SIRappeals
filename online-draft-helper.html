@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ECI Online Application Draft Builder — Character Limit Compliance Tool | APCR</title>
+
+  <style>
+    :root {
+      --navy-950: #0a1322;
+      --navy-900: #101e36;
+      --navy-800: #182b4d;
+      --navy-700: #223c6a;
+      --amber-600: #b45309;
+      --amber-500: #d97706;
+      --amber-100: #fef3c7;
+      --amber-50: #fffbeb;
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-300: #cbd5e1;
+      --slate-400: #94a3b8;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+      --emerald-600: #059669;
+      --emerald-500: #10b981;
+      --emerald-100: #d1fae5;
+      --emerald-50: #ecfdf5;
+      --crimson-700: #b91c1c;
+      --crimson-600: #dc2626;
+      --crimson-100: #fee2e2;
+      --crimson-50: #fef2f2;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--slate-800);
+      background-color: #ebf0f7;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      background-color: var(--navy-950);
+      color: #94a3b8;
+      font-size: 0.8rem;
+      padding: 0.4rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      gap: 0.5rem;
+    }
+    .top-bar a {
+      color: #cbd5e1;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .top-bar a:hover {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+
+    .top-counter {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      color: #94a3b8;
+    }
+    .top-counter strong {
+      color: var(--amber-500);
+      font-family: monospace;
+      font-size: 0.85rem;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(180deg, var(--navy-900) 0%, var(--navy-800) 100%);
+      color: #ffffff;
+      padding: 1.15rem 1.5rem;
+      border-bottom: 3px solid var(--amber-500);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .header-logo {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
+      background: #ffffff;
+      padding: 3px;
+      border-radius: 4px;
+    }
+
+    .header-titles h1 {
+      font-family: Charter, Georgia, "Times New Roman", serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .header-badge {
+      display: inline-block;
+      background: var(--amber-500);
+      color: var(--navy-950);
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .header-sub {
+      font-size: 0.82rem;
+      color: #cbd5e1;
+      margin-top: 2px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 0.95rem;
+      font-size: 0.825rem;
+      font-weight: 600;
+      border-radius: 5px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background-color: var(--amber-500);
+      color: var(--navy-950);
+      font-weight: 700;
+    }
+    .btn-primary:hover {
+      background-color: #f59e0b;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background-color: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+    .btn-secondary:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-portal {
+      background-color: #0284c7;
+      color: #ffffff;
+    }
+    .btn-portal:hover {
+      background-color: #0369a1;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1400px;
+      margin: 1.25rem auto;
+      padding: 0 1rem;
+    }
+
+    /* Dual Channel Message Banner */
+    .dual-channel-banner {
+      background: linear-gradient(135deg, #ffffff 0%, #fffbeb 100%);
+      border: 2px solid #f59e0b;
+      border-left: 6px solid #d97706;
+      border-radius: 8px;
+      padding: 1.1rem 1.4rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .banner-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--navy-900);
+      margin-bottom: 0.5rem;
+    }
+
+    .banner-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 0.75rem;
+    }
+
+    @media (max-width: 900px) {
+      .banner-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .banner-step {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 0.85rem 1rem;
+    }
+
+    .banner-step-title {
+      font-weight: 700;
+      font-size: 0.875rem;
+      color: var(--navy-900);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .step-badge-online {
+      background: #0284c7;
+      color: #fff;
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 800;
+    }
+
+    .step-badge-offline {
+      background: #d97706;
+      color: #fff;
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 800;
+    }
+
+    .banner-step p {
+      font-size: 0.825rem;
+      color: #475569;
+      line-height: 1.45;
+    }
+
+    .banner-warning {
+      margin-top: 0.75rem;
+      padding: 0.6rem 0.85rem;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      color: #991b1b;
+      font-weight: 600;
+    }
+
+    /* Layout Grid */
+    .layout-grid {
+      display: grid;
+      grid-template-columns: 460px 1fr;
+      gap: 1.25rem;
+      align-items: start;
+    }
+
+    @media (max-width: 1024px) {
+      .layout-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Left Input Panel */
+    .input-panel {
+      background: #ffffff;
+      border-radius: 8px;
+      border: 1px solid var(--slate-200);
+      padding: 1.25rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .section-title {
+      font-size: 0.875rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--navy-800);
+      margin-bottom: 0.85rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid var(--amber-500);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .form-group {
+      margin-bottom: 0.85rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--slate-700);
+      margin-bottom: 0.25rem;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 0.5rem 0.65rem;
+      font-size: 0.85rem;
+      border: 1px solid var(--slate-300);
+      border-radius: 4px;
+      background-color: #ffffff;
+      color: var(--slate-900);
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--navy-700);
+      box-shadow: 0 0 0 2px rgba(34, 60, 106, 0.15);
+    }
+
+    .field-hint {
+      font-size: 0.725rem;
+      color: var(--slate-400);
+      margin-top: 0.2rem;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+    }
+
+    .scenario-picker-box {
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: 6px;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .format-select {
+      font-weight: 600;
+      background-color: #ffffff;
+      border: 1.5px solid var(--amber-500);
+    }
+
+    .dynamic-scenario-fields {
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 6px;
+      padding: 0.85rem;
+      margin-top: 0.75rem;
+    }
+
+    /* Right Output Panel */
+    .output-panel {
+      position: sticky;
+      top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+    }
+
+    /* Main Limit Breached Alert Banner */
+    .limit-alert-banner {
+      display: none;
+      background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
+      color: #ffffff;
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      box-shadow: 0 4px 14px rgba(185, 28, 28, 0.35);
+      border: 2px solid #ef4444;
+      animation: pulseAlert 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseAlert {
+      0%, 100% {
+        box-shadow: 0 4px 14px rgba(185, 28, 28, 0.35);
+      }
+      50% {
+        box-shadow: 0 6px 22px rgba(239, 68, 68, 0.65);
+      }
+    }
+
+    .limit-alert-banner.active {
+      display: block;
+    }
+
+    .alert-banner-title {
+      font-size: 1rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.35rem;
+      letter-spacing: 0.3px;
+    }
+
+    .alert-banner-desc {
+      font-size: 0.825rem;
+      line-height: 1.45;
+      color: #fee2e2;
+    }
+
+    .alert-banner-metrics {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.5rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 0.8rem;
+    }
+
+    /* Status OK Banner */
+    .status-ok-banner {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      border-left: 4px solid var(--emerald-600);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      font-size: 0.825rem;
+      color: #065f46;
+    }
+
+    /* Draft Cards */
+    .draft-card {
+      background: #ffffff;
+      border-radius: 8px;
+      border: 1px solid var(--slate-200);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    .draft-card.breached {
+      border: 2px solid var(--crimson-600);
+      box-shadow: 0 4px 16px rgba(220, 38, 38, 0.15);
+    }
+
+    .draft-card-header {
+      background: var(--navy-900);
+      color: #ffffff;
+      padding: 0.75rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .draft-card-title {
+      font-size: 0.925rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Counter Badge */
+    .char-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: monospace;
+      font-size: 0.775rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+    }
+
+    .char-badge.safe {
+      background: rgba(16, 185, 129, 0.25);
+      color: #34d399;
+      border: 1px solid rgba(52, 211, 153, 0.4);
+    }
+
+    .char-badge.warning {
+      background: rgba(245, 158, 11, 0.3);
+      color: #fbbf24;
+      border: 1px solid rgba(251, 191, 36, 0.5);
+    }
+
+    .char-badge.breached {
+      background: #dc2626;
+      color: #ffffff;
+      border: 1px solid #ef4444;
+      animation: pulseBadge 1.5s infinite;
+    }
+
+    @keyframes pulseBadge {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .draft-card-body {
+      padding: 1rem;
+    }
+
+    .draft-textarea {
+      width: 100%;
+      min-height: 140px;
+      font-family: inherit;
+      font-size: 0.875rem;
+      line-height: 1.55;
+      color: var(--slate-900);
+      background-color: #fafbfc;
+      border: 1px solid var(--slate-300);
+      border-radius: 6px;
+      padding: 0.75rem;
+      resize: vertical;
+      transition: all 0.15s ease;
+    }
+
+    .draft-textarea.breached {
+      border: 2px solid var(--crimson-600);
+      background-color: #fff5f5;
+    }
+
+    .draft-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 1rem;
+      background: var(--slate-50);
+      border-top: 1px solid var(--slate-200);
+      font-size: 0.775rem;
+      color: var(--slate-600);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--navy-800);
+      color: #ffffff;
+      border: none;
+      padding: 0.4rem 0.8rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .copy-btn:hover {
+      background: var(--navy-700);
+    }
+
+    .copy-btn.copied {
+      background: var(--emerald-600);
+    }
+
+    .card-alert-msg {
+      display: none;
+      margin-top: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 4px;
+      color: #991b1b;
+      font-size: 0.775rem;
+      font-weight: 600;
+    }
+
+    .card-alert-msg.active {
+      display: block;
+    }
+
+    /* Next Steps Action Card */
+    .next-steps-card {
+      background: linear-gradient(135deg, var(--navy-900) 0%, var(--navy-800) 100%);
+      color: #ffffff;
+      border-radius: 8px;
+      padding: 1.25rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .next-steps-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--amber-500);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .next-steps-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 0.825rem;
+      color: #cbd5e1;
+      margin-bottom: 1rem;
+    }
+
+    .next-steps-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      line-height: 1.45;
+    }
+
+    .next-steps-list strong {
+      color: #ffffff;
+    }
+
+    .step-num {
+      background: var(--amber-500);
+      color: var(--navy-950);
+      font-weight: 800;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .cta-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .cta-actions .btn {
+      flex: 1;
+      justify-content: center;
+      text-align: center;
+      padding: 0.65rem 1rem;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: var(--navy-950);
+      color: #ffffff;
+      padding: 0.75rem 1.25rem;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      border-left: 4px solid var(--amber-500);
+      font-size: 0.85rem;
+      font-weight: 600;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.2s ease;
+      pointer-events: none;
+      z-index: 1000;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div>
+      <a href="index.html">&larr; Legal Framework</a> &nbsp;|&nbsp;
+      <a href="appeal-guide.html">16-Step Guide</a> &nbsp;|&nbsp;
+      <a href="form.html">Offline Application Draft Builder</a> &nbsp;|&nbsp;
+      <span style="color:var(--amber-500); font-weight:600;">Online Application Draft Builder</span>
+    </div>
+    <div class="top-counter">
+      <span>Portal Character Monitor Active</span> &bull;
+      <span>Brief Facts: &lt;1,000</span> &bull;
+      <span>Relief: &lt;500</span>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-left">
+      <img src="APCR Logo.png" alt="APCR Logo" class="header-logo" onerror="this.style.display='none'">
+      <div class="header-titles">
+        <h1>
+          ECI Online Application Draft Builder
+          <span class="header-badge">Online Step 1</span>
+        </h1>
+        <div class="header-sub">
+          Generate Character-Compliant Brief Facts (&lt;1,000 Chars) &amp; Relief Sought (&lt;500 Chars) for voters.eci.gov.in
+        </div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <a href="https://voters.eci.gov.in" target="_blank" rel="noopener noreferrer" class="btn btn-portal">
+        <span>voters.eci.gov.in ↗</span>
+      </a>
+      <a href="form.html" class="btn btn-primary">
+        <span>Offline Application Draft Builder (Step 2) &rarr;</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="container">
+
+    <!-- Crucial Dual Channel Protocol Notice -->
+    <div class="dual-channel-banner">
+      <div class="banner-header">
+        <span>⚠️ MANDATORY TWO-STEP APPEAL PROCEDURE (ONLINE FIRST, THEN PHYSICAL SUBMISSION)</span>
+      </div>
+      <p style="font-size:0.85rem; color:#475569; line-height:1.5;">
+        Under the Election Commission of India (ECI) framework, filing an appeal against SIR electoral deletions/notices requires a two-step dual-channel process. Follow this sequence strictly:
+      </p>
+
+      <div class="banner-grid">
+        <div class="banner-step">
+          <div class="banner-step-title">
+            <span class="step-badge-online">STEP 1: ONLINE FILING</span>
+            <span>File on voters.eci.gov.in</span>
+          </div>
+          <p>
+            The ECI online portal caps <strong>Brief Facts at 1,000 characters</strong>, <strong>Relief Sought at 500 characters</strong>, and <strong>does not permit uploading documentary evidence</strong>. Use this helper page to generate compliant concise text, paste it into the portal, submit, and record your <strong>Online Appeal Reference Number</strong>.
+          </p>
+        </div>
+
+        <div class="banner-step">
+          <div class="banner-step-title">
+            <span class="step-badge-offline">STEP 2: PHYSICAL SUBMISSION</span>
+            <span>Submit via Offline Application Draft Builder</span>
+          </div>
+          <p>
+            Open our <a href="form.html" style="color:var(--amber-600); font-weight:700;">Offline Application Draft Builder</a>, enter your Online Reference Number, and download the full legal petition. <strong>The downloaded application must be printed, signed, and physically submitted along with certified/self-attested copies of all documents mentioned in the appeal</strong> to the Appellate Authority / Dropbox (DM/SDM office).
+          </p>
+        </div>
+      </div>
+
+      <div class="banner-warning">
+        Notice: An online appeal alone without physical submission of documentary proofs is incomplete because the online portal does not accept attachments. Both steps are mandatory.
+      </div>
+    </div>
+
+    <!-- Layout Grid -->
+    <div class="layout-grid">
+
+      <!-- LEFT: Inputs & Scenario Selection -->
+      <div class="input-panel">
+        <div class="section-title">
+          <span>1. Elector &amp; Jurisdiction Details</span>
+        </div>
+
+        <div class="form-group">
+          <label for="stateSelect">State / Union Territory *</label>
+          <select id="stateSelect">
+            <option value="Karnataka" selected>Karnataka</option>
+            <option value="Andhra Pradesh">Andhra Pradesh</option>
+            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+            <option value="Assam">Assam</option>
+            <option value="Bihar">Bihar</option>
+            <option value="Chhattisgarh">Chhattisgarh</option>
+            <option value="Goa">Goa</option>
+            <option value="Gujarat">Gujarat</option>
+            <option value="Haryana">Haryana</option>
+            <option value="Himachal Pradesh">Himachal Pradesh</option>
+            <option value="Jharkhand">Jharkhand</option>
+            <option value="Kerala">Kerala</option>
+            <option value="Madhya Pradesh">Madhya Pradesh</option>
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="Manipur">Manipur</option>
+            <option value="Meghalaya">Meghalaya</option>
+            <option value="Mizoram">Mizoram</option>
+            <option value="Nagaland">Nagaland</option>
+            <option value="Odisha">Odisha</option>
+            <option value="Punjab">Punjab</option>
+            <option value="Rajasthan">Rajasthan</option>
+            <option value="Sikkim">Sikkim</option>
+            <option value="Tamil Nadu">Tamil Nadu</option>
+            <option value="Telangana">Telangana</option>
+            <option value="Tripura">Tripura</option>
+            <option value="Uttar Pradesh">Uttar Pradesh</option>
+            <option value="Uttarakhand">Uttarakhand</option>
+            <option value="West Bengal">West Bengal</option>
+            <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+            <option value="Chandigarh">Chandigarh</option>
+            <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+            <option value="Delhi (NCT)">Delhi (NCT)</option>
+            <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+            <option value="Ladakh">Ladakh</option>
+            <option value="Lakshadweep">Lakshadweep</option>
+            <option value="Puducherry">Puducherry</option>
+          </select>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="electorName">Elector Full Name *</label>
+            <input type="text" id="electorName" placeholder="e.g. Mohammed Farooq Khan">
+          </div>
+          <div class="form-group">
+            <label for="relativeName">Father / Relative Name *</label>
+            <input type="text" id="relativeName" placeholder="e.g. Abdul Rahim Khan">
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="epicNo">Current EPIC No. *</label>
+            <input type="text" id="epicNo" placeholder="e.g. ABC1234567">
+          </div>
+          <div class="form-group">
+            <label for="acName">Assembly Constituency *</label>
+            <input type="text" id="acName" placeholder="e.g. 159 - Pulakeshinagar">
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="partNo">Part No. (Booth)</label>
+            <input type="text" id="partNo" placeholder="e.g. 142">
+          </div>
+          <div class="form-group">
+            <label for="slNo">Serial No. in Roll</label>
+            <input type="text" id="slNo" placeholder="e.g. 385">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="address">Ordinary Residential Address *</label>
+          <input type="text" id="address" placeholder="e.g. No. 45, Mosque Road, Frazer Town, Bengaluru">
+          <div class="field-hint">Keep address succinct to preserve characters for legal grounds.</div>
+        </div>
+
+        <!-- Scenario Selection -->
+        <div class="section-title" style="margin-top: 1.25rem;">
+          <span>2. Select SIR Notice / Deletion Scenario</span>
+        </div>
+
+        <div class="scenario-picker-box">
+          <label for="formatSelect" style="color:var(--navy-900);">Select Scenario (1 of 13) *</label>
+          <select id="formatSelect" class="format-select">
+            <option value="scenario1">Scenario 1: Details Related to You/Your Relative Could Not Be Established</option>
+            <option value="scenario2">Scenario 2: Six or More Siblings When Linkage Is Correct</option>
+            <option value="scenario3">Scenario 3: Six or More Siblings When Linkage Is Incorrect</option>
+            <option value="scenario4">Scenario 4: Age Discrepancy — Parents (15 Yrs or Less / 50 Yrs or More) — Age Correct in 2002 SIR</option>
+            <option value="scenario5">Scenario 5: Age Discrepancy — Parents (15 Yrs or Less / 50 Yrs or More) — Age Incorrect in 2002 SIR</option>
+            <option value="scenario6">Scenario 6: Father's Name Mismatch Between Current Roll and Previous SIR Roll</option>
+            <option value="scenario7">Scenario 7: Age Discrepancy — Grandparents (40 Years) — Age Incorrectly Stated in SIR 2002</option>
+            <option value="scenario8">Scenario 8: Age Discrepancy — Grandparents (40 Years) — Age Correctly Stated in SIR 2002</option>
+            <option value="scenario9">Scenario 9: Self-Name Mismatch Between Current Roll and Previous SIR Roll</option>
+            <option value="scenario10">Scenario 10: Sibling Age Gap of Less Than 9 Months</option>
+            <option value="scenario11">Scenario 11: Deletion/Flagging on Ground of Alleged Non-Citizenship / "Doubtful" Status</option>
+            <option value="scenario12">Scenario 12: Wrongful Deletion Despite Continued Domicile — Temporary Absence at Enumeration</option>
+            <option value="scenario13">Scenario 13: Wrongful Deletion on Fraudulent / Unauthorized Form 7 (Illegal Objection)</option>
+          </select>
+        </div>
+
+        <!-- Dynamic Inputs for Selected Scenario -->
+        <div class="section-title">
+          <span>3. Scenario Specific Details</span>
+        </div>
+        <div id="dynamicInputsContainer" class="dynamic-scenario-fields">
+          <!-- Populated by JS -->
+        </div>
+
+      </div>
+
+      <!-- RIGHT: Live Character-Monitored Output & Alert Engine -->
+      <div class="output-panel">
+
+        <!-- Global Alert Banner for Limit Breach -->
+        <div id="breachAlertBanner" class="limit-alert-banner">
+          <div class="alert-banner-title">
+            <span>🚨 CHARACTER LIMIT BREACHED — ECI PORTAL WILL REJECT</span>
+          </div>
+          <div class="alert-banner-desc" id="breachAlertDesc">
+            One or more fields exceed the strict limits enforced on voters.eci.gov.in. You must condense the text below before copying.
+          </div>
+          <div class="alert-banner-metrics">
+            <span id="breachFactsMetric"></span>
+            <span id="breachReliefMetric"></span>
+          </div>
+        </div>
+
+        <!-- Status OK Banner -->
+        <div id="statusOkBanner" class="status-ok-banner">
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span style="font-size:1.1rem;">✅</span>
+            <strong>ECI Portal Character Limits Respected:</strong> All fields are under maximum thresholds.
+          </div>
+          <div style="font-family:monospace; font-size:0.8rem; font-weight:700;">
+            Facts &lt;1,000 &bull; Relief &lt;500
+          </div>
+        </div>
+
+        <!-- Box 1: Brief Facts of Appeal (< 1,000 Chars) -->
+        <div class="draft-card" id="cardFacts">
+          <div class="draft-card-header">
+            <div class="draft-card-title">
+              <span>1. Brief Facts of Appeal</span>
+              <span style="font-size:0.75rem; font-weight:normal; opacity:0.85;">(Field 1 on Portal)</span>
+            </div>
+            <div class="char-badge safe" id="badgeFacts">
+              <span id="countFacts">0</span> / 1,000 chars
+            </div>
+          </div>
+          <div class="draft-card-body">
+            <textarea id="textFacts" class="draft-textarea" spellcheck="false" placeholder="Generating Brief Facts of Appeal..."></textarea>
+            <div class="card-alert-msg" id="alertFactsMsg">
+              ⚠️ <strong>EXCEEDS 1,000 CHARACTER LIMIT:</strong> Brief Facts must be strictly under 1,000 characters. Please trim details.
+            </div>
+          </div>
+          <div class="draft-card-footer">
+            <div>
+              <span>Official ECI Cap: <strong>1,000 Characters</strong></span>
+            </div>
+            <div style="display:flex; gap:0.5rem;">
+              <button type="button" class="copy-btn" id="btnResetFacts" title="Reset to auto-generated template">
+                ↺ Reset
+              </button>
+              <button type="button" class="copy-btn" id="btnCopyFacts">
+                <span>📋 Copy Brief Facts</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Box 2: Relief Sought (< 500 Chars) -->
+        <div class="draft-card" id="cardRelief">
+          <div class="draft-card-header">
+            <div class="draft-card-title">
+              <span>2. Relief Sought</span>
+              <span style="font-size:0.75rem; font-weight:normal; opacity:0.85;">(Field 2 on Portal)</span>
+            </div>
+            <div class="char-badge safe" id="badgeRelief">
+              <span id="countRelief">0</span> / 500 chars
+            </div>
+          </div>
+          <div class="draft-card-body">
+            <textarea id="textRelief" class="draft-textarea" spellcheck="false" placeholder="Generating Relief Sought..."></textarea>
+            <div class="card-alert-msg" id="alertReliefMsg">
+              ⚠️ <strong>EXCEEDS 500 CHARACTER LIMIT:</strong> Relief Sought must be strictly under 500 characters. Please trim details.
+            </div>
+          </div>
+          <div class="draft-card-footer">
+            <div>
+              <span>Official ECI Cap: <strong>500 Characters</strong></span>
+            </div>
+            <div style="display:flex; gap:0.5rem;">
+              <button type="button" class="copy-btn" id="btnResetRelief" title="Reset to auto-generated template">
+                ↺ Reset
+              </button>
+              <button type="button" class="copy-btn" id="btnCopyRelief">
+                <span>📋 Copy Relief Sought</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Complete ECI Submission Bundle & Next Steps -->
+        <div class="next-steps-card">
+          <div class="next-steps-title">
+            <span>🚀 What to Do After Filing on voters.eci.gov.in</span>
+          </div>
+          <ol class="next-steps-list">
+            <li>
+              <span class="step-num">1</span>
+              <div>
+                <strong>Paste into ECI Portal:</strong> Open <a href="https://voters.eci.gov.in" target="_blank" style="color:var(--amber-500); text-decoration:underline;">voters.eci.gov.in</a>, navigate to Appeal, paste <em>Brief Facts</em> and <em>Relief Sought</em>, and submit.
+              </div>
+            </li>
+            <li>
+              <span class="step-num">2</span>
+              <div>
+                <strong>Record Online Reference Number:</strong> Save the electronic acknowledgment tracking number (e.g. <code>APP/2026/XXXXX</code>).
+              </div>
+            </li>
+            <li>
+              <span class="step-num">3</span>
+              <div>
+                <strong>Generate Offline Representation:</strong> Open <a href="form.html" style="color:var(--amber-500); text-decoration:underline;">Offline Application Draft Builder</a>, check "Yes" for online appeal, enter your reference number, and download the full legal petition.
+              </div>
+            </li>
+            <li>
+              <span class="step-num">4</span>
+              <div>
+                <strong>Physical Submission with Documents:</strong> <em>The downloaded application must be printed, signed, and physically submitted along with certified/self-attested copies of all documents mentioned in the appeal</em> to the Appellate Authority / Dropbox (DM/SDM office).
+              </div>
+            </li>
+          </ol>
+
+          <div class="cta-actions">
+            <button type="button" class="btn btn-secondary" id="btnCopyBoth">
+              <span>📋 Copy Both for Portal</span>
+            </button>
+            <a href="https://voters.eci.gov.in" target="_blank" rel="noopener noreferrer" class="btn btn-portal">
+              <span>Open voters.eci.gov.in ↗</span>
+            </a>
+            <a href="form.html" class="btn btn-primary">
+              <span>Open Offline Application Draft Builder &rarr;</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">Text copied to clipboard!</div>
+
+  <script>
+    // State Store
+    const state = {
+      electorState: 'Karnataka',
+      electorName: '',
+      relativeName: '',
+      epicNo: '',
+      acName: '',
+      partNo: '',
+      slNo: '',
+      address: '',
+      scenario: 'scenario1',
+
+      // Scenario dynamic fields
+      s1_prevPart: '',
+      s1_prevSl: '',
+      s1_pedigreeDoc: 'Family Pedigree / Ration Card',
+
+      s2_father: '',
+      s2_siblings: 'Ayesha, Zaid, Bilal',
+
+      s3_father: '',
+      s3_erroneousPersons: 'Clustered Non-Family Names',
+
+      s4_parent: '',
+      s4_ageGap: 'less than 15 years',
+      s4_reason: 'early customary marriage and clerical entry',
+
+      s5_parentRollName: '',
+      s5_parentDocName: 'Birth Certificate / School Record',
+
+      s6_fatherTrue: '',
+      s6_fatherCurrent: '',
+      s6_fatherPrev: '',
+
+      s7_gpName: '',
+      s7_gpDocName: 'School Leaving Certificate / Civil Proof',
+
+      s8_gpName: '',
+      s8_marriageCustom: 'customary lineage timing',
+
+      s9_actualName: '',
+      s9_selfCurrent: '',
+      s9_selfPrev: '',
+
+      s10_progenyName: '',
+      s10_parentName: '',
+      s10_reason: 'twin birth',
+
+      s11_citizenshipBy: 'birth',
+      s11_applicantDobPob: '',
+      s11_fatherName: '',
+      s11_motherName: '',
+
+      s12_absenceReason: 'employment / education',
+      s12_docProof: 'Property Tax / Electricity Bill',
+
+      s13_objectorName: 'Unconnected Third-Party Objector'
+    };
+
+    // User edits flags (to preserve manual edits until reset)
+    let userEditedFacts = false;
+    let userEditedRelief = false;
+
+    // Helper: Safe Value with fallback
+    function val(v, fallback) {
+      if (!v || !v.trim()) return fallback;
+      return v.trim();
+    }
+
+    // Dynamic Scenario Form Fields Generator
+    function renderDynamicInputs() {
+      const container = document.getElementById('dynamicInputsContainer');
+      const sc = state.scenario;
+      let h = '';
+
+      switch (sc) {
+        case 'scenario1':
+          h = `
+            <div class="grid-2">
+              <div class="form-group">
+                <label>Baseline (2002) Part No.</label>
+                <input type="text" id="s1_prevPart" value="${state.s1_prevPart}" placeholder="e.g. 138">
+              </div>
+              <div class="form-group">
+                <label>Baseline (2002) Sl No.</label>
+                <input type="text" id="s1_prevSl" value="${state.s1_prevSl}" placeholder="e.g. 210">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Pedigree Proof Document</label>
+              <input type="text" id="s1_pedigreeDoc" value="${state.s1_pedigreeDoc}" placeholder="e.g. Family Pedigree / Ration Card">
+            </div>
+          `;
+          break;
+
+        case 'scenario2':
+          h = `
+            <div class="form-group">
+              <label>Father's Name in Roll</label>
+              <input type="text" id="s2_father" value="${state.s2_father}" placeholder="e.g. Abdul Rahim Khan">
+            </div>
+            <div class="form-group">
+              <label>Names of Genuine Siblings (comma separated)</label>
+              <input type="text" id="s2_siblings" value="${state.s2_siblings}" placeholder="e.g. Ayesha, Zaid, Bilal, Maryam">
+            </div>
+          `;
+          break;
+
+        case 'scenario3':
+          h = `
+            <div class="form-group">
+              <label>Father's Name</label>
+              <input type="text" id="s3_father" value="${state.s3_father}" placeholder="e.g. Abdul Rahim Khan">
+            </div>
+            <div class="form-group">
+              <label>Erroneously Clustered / Unassociated Names</label>
+              <input type="text" id="s3_erroneousPersons" value="${state.s3_erroneousPersons}" placeholder="e.g. Unrelated Individuals incorrectly linked">
+            </div>
+          `;
+          break;
+
+        case 'scenario4':
+          h = `
+            <div class="form-group">
+              <label>Parent's Name in Roll</label>
+              <input type="text" id="s4_parent" value="${state.s4_parent}" placeholder="e.g. Abdul Rahim Khan">
+            </div>
+            <div class="grid-2">
+              <div class="form-group">
+                <label>Age Gap Condition</label>
+                <select id="s4_ageGap">
+                  <option value="less than 15 years" ${state.s4_ageGap === 'less than 15 years' ? 'selected' : ''}>Less than 15 years</option>
+                  <option value="50 years or more" ${state.s4_ageGap === '50 years or more' ? 'selected' : ''}>50 years or more</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Circumstance / Reason</label>
+                <input type="text" id="s4_reason" value="${state.s4_reason}" placeholder="e.g. early customary marriage and clerical entry">
+              </div>
+            </div>
+          `;
+          break;
+
+        case 'scenario5':
+          h = `
+            <div class="form-group">
+              <label>Parent's Name in 2002 Roll</label>
+              <input type="text" id="s5_parentRollName" value="${state.s5_parentRollName}" placeholder="e.g. Abdul Rahim Khan">
+            </div>
+            <div class="form-group">
+              <label>Parent's Authentic Age Proof Document</label>
+              <input type="text" id="s5_parentDocName" value="${state.s5_parentDocName}" placeholder="e.g. Birth Certificate / School Record">
+            </div>
+          `;
+          break;
+
+        case 'scenario6':
+          h = `
+            <div class="form-group">
+              <label>Father's Correct / True Name</label>
+              <input type="text" id="s6_fatherTrue" value="${state.s6_fatherTrue}" placeholder="e.g. Abdul Rahim Khan">
+            </div>
+            <div class="grid-2">
+              <div class="form-group">
+                <label>Father's Name in Current Roll</label>
+                <input type="text" id="s6_fatherCurrent" value="${state.s6_fatherCurrent}" placeholder="e.g. Abdul Raheem">
+              </div>
+              <div class="form-group">
+                <label>Father's Name in 2002 Roll</label>
+                <input type="text" id="s6_fatherPrev" value="${state.s6_fatherPrev}" placeholder="e.g. Abdul Rahim Khan">
+              </div>
+            </div>
+          `;
+          break;
+
+        case 'scenario7':
+          h = `
+            <div class="form-group">
+              <label>Grandparent's Name</label>
+              <input type="text" id="s7_gpName" value="${state.s7_gpName}" placeholder="e.g. Ghulam Mohiuddin">
+            </div>
+            <div class="form-group">
+              <label>Grandparent's Authentic Document</label>
+              <input type="text" id="s7_gpDocName" value="${state.s7_gpDocName}" placeholder="e.g. School Leaving Certificate / Civil Proof">
+            </div>
+          `;
+          break;
+
+        case 'scenario8':
+          h = `
+            <div class="form-group">
+              <label>Grandparent's Name</label>
+              <input type="text" id="s8_gpName" value="${state.s8_gpName}" placeholder="e.g. Ghulam Mohiuddin">
+            </div>
+            <div class="form-group">
+              <label>Genealogical Circumstance</label>
+              <input type="text" id="s8_marriageCustom" value="${state.s8_marriageCustom}" placeholder="e.g. customary lineage timing">
+            </div>
+          `;
+          break;
+
+        case 'scenario9':
+          h = `
+            <div class="form-group">
+              <label>Elector's True Name</label>
+              <input type="text" id="s9_actualName" value="${state.s9_actualName}" placeholder="e.g. Mohammed Farooq Khan">
+            </div>
+            <div class="grid-2">
+              <div class="form-group">
+                <label>Name in Current Roll</label>
+                <input type="text" id="s9_selfCurrent" value="${state.s9_selfCurrent}" placeholder="e.g. Mohd Farooq">
+              </div>
+              <div class="form-group">
+                <label>Name in 2002 Baseline Roll</label>
+                <input type="text" id="s9_selfPrev" value="${state.s9_selfPrev}" placeholder="e.g. Mohammed Farooq Khan">
+              </div>
+            </div>
+          `;
+          break;
+
+        case 'scenario10':
+          h = `
+            <div class="grid-2">
+              <div class="form-group">
+                <label>Sibling's Name</label>
+                <input type="text" id="s10_progenyName" value="${state.s10_progenyName}" placeholder="e.g. Zaid Khan">
+              </div>
+              <div class="form-group">
+                <label>Parent's Name</label>
+                <input type="text" id="s10_parentName" value="${state.s10_parentName}" placeholder="e.g. Abdul Rahim Khan">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Reason for Less Than 9 Months Gap</label>
+              <select id="s10_reason">
+                <option value="twin birth" ${state.s10_reason === 'twin birth' ? 'selected' : ''}>Twin Birth</option>
+                <option value="clerical estimation error in rolls" ${state.s10_reason === 'clerical estimation error in rolls' ? 'selected' : ''}>Clerical Estimation Error in Historical Rolls</option>
+                <option value="legal adoption" ${state.s10_reason === 'legal adoption' ? 'selected' : ''}>Legal Adoption / Remarriage</option>
+              </select>
+            </div>
+          `;
+          break;
+
+        case 'scenario11':
+          h = `
+            <div class="grid-2">
+              <div class="form-group">
+                <label>Citizenship Ground</label>
+                <select id="s11_citizenshipBy">
+                  <option value="birth" ${state.s11_citizenshipBy === 'birth' ? 'selected' : ''}>By Birth (Sec 3 Citizenship Act)</option>
+                  <option value="descent" ${state.s11_citizenshipBy === 'descent' ? 'selected' : ''}>By Descent (Sec 4 Citizenship Act)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Date &amp; Place of Birth</label>
+                <input type="text" id="s11_applicantDobPob" value="${state.s11_applicantDobPob}" placeholder="e.g. 04/05/1988 at Bengaluru, Karnataka">
+              </div>
+            </div>
+            <div class="grid-2">
+              <div class="form-group">
+                <label>Father's Name</label>
+                <input type="text" id="s11_fatherName" value="${state.s11_fatherName}" placeholder="e.g. Abdul Rahim Khan">
+              </div>
+              <div class="form-group">
+                <label>Mother's Name</label>
+                <input type="text" id="s11_motherName" value="${state.s11_motherName}" placeholder="e.g. Fatima Begum">
+              </div>
+            </div>
+          `;
+          break;
+
+        case 'scenario12':
+          h = `
+            <div class="form-group">
+              <label>Reason for Temporary Absence</label>
+              <input type="text" id="s12_absenceReason" value="${state.s12_absenceReason}" placeholder="e.g. employment / higher education / medical treatment">
+            </div>
+            <div class="form-group">
+              <label>Proof of Continued Domicile</label>
+              <input type="text" id="s12_docProof" value="${state.s12_docProof}" placeholder="e.g. Property Tax / Electricity Bill / Aadhaar">
+            </div>
+          `;
+          break;
+
+        case 'scenario13':
+          h = `
+            <div class="form-group">
+              <label>False / Unauthorized Objector's Name</label>
+              <input type="text" id="s13_objectorName" value="${state.s13_objectorName}" placeholder="e.g. Unconnected Third-Party Objector">
+            </div>
+            <div class="field-hint">Objector had no locus standi and filed objection without notice to elector.</div>
+          `;
+          break;
+      }
+
+      container.innerHTML = h;
+
+      // Attach input event listeners for newly injected elements
+      container.querySelectorAll('input, select').forEach(el => {
+        el.addEventListener('input', (e) => {
+          state[e.target.id] = e.target.value;
+          generateDrafts();
+        });
+      });
+    }
+
+    // Generator logic: creates compliant facts & relief
+    function generateTextTemplates() {
+      const sc = state.scenario;
+      const name = val(state.electorName, '[Elector Name]');
+      const relative = val(state.relativeName, '[Relative Name]');
+      const epic = val(state.epicNo, '[EPIC No.]');
+      const ac = val(state.acName, '[Assembly Constituency]');
+      const part = val(state.partNo, '[Part]');
+      const sl = val(state.slNo, '[Sl]');
+      const address = val(state.address, '[Residential Address]');
+
+      let facts = '';
+      let relief = '';
+
+      switch (sc) {
+        case 'scenario1': {
+          const prevPart = val(state.s1_prevPart, '[2002 Part]');
+          const prevSl = val(state.s1_prevSl, '[2002 Sl]');
+          const pedigree = val(state.s1_pedigreeDoc, 'Family Pedigree');
+          facts = `Appellant ${name}, EPIC: ${epic}, Part: ${part}, Sl: ${sl}, AC: ${ac}, is a bona fide Indian citizen continuously residing at ${address}. An adverse notice/rejection was issued stating details related to relative ${relative} could not be established. Appellant submits that relative was enrolled in baseline roll (Part ${prevPart}, Sl ${prevSl}) and certified family pedigree proves direct lineage. The finding of non-establishment is arbitrary, contrary to official electoral baselines, and violates natural justice without proper local inquiry. An offline application with detailed facts of the issue will be submitted with the appellate authority.`;
+          relief = `Quash the rejection/notice; verify certified baseline records and family pedigree; direct inclusion/restoration of Appellant ${name} (EPIC: ${epic}) in the current electoral roll of AC ${ac}; issue an updated EPIC.`;
+          break;
+        }
+
+        case 'scenario2': {
+          const father = val(state.s2_father, relative);
+          const siblings = val(state.s2_siblings, 'siblings');
+          facts = `Appellant ${name}, EPIC: ${epic}, Part: ${part}, Sl: ${sl}, AC: ${ac}, resides at ${address}. Notice was issued solely questioning family size having 6 or more siblings (${siblings}) linked to father ${father}. Appellant clarifies that all siblings are genuine biological progeny of ${father}. Large family size is a demographic reality and cannot constitute legal ground for flagging or deletion. Valid ration card, school records, and certified baseline roll confirm genuine parentage. An offline application with detailed facts of the issue will be submitted with the appellate authority.`;
+          relief = `Dismiss objection regarding sibling count; confirm correct linkage to father ${father}; restore Appellant ${name} (EPIC: ${epic}) in electoral roll with full voting rights.`;
+          break;
+        }
+
+        case 'scenario3': {
+          const father = val(state.s3_father, relative);
+          const badEntries = val(state.s3_erroneousPersons, 'unrelated individuals');
+          facts = `Appellant ${name}, EPIC: ${epic}, Part: ${part}, Sl: ${sl}, AC: ${ac}, resides at ${address}. Notice was issued alleging 6 or more siblings linked to father ${father}. Appellant clarifies that erroneous clerical clustering occurred during enumeration, linking unassociated individuals (${badEntries}) to father's record. Appellant's actual family consists of genuine siblings confirmed by Parivar Register/Ration Card. Erroneous linkages must be severed without penalizing genuine electors. An offline application with detailed facts of the issue will be submitted with the appellate authority.`;
+          relief = `Correct clerical over-linkage; sever unauthorized entries; confirm genuine family linkage to father ${father}; maintain Appellant ${name} (EPIC: ${epic}) on the current electoral roll of AC ${ac}.`;
+          break;
+        }
+
+        case 'scenario4': {
+          const parent = val(state.s4_parent, relative);
+          const gap = val(state.s4_ageGap, 'less than 15 years');
+          const reason = val(state.s4_reason, 'customary biological circumstances');
+          facts = `Appellant ${name}, EPIC: ${epic}, Part: ${part}, Sl: ${sl}, AC: ${ac}, resides at ${address}. Notice alleges parental age discrepancy (${gap} between parent ${parent} and applicant), where parent's age was correctly recorded in 2002 SIR roll. Appellant clarifies that the age gap arises from genuine biological/historical circumstances (${reason}). Documentary evidence including birth certificates and school records substantiate genuine biological relationship and bona fide voting status. An offline application with detailed facts of the issue will be submitted with the appellate authority.`;
+          relief = `Accept documentary proofs explaining parental age gap; drop adverse notice; confirm linkage to parent ${parent}; restore Appellant ${name} (EPIC: ${epic}) in AC ${ac} electoral roll.`;
+          break;
+        }
+
+        case 'scenario5': {
+          const parentName = val(state.s5_parentRollName, relative);
+          const doc = val(state.s5_parentDocName, 'Birth Certificate');
+          facts = `Appellant ${name}, EPIC: ${epic}, Part: ${part}, Sl: ${sl}, AC: ${ac}, resides at ${address}. Notice cites apparent parental age discrepancy. Appellant submits that parent ${parentName}'s age was erroneously recorded in 2002 SIR roll due to clerical estimation. Parent's actual birth date is supported by authentic civil documentation (${doc}). Clerical errors in historical rolls cannot extinguish fundamental voting rights of bona fide citizens. An offline application with detailed facts of the issue will be submitted with the appellate authority.`;
+          relief = `Take on record parent's authentic age proof; correct historical clerical discrepancy; uphold genuine parent-child linkage; restore Appellant ${name} (EPIC: ${epic}) in AC ${ac} electoral roll.`;
+          break;
+        }
+
+        case 'scenario6': {
+          const fTrue = val(state.s6_fatherTrue, relative);
+          const fCurr = val(state.s6_fatherCurrent, relative);
+          const fPrev = val(state.s6_fatherPrev, relative);
+          facts = `Appellant ${name}, EPIC: ${epic}, Part: ${part}, Sl: ${sl}, AC: ${ac}, resides at ${address}. Notice alleges mismatch in father's name between current roll ('${fCurr}') and baseline SIR roll ('${fPrev}'). Appellant clarifies this is a minor phonetic/spelling variance in vernacular translation. Father's true identity is ${fTrue}. Form 8 was submitted for rectification. Lineage is proven by authentic school and civil records. An offline application with detailed facts of the issue will be submitted with the appellate authority.`;
+          relief = `Order vernacular spelling correction; accept identity of father ${fTrue}; drop mismatch objection; ensure uninterrupted enrollment of Appellant ${name} in AC ${ac} roll.`;
+          break;
+        }
+
+        case 'scenario7': {
+          const gpName = val(state.s7_gpName, '[Grandparent Name]');
+          const gpDoc = val(state.s7_gpDocName, 'authentic civil documents');
+          facts = `Appellant ${name}, EPIC: ${epic}, Part: ${part}, Sl: ${sl}, AC: ${ac}, resides at ${address}. Notice cites alleged 40-year grandparental age discrepancy. Appellant submits that grandparent ${gpName}'s age in 2002 SIR roll was an approximate clerical entry. Authentic civil documents (${gpDoc}) establish correct chronological age. Historical estimation errors of enumerators cannot defeat constitutional voting rights of third-generation descendants. An offline application with detailed facts of the issue will be submitted with the appellate authority.`;
+          relief = `Accept grandparent's authentic age records; resolve historical clerical variance; drop adverse proceedings; retain Appellant ${name} (EPIC: ${epic}) in AC ${ac} electoral roll.`;
+          break;
+        }
+
+        case 'scenario8': {
+          const gpName = val(state.s8_gpName, '[Grandparent Name]');
+          facts = `Appellant ${name}, EPIC: ${epic}, Part: ${part}, Sl: ${sl}, AC: ${ac}, resides at ${address}. Notice questions grandparental age gap of 40 years where grandparent's age was correctly recorded in 2002 SIR roll. Appellant submits that the age difference is biologically and socially genuine, reflecting customary marriage timing. Clear family tree and registered documents corroborate genuine genealogical descent. An offline application with detailed facts of the issue will be submitted with the appellate authority.`;
+          relief = `Uphold validity of grandparental lineage; drop objection regarding age gap; confirm uninterrupted enrollment of Appellant ${name} (EPIC: ${epic}) in AC ${ac} roll.`;
+          break;
+        }
+
+        case 'scenario9': {
+          const trueName = val(state.s9_actualName, name);
+          const sCurr = val(state.s9_selfCurrent, name);
+          const sPrev = val(state.s9_selfPrev, name);
+          facts = `Appellant ${name}, EPIC: ${epic}, Part: ${part}, Sl: ${sl}, AC: ${ac}, resides at ${address}. Adverse notice alleges mismatch between Appellant's name in current roll ('${sCurr}') and baseline roll ('${sPrev}'). Appellant clarifies that both entries refer to the exact same individual; variance arose from clerical transcription or marital title. Aadhaar, Passport, and school certificates confirm true name ${trueName}. An offline application with detailed facts of the issue will be submitted with the appellate authority.`;
+          relief = `Rectify clerical name variance; confirm single identity of Appellant ${trueName} (EPIC: ${epic}); restore name in AC ${ac} electoral roll with corrected particulars.`;
+          break;
+        }
+
+        case 'scenario10': {
+          const sib = val(state.s10_progenyName, '[Sibling Name]');
+          const parent = val(state.s10_parentName, relative);
+          const reason = val(state.s10_reason, 'twin birth');
+          facts = `Appellant ${name}, EPIC: ${epic}, Part: ${part}, Sl: ${sl}, AC: ${ac}, resides at ${address}. Notice alleges abnormal sibling age gap of less than 9 months between Appellant and sibling ${sib}. Appellant clarifies that this is due to (${reason}). Both are genuine children of parent ${parent}. Hospital and school records conclusively establish genuine birth circumstances. An offline application with detailed facts of the issue will be submitted with the appellate authority.`;
+          relief = `Accept documentary proofs explaining sibling birth gap; drop objection; confirm legitimate sibling linkage to parent ${parent}; restore Appellant ${name} in AC ${ac} roll.`;
+          break;
+        }
+
+        case 'scenario11': {
+          const by = val(state.s11_citizenshipBy, 'birth');
+          const dobPob = val(state.s11_applicantDobPob, 'in India');
+          const fName = val(state.s11_fatherName, relative);
+          const mName = val(state.s11_motherName, '[Mother Name]');
+          facts = `Appellant ${name}, EPIC: ${epic}, Part: ${part}, Sl: ${sl}, AC: ${ac}, resides at ${address}. Notice/flagging arbitrarily questions citizenship status as 'doubtful'. Appellant is an Indian citizen by ${by} under Citizenship Act 1955, born ${dobPob}. Parents (${fName}, ${mName}) were enrolled in baseline rolls. Electoral authorities possess no summary jurisdiction to question citizenship of enrolled voters without Tribunal reference (Lal Babu Hussein v ECI). An offline application with detailed facts of the issue will be submitted with the appellate authority.`;
+          relief = `Quash arbitrary 'doubtful' flag; declare Appellant a verified citizen-elector; restore full voting rights of Appellant ${name} (EPIC: ${epic}) in AC ${ac} electoral roll without impediment.`;
+          break;
+        }
+
+        case 'scenario12': {
+          const reason = val(state.s12_absenceReason, 'employment/education');
+          facts = `Appellant ${name}, EPIC: ${epic}, Part: ${part}, Sl: ${sl}, AC: ${ac}. Notice/deletion ordered on ground of alleged non-residence. Appellant maintains continuous permanent domicile at ${address} and was only temporarily absent due to ${reason}. Under RPA 1950 Sec 20(1A), temporary absence for work/education does not terminate ordinary residence. Domicile proof, property tax, and utility bills confirm permanent residence. An offline application with detailed facts of the issue will be submitted with the appellate authority.`;
+          relief = `Set aside wrongful deletion; hold that temporary absence does not terminate ordinary residence; immediately reinstate Appellant ${name} (EPIC: ${epic}) in AC ${ac} roll at ${address}.`;
+          break;
+        }
+
+        case 'scenario13': {
+          const obj = val(state.s13_objectorName, 'unconnected third party');
+          facts = `Appellant ${name}, EPIC: ${epic}, Part: ${part}, Sl: ${sl}, AC: ${ac}, resides at ${address}. Deletion was fraudulently executed based on unauthorized Form 7 objection filed by stranger ${obj}. Appellant received zero notice and was denied hearing in blatant violation of Section 22 RPA 1950 and natural justice. Objector lacked locus standi and filed malicious objection. Appellant has never shifted and resides permanently at given address. An offline application with detailed facts of the issue will be submitted with the appellate authority.`;
+          relief = `Declare Form 7 objection fraudulent and void ab initio; reinstate Appellant ${name} (EPIC: ${epic}) immediately in AC ${ac} electoral roll; initiate penal action under Section 31 RPA against false objector.`;
+          break;
+        }
+      }
+
+      // Ensure offline application statement is strictly present across all scenarios
+      const offlineNotice = 'An offline application with detailed facts of the issue will be submitted with the appellate authority.';
+      if (facts && !facts.includes(offlineNotice)) {
+        facts += ' ' + offlineNotice;
+      }
+
+      return { facts, relief };
+    }
+
+    // Refresh display & monitors
+    function generateDrafts() {
+      const templates = generateTextTemplates();
+
+      const textFacts = document.getElementById('textFacts');
+      const textRelief = document.getElementById('textRelief');
+
+      if (!userEditedFacts) {
+        textFacts.value = templates.facts;
+      }
+      if (!userEditedRelief) {
+        textRelief.value = templates.relief;
+      }
+
+      auditCharacterLimits();
+    }
+
+    // Audit character limits and toggle UI alerts
+    function auditCharacterLimits() {
+      const textFacts = document.getElementById('textFacts').value;
+      const textRelief = document.getElementById('textRelief').value;
+
+      const lenFacts = textFacts.length;
+      const lenRelief = textRelief.length;
+
+      const countFactsEl = document.getElementById('countFacts');
+      const countReliefEl = document.getElementById('countRelief');
+
+      countFactsEl.textContent = lenFacts;
+      countReliefEl.textContent = lenRelief;
+
+      const badgeFacts = document.getElementById('badgeFacts');
+      const badgeRelief = document.getElementById('badgeRelief');
+      const cardFacts = document.getElementById('cardFacts');
+      const cardRelief = document.getElementById('cardRelief');
+      const alertFactsMsg = document.getElementById('alertFactsMsg');
+      const alertReliefMsg = document.getElementById('alertReliefMsg');
+      const textFactsEl = document.getElementById('textFacts');
+      const textReliefEl = document.getElementById('textRelief');
+
+      const breachBanner = document.getElementById('breachAlertBanner');
+      const statusOkBanner = document.getElementById('statusOkBanner');
+      const breachFactsMetric = document.getElementById('breachFactsMetric');
+      const breachReliefMetric = document.getElementById('breachReliefMetric');
+
+      let factsBreached = false;
+      let reliefBreached = false;
+
+      // Facts limit check (< 1000)
+      if (lenFacts >= 1000) {
+        factsBreached = true;
+        const over = lenFacts - 1000;
+        badgeFacts.className = 'char-badge breached';
+        cardFacts.classList.add('breached');
+        textFactsEl.classList.add('breached');
+        alertFactsMsg.innerHTML = `🚨 <strong>LIMIT BREACHED:</strong> Brief Facts has <strong>${lenFacts}</strong> characters (strictly capped at 1,000). You are <strong>${over} characters over limit</strong>! The ECI portal will reject this submission. Please trim text.`;
+        alertFactsMsg.classList.add('active');
+      } else if (lenFacts >= 850) {
+        badgeFacts.className = 'char-badge warning';
+        cardFacts.classList.remove('breached');
+        textFactsEl.classList.remove('breached');
+        alertFactsMsg.classList.remove('active');
+      } else {
+        badgeFacts.className = 'char-badge safe';
+        cardFacts.classList.remove('breached');
+        textFactsEl.classList.remove('breached');
+        alertFactsMsg.classList.remove('active');
+      }
+
+      // Relief limit check (< 500)
+      if (lenRelief >= 500) {
+        reliefBreached = true;
+        const over = lenRelief - 500;
+        badgeRelief.className = 'char-badge breached';
+        cardRelief.classList.add('breached');
+        textReliefEl.classList.add('breached');
+        alertReliefMsg.innerHTML = `🚨 <strong>LIMIT BREACHED:</strong> Relief Sought has <strong>${lenRelief}</strong> characters (strictly capped at 500). You are <strong>${over} characters over limit</strong>! The ECI portal will reject this submission. Please trim text.`;
+        alertReliefMsg.classList.add('active');
+      } else if (lenRelief >= 420) {
+        badgeRelief.className = 'char-badge warning';
+        cardRelief.classList.remove('breached');
+        textReliefEl.classList.remove('breached');
+        alertReliefMsg.classList.remove('active');
+      } else {
+        badgeRelief.className = 'char-badge safe';
+        cardRelief.classList.remove('breached');
+        textReliefEl.classList.remove('breached');
+        alertReliefMsg.classList.remove('active');
+      }
+
+      // Global Breach Banner
+      if (factsBreached || reliefBreached) {
+        breachBanner.classList.add('active');
+        statusOkBanner.style.display = 'none';
+
+        if (factsBreached && reliefBreached) {
+          breachFactsMetric.innerHTML = `• <strong>Brief Facts:</strong> ${lenFacts}/1,000 Chars (${lenFacts - 1000} over limit)`;
+          breachReliefMetric.innerHTML = `• <strong>Relief Sought:</strong> ${lenRelief}/500 Chars (${lenRelief - 500} over limit)`;
+        } else if (factsBreached) {
+          breachFactsMetric.innerHTML = `• <strong>Brief Facts:</strong> ${lenFacts}/1,000 Chars (${lenFacts - 1000} over limit)`;
+          breachReliefMetric.innerHTML = `• <strong>Relief Sought:</strong> ${lenRelief}/500 Chars (Compliant)`;
+        } else {
+          breachFactsMetric.innerHTML = `• <strong>Brief Facts:</strong> ${lenFacts}/1,000 Chars (Compliant)`;
+          breachReliefMetric.innerHTML = `• <strong>Relief Sought:</strong> ${lenRelief}/500 Chars (${lenRelief - 500} over limit)`;
+        }
+      } else {
+        breachBanner.classList.remove('active');
+        statusOkBanner.style.display = 'flex';
+      }
+    }
+
+    // Toast helper
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+
+    // Copy to clipboard helper
+    function copyText(str, btn, label) {
+      navigator.clipboard.writeText(str).then(() => {
+        btn.classList.add('copied');
+        const oldText = btn.innerHTML;
+        btn.innerHTML = '✓ Copied!';
+        showToast(label + ' copied to clipboard!');
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.innerHTML = oldText;
+        }, 2000);
+      }).catch(err => {
+        alert('Could not copy automatically. Please select text manually.');
+      });
+    }
+
+    // Initialize Event Listeners
+    window.addEventListener('DOMContentLoaded', () => {
+      // Static inputs
+      const staticInputs = ['stateSelect', 'electorName', 'relativeName', 'epicNo', 'acName', 'partNo', 'slNo', 'address'];
+      staticInputs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('input', (e) => {
+            state[id] = e.target.value;
+            generateDrafts();
+          });
+        }
+      });
+
+      // Scenario Selector
+      const formatSelect = document.getElementById('formatSelect');
+      formatSelect.addEventListener('change', (e) => {
+        state.scenario = e.target.value;
+        userEditedFacts = false;
+        userEditedRelief = false;
+        renderDynamicInputs();
+        generateDrafts();
+      });
+
+      // Textarea Manual Edits
+      const textFacts = document.getElementById('textFacts');
+      textFacts.addEventListener('input', () => {
+        userEditedFacts = true;
+        auditCharacterLimits();
+      });
+
+      const textRelief = document.getElementById('textRelief');
+      textRelief.addEventListener('input', () => {
+        userEditedRelief = true;
+        auditCharacterLimits();
+      });
+
+      // Reset Buttons
+      document.getElementById('btnResetFacts').addEventListener('click', () => {
+        userEditedFacts = false;
+        generateDrafts();
+        showToast('Brief Facts reset to template');
+      });
+
+      document.getElementById('btnResetRelief').addEventListener('click', () => {
+        userEditedRelief = false;
+        generateDrafts();
+        showToast('Relief Sought reset to template');
+      });
+
+      // Copy Buttons
+      document.getElementById('btnCopyFacts').addEventListener('click', function() {
+        const text = document.getElementById('textFacts').value;
+        if (text.length >= 1000) {
+          if (!confirm(`Warning: Brief Facts currently has ${text.length} characters (strictly capped at 1,000 on voters.eci.gov.in). Copy anyway?`)) {
+            return;
+          }
+        }
+        copyText(text, this, 'Brief Facts');
+      });
+
+      document.getElementById('btnCopyRelief').addEventListener('click', function() {
+        const text = document.getElementById('textRelief').value;
+        if (text.length >= 500) {
+          if (!confirm(`Warning: Relief Sought currently has ${text.length} characters (strictly capped at 500 on voters.eci.gov.in). Copy anyway?`)) {
+            return;
+          }
+        }
+        copyText(text, this, 'Relief Sought');
+      });
+
+      document.getElementById('btnCopyBoth').addEventListener('click', function() {
+        const textFacts = document.getElementById('textFacts').value;
+        const textRelief = document.getElementById('textRelief').value;
+        const bundle = `=== 1. BRIEF FACTS OF APPEAL (< 1,000 CHARS) ===\n${textFacts}\n\n=== 2. RELIEF SOUGHT (< 500 CHARS) ===\n${textRelief}`;
+        copyText(bundle, this, 'Both Facts & Relief');
+      });
+
+      // URL parameter check (e.g. ?format=scenario6)
+      const urlParams = new URLSearchParams(window.location.search);
+      const paramFormat = urlParams.get('format');
+      if (paramFormat && formatSelect.querySelector(`option[value="${paramFormat}"]`)) {
+        formatSelect.value = paramFormat;
+        state.scenario = paramFormat;
+      }
+
+      // Initial Render
+      renderDynamicInputs();
+      generateDrafts();
+    });
+  </script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SIR Karnataka Application Builder — Representation & Appeal Generator</title>
+  <title>SIR Karnataka Offline Application Draft Builder — Representation & Appeal Generator</title>
 
   <style>
     :root {
@@ -580,7 +580,7 @@
   <div class="top-bar">
     <div style="display: flex; align-items: center; gap: 8px;">
       <img src="APCR Logo.png" alt="APCR Logo" style="height: 20px; width: auto; background: #fff; padding: 1px 3px; border-radius: 3px;">
-      <span><strong>SIR (Karnataka): Claims, Objections &amp; Appeals</strong> | Application Builder</span>
+      <span><strong>SIR (Karnataka): Claims, Objections &amp; Appeals</strong> | Offline Application Draft Builder</span>
     </div>
     <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
       <div class="top-visitor-panel" title="Total Website Visitors">
@@ -608,10 +608,14 @@
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
           <span>Online Appeal Guide</span>
         </a>
+        <a href="online-draft-helper.html" class="back-link" style="border-color: rgba(254, 240, 138, 0.4); color: #fef08a;">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+          <span>Online Application Draft Builder (&lt;1,000 Chars)</span>
+        </a>
       </div>
       <img src="APCR Logo.png" alt="APCR Logo" class="app-header-logo" style="height: 54px; width: auto; object-fit: contain; background: #ffffff; padding: 4px 8px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.25); flex-shrink: 0;">
       <div>
-        <h1>SIR Karnataka Application Builder</h1>
+        <h1>SIR Karnataka Offline Application Draft Builder</h1>
         <div class="header-sub">Association for Protection of Civil Rights (APCR) &bull; Representation &amp; Appeal Generator</div>
       </div>
     </div>
@@ -995,6 +999,9 @@
           <p>
             <strong>Mandatory Review:</strong> These formats serve as reference models for guidance and do not constitute formal legal counsel. Every draft and representation should be reviewed properly by an expert who understands the legalities and procedural requirements, and must be customized and tweaked based on individual appellant and elector scenarios.
           </p>
+          <p style="margin-top:0.45rem; padding-top:0.45rem; border-top:1px dashed #fed7aa; color: var(--navy-900); font-weight:600;">
+            <strong>Mandatory Submission Requirement:</strong> The downloaded application must be printed, signed, and physically submitted along with certified/self-attested copies of all documents mentioned in the appeal to the designated Appellate Authority / Dropbox (at the DM / SDM / DEO office).
+          </p>
         </div>
 
         <div class="section-title">1. Common Elector &amp; Authority Details</div>
@@ -1066,7 +1073,7 @@
         <div class="form-group" style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 0.85rem 1rem; margin-bottom: 1rem;">
           <label style="font-weight: 700; color: var(--navy-900); font-size: 0.85rem; margin-bottom: 0.25rem;">Have you submitted an appeal online on the ECI Portal (voters.eci.gov.in)?</label>
           <div style="font-size: 0.75rem; color: var(--slate-600); margin-bottom: 0.65rem; line-height: 1.4;">
-            As outlined in the Volunteer Handbook, filing online first registers an official tracking record under SC oversight. <a href="appeal-guide.html" target="_blank" style="color: var(--amber-600); font-weight: 600; text-decoration: underline;">Read Step-by-Step Online Filing Guide &rarr;</a>
+            As outlined in the Volunteer Handbook, filing online first registers an official tracking record under SC oversight. <a href="online-draft-helper.html" target="_blank" style="color: var(--amber-600); font-weight: 700; text-decoration: underline;">Open Online Application Draft Builder (&lt;1,000 Chars) &rarr;</a> &bull; <a href="appeal-guide.html" target="_blank" style="color: var(--navy-700); font-weight: 600; text-decoration: underline;">Read Step-by-Step Online Guide &rarr;</a>
           </div>
           <div style="display: flex; gap: 1.25rem; margin-bottom: 0.5rem;">
             <label class="checkbox-item" style="font-weight: 600; cursor: pointer;">
@@ -2095,6 +2102,10 @@
             Email ID: ${val(s.emailId, 'Email ID')}<br>
             Current Address: ${val(s.address, 'Current Address')}
           </div>
+        </div>
+
+        <div style="margin-top: 0.85rem; padding: 6px 10px; background: #f8fafc; border: 1px dashed #94a3b8; border-radius: 4px; font-size: 0.825em; color: #334155; line-height: 1.4;">
+          <strong>Mandatory Physical Submission Requirement:</strong> This downloaded application must be printed, signed, and physically submitted along with certified/self-attested copies of all supporting documents mentioned in this appeal (Aadhaar, Birth Certificate, School Certificate, 2002 SIR Roll baseline, etc.) and the online appeal acknowledgment slip to the nearest designated Appellate Authority / Dropbox (at DM / SDM / DEO office).
         </div>
       `;
 

@@ -599,10 +599,16 @@
   <!-- App Header -->
   <header>
     <div class="header-left">
-      <a href="index.html" class="back-link">
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-        <span>Theory &amp; Legal Framework</span>
-      </a>
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <a href="index.html" class="back-link">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+          <span>Theory &amp; Legal Framework</span>
+        </a>
+        <a href="appeal-guide.html" class="back-link" style="border-color: rgba(254, 240, 138, 0.4); color: #fef08a;">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          <span>Online Appeal Guide</span>
+        </a>
+      </div>
       <img src="APCR Logo.png" alt="APCR Logo" class="app-header-logo" style="height: 54px; width: auto; object-fit: contain; background: #ffffff; padding: 4px 8px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.25); flex-shrink: 0;">
       <div>
         <h1>SIR Karnataka Application Builder</h1>
@@ -743,6 +749,10 @@
       partNo: '',
       slNo: '',
       address: '', // Unified address: populates both permanent residence and signature current address!
+
+      // Online Appeal submission status & tracking reference
+      hasOnlineAppeal: 'no',
+      onlineAppealRefNo: '',
 
       // Common document proofs & notice reference
       aadhaarNo: '',
@@ -1050,6 +1060,30 @@
           <label>Residential Address (Permanent &amp; Current)</label>
           <textarea id="address" placeholder="Complete address (e.g. #12, 1st Cross, Tannery Road, Bengaluru)">${escapeHtml(appState.address)}</textarea>
           <div class="field-hint">Unified field: Populates both permanent residence in petition body and current address in signature block.</div>
+        </div>
+
+        <!-- Online Appeal Submission Status & Tracking Reference -->
+        <div class="form-group" style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 6px; padding: 0.85rem 1rem; margin-bottom: 1rem;">
+          <label style="font-weight: 700; color: var(--navy-900); font-size: 0.85rem; margin-bottom: 0.25rem;">Have you submitted an appeal online on the ECI Portal (voters.eci.gov.in)?</label>
+          <div style="font-size: 0.75rem; color: var(--slate-600); margin-bottom: 0.65rem; line-height: 1.4;">
+            As outlined in the Volunteer Handbook, filing online first registers an official tracking record under SC oversight. <a href="appeal-guide.html" target="_blank" style="color: var(--amber-600); font-weight: 600; text-decoration: underline;">Read Step-by-Step Online Filing Guide &rarr;</a>
+          </div>
+          <div style="display: flex; gap: 1.25rem; margin-bottom: 0.5rem;">
+            <label class="checkbox-item" style="font-weight: 600; cursor: pointer;">
+              <input type="radio" name="hasOnlineAppeal" value="yes" ${appState.hasOnlineAppeal === 'yes' ? 'checked' : ''}>
+              <span>Yes, Online Appeal Submitted</span>
+            </label>
+            <label class="checkbox-item" style="font-weight: 600; cursor: pointer;">
+              <input type="radio" name="hasOnlineAppeal" value="no" ${appState.hasOnlineAppeal !== 'yes' ? 'checked' : ''}>
+              <span>No / Direct Physical Appeal</span>
+            </label>
+          </div>
+
+          <div id="onlineAppealRefBox" style="${appState.hasOnlineAppeal === 'yes' ? '' : 'display: none;'} margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px dashed #cbd5e1;">
+            <label style="font-size: 0.8rem; font-weight: 700; color: var(--navy-800);">Online Appeal Reference / Acknowledgment Number</label>
+            <input type="text" id="onlineAppealRefNo" value="${escapeHtml(appState.onlineAppealRefNo)}" placeholder="e.g. ECI/APP/2026/KA/001428">
+            <div class="field-hint">This tracking reference will be dynamically added as a dedicated line in your representation across all scenarios.</div>
+          </div>
         </div>
 
         <!-- Notice Reference -->
@@ -1870,6 +1904,17 @@
       const id = e.target.id;
       const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
 
+      // Handle radio for online appeal status
+      if (e.target.name === 'hasOnlineAppeal') {
+        appState.hasOnlineAppeal = e.target.value;
+        const box = document.getElementById('onlineAppealRefBox');
+        if (box) {
+          box.style.display = appState.hasOnlineAppeal === 'yes' ? 'block' : 'none';
+        }
+        updatePreview();
+        return;
+      }
+
       // Update common state
       if (id in appState) {
         appState[id] = value;
@@ -1964,7 +2009,14 @@
             Constituency: ${val(s.constituency, 'Constituency')}<br>
             District: ${val(s.district, 'District')}<br>
             State: ${val(s.state, 'State')}
+            ${s.hasOnlineAppeal === 'yes' ? `<br>Online Appeal Tracking Ref. No.: ${val(s.onlineAppealRefNo, 'Online Appeal Ref No.')}` : ''}
           </div>
+
+          ${s.hasOnlineAppeal === 'yes' ? `
+          <div style="background: #f8fafc; border-left: 3.5px solid #0f172a; padding: 6px 10px; margin: 0.45rem 0; font-size: 0.93em; line-height: 1.4; text-align: justify;">
+            <strong>Online Appeal Reference:</strong> This detailed representation-cum-appeal is tendered in furtherance to and continuation of the Online Appeal submitted on the official Election Commission of India portal (voters.eci.gov.in) under Application Reference / Acknowledgment No. <strong>${val(s.onlineAppealRefNo, 'Online Appeal Ref No.')}</strong>. Given that the online portal strictly does not permit the uploading of supporting documents and restricts brief facts to 1,000 characters, this physical memorandum formally places the complete factual matrix, statutory grounds, natural justice violations, and annexed certified documentary evidence on record for adjudication.
+          </div>
+          ` : ''}
 
           <div class="pet-salutation">Dear Sir/Madam,</div>
 

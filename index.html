@@ -612,12 +612,18 @@
           </div>
         </div>
       </div>
-      <div class="header-cta">
-        <a href="form.html" class="btn-cta">
-          <span>Create an Application</span>
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-        </a>
-        <span class="cta-subtext">Choose from 13 sample formats &amp; export Word document</span>
+      <div class="header-cta" style="display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-end;">
+        <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+          <a href="appeal-guide.html" class="btn-cta" style="background-color: var(--navy-700); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.25);">
+            <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            <span>Online Appeal Guide</span>
+          </a>
+          <a href="form.html" class="btn-cta">
+            <span>Application Builder</span>
+            <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          </a>
+        </div>
+        <span class="cta-subtext">Online-first protocol &bull; 13 legal formats &bull; Word (.doc) export</span>
       </div>
     </div>
   </header>
@@ -629,7 +635,11 @@
     <aside class="sidebar-nav">
       <div class="sidebar-title">Contents &amp; Navigation</div>
       <nav class="sidebar-menu">
+        <a href="appeal-guide.html" style="background: var(--amber-50); color: var(--amber-600); border-left: 3px solid var(--amber-500); font-weight: 700;">
+          <span>&#9733; Online Appeal Guide (ECINet &rarr; form.html)</span>
+        </a>
         <a href="#overview"><span>Overview</span></a>
+        <a href="#two-step-strategy"><span>Two-Step Appeal Strategy</span></a>
         <a href="#framework"><span>Legal Framework</span></a>
         <a href="#procedure"><span>6-Step Procedure</span></a>
         <a href="#formats"><span>Application Formats Index</span></a>
@@ -639,7 +649,10 @@
       </nav>
 
       <div class="sidebar-cta-box">
-        <div class="cta-text">Statutory representations:</div>
+        <div class="cta-text">Volunteer &amp; Appeal tools:</div>
+        <a href="appeal-guide.html" class="sidebar-btn-cta" style="background: var(--navy-800); color: #ffffff; margin-bottom: 0.5rem;">
+          <span>Appeal Guide &rarr;</span>
+        </a>
         <a href="form.html" class="sidebar-btn-cta">
           <span>Application Builder &rarr;</span>
         </a>
@@ -648,6 +661,39 @@
 
     <!-- Main Content Area on Right -->
     <main class="content-main">
+
+    <!-- Two-Step Appeal Strategy Section (Volunteer Handbook Protocol) -->
+    <section id="two-step-strategy" style="background: linear-gradient(135deg, #ffffff 0%, #fffdf7 100%); border: 1.5px solid #fed7aa; border-left: 5px solid var(--amber-500);">
+      <div style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--amber-600); letter-spacing: 0.05em; margin-bottom: 0.35rem;">
+        Volunteer Handbook Protocol &bull; Best Practice (APCR Karnataka)
+      </div>
+      <h2 style="border-bottom: none; margin-bottom: 0.6rem;">Two-Step Appeal Procedure: Why &amp; How to File Online First</h2>
+      <p>
+        As detailed in the <em>SIR Appeal Volunteer Handbook</em>, relying exclusively on either the online portal or a standalone physical submission creates significant procedural hurdles. The established protocol is a <strong>Two-Step Strategy</strong>:
+      </p>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+        <div style="background: #ffffff; border: 1px solid var(--slate-200); border-radius: 6px; padding: 1rem;">
+          <strong style="color: var(--navy-900); font-size: 0.9rem;">Step 1: File Online on ECI Portal</strong>
+          <p style="font-size: 0.825rem; color: var(--slate-600); margin-top: 0.35rem; line-height: 1.45;">
+            Submit your initial appeal on <a href="https://voters.eci.gov.in/" target="_blank" style="color: var(--amber-600); font-weight: 600;">voters.eci.gov.in</a> within 15 days of roll publication. This registers your appeal on ECINet under Supreme Court oversight and generates an official <strong>Application Reference / Acknowledgment Number</strong>.
+          </p>
+        </div>
+        <div style="background: #ffffff; border: 1px solid var(--slate-200); border-radius: 6px; padding: 1rem;">
+          <strong style="color: var(--navy-900); font-size: 0.9rem;">Step 2: Generate Detailed Appeal on form.html</strong>
+          <p style="font-size: 0.825rem; color: var(--slate-600); margin-top: 0.35rem; line-height: 1.45;">
+            Because the online portal caps facts to 1,000 chars and <em>strictly prohibits document uploads</em>, enter your Online Reference Number into <a href="form.html" style="color: var(--amber-600); font-weight: 600;">form.html</a> to generate a comprehensive legal petition with certified proofs for the Appellate Dropbox.
+          </p>
+        </div>
+      </div>
+      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1rem;">
+        <a href="appeal-guide.html" style="display: inline-flex; align-items: center; gap: 6px; background: var(--navy-800); color: #ffffff; padding: 0.55rem 1.1rem; font-size: 0.85rem; font-weight: 700; border-radius: 5px; text-decoration: none;">
+          <span>Read 16-Step Online Guide &rarr;</span>
+        </a>
+        <a href="form.html" style="display: inline-flex; align-items: center; gap: 6px; background: var(--amber-500); color: var(--navy-950); padding: 0.55rem 1.1rem; font-size: 0.85rem; font-weight: 700; border-radius: 5px; text-decoration: none;">
+          <span>Open Application Builder &rarr;</span>
+        </a>
+      </div>
+    </section>
 
     <!-- Overview Section -->
     <section id="overview">

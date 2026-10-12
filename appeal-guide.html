@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIR Appeal Guide — Online Filing & Detailed Legal Representation Protocol | APCR Karnataka</title>
+  <style>
+    :root {
+      --navy-950: #0a1322;
+      --navy-900: #101e36;
+      --navy-800: #182b4d;
+      --navy-700: #223c6a;
+      --amber-600: #b45309;
+      --amber-500: #d97706;
+      --amber-100: #fef3c7;
+      --amber-50: #fffbeb;
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-300: #cbd5e1;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+      --emerald-700: #047857;
+      --emerald-600: #059669;
+      --emerald-50: #ecfdf5;
+      --crimson-700: #b91c1c;
+      --crimson-50: #fef2f2;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.65;
+      color: var(--slate-800);
+      background-color: var(--slate-50);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      background-color: var(--navy-950);
+      color: #94a3b8;
+      font-size: 0.825rem;
+      padding: 0.45rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .top-bar a {
+      color: #cbd5e1;
+      text-decoration: none;
+    }
+    .top-bar a:hover {
+      text-decoration: underline;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(180deg, var(--navy-900) 0%, var(--navy-800) 100%);
+      color: #ffffff;
+      padding: 1.5rem 2rem;
+      border-bottom: 3px solid var(--amber-500);
+    }
+
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+    }
+
+    .header-branding {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .header-logo {
+      height: 56px;
+      width: auto;
+      object-fit: contain;
+      background: #ffffff;
+      padding: 4px 8px;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.725rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background-color: rgba(217, 119, 6, 0.2);
+      color: #fef08a;
+      border: 1px solid rgba(217, 119, 6, 0.4);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      margin-bottom: 0.35rem;
+    }
+
+    h1 {
+      font-family: Charter, Georgia, "Times New Roman", serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.25;
+    }
+
+    .header-sub {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      margin-top: 0.25rem;
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 1.1rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .btn-nav-outline {
+      color: #cbd5e1;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .btn-nav-outline:hover {
+      background: rgba(255, 255, 255, 0.16);
+      color: #ffffff;
+    }
+
+    .btn-nav-primary {
+      background-color: var(--amber-500);
+      color: var(--navy-950);
+      font-weight: 700;
+      border: 1px solid var(--amber-600);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+    .btn-nav-primary:hover {
+      background-color: #f59e0b;
+      transform: translateY(-1px);
+    }
+
+    /* Layout Wrapper */
+    .layout-wrapper {
+      max-width: 1200px;
+      margin: 2rem auto 4rem;
+      padding: 0 1.5rem;
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    /* Left Sidebar */
+    aside.sidebar-nav {
+      width: 280px;
+      min-width: 250px;
+      position: sticky;
+      top: 1.5rem;
+      max-height: calc(100vh - 3rem);
+      overflow-y: auto;
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 8px;
+      padding: 1.25rem 1rem;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+    }
+
+    .sidebar-title {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--slate-600);
+      padding: 0 0.5rem 0.6rem;
+      border-bottom: 1.5px solid var(--slate-200);
+      margin-bottom: 0.75rem;
+    }
+
+    .sidebar-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .sidebar-menu a {
+      display: block;
+      padding: 0.55rem 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--slate-700);
+      text-decoration: none;
+      border-radius: 5px;
+      border-left: 3px solid transparent;
+      transition: all 0.15s ease;
+      line-height: 1.35;
+    }
+
+    .sidebar-menu a:hover {
+      background-color: var(--slate-100);
+      color: var(--navy-900);
+      border-left-color: var(--amber-500);
+    }
+
+    /* Main Content */
+    main.content-main {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .hero-banner {
+      background: linear-gradient(135deg, #ffffff 0%, var(--amber-50) 100%);
+      border: 1.5px solid var(--amber-100);
+      border-left: 5px solid var(--amber-500);
+      border-radius: 8px;
+      padding: 1.75rem 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+
+    .hero-banner h2 {
+      font-family: Charter, Georgia, serif;
+      font-size: 1.5rem;
+      color: var(--navy-900);
+      margin-bottom: 0.65rem;
+    }
+
+    .hero-banner p {
+      font-size: 0.925rem;
+      color: var(--slate-700);
+      line-height: 1.6;
+      margin-bottom: 0.85rem;
+    }
+
+    .why-online-box {
+      background: #ffffff;
+      border: 1px solid #fed7aa;
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+    .why-online-box strong {
+      color: var(--amber-600);
+    }
+
+    /* Process Flow Overview */
+    .flow-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .flow-card {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 8px;
+      padding: 1.25rem;
+      position: relative;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .flow-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    .flow-step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--navy-800);
+      color: #ffffff;
+      font-size: 0.8rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+    }
+
+    .flow-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy-900);
+      margin-bottom: 0.45rem;
+    }
+
+    .flow-card p {
+      font-size: 0.825rem;
+      color: var(--slate-600);
+      line-height: 1.45;
+    }
+
+    /* Section Styling */
+    section {
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 8px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+    }
+
+    section h2 {
+      font-family: Charter, Georgia, serif;
+      font-size: 1.35rem;
+      color: var(--navy-900);
+      border-bottom: 2px solid var(--slate-100);
+      padding-bottom: 0.65rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .stage-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+    }
+
+    .stage-item {
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: 6px;
+      padding: 1rem 0.85rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stage-badge {
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--amber-600);
+      margin-bottom: 0.25rem;
+    }
+
+    .stage-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--navy-900);
+      margin-bottom: 0.45rem;
+    }
+
+    .stage-desc {
+      font-size: 0.775rem;
+      color: var(--slate-600);
+      line-height: 1.4;
+      flex: 1;
+    }
+
+    /* Step Cards (16 Steps) */
+    .phase-block {
+      margin-bottom: 1.75rem;
+      border: 1px solid var(--slate-200);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .phase-header {
+      background: var(--slate-100);
+      padding: 0.75rem 1.25rem;
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--navy-800);
+      border-bottom: 1px solid var(--slate-200);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .step-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 1.25rem;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--slate-100);
+      background: #ffffff;
+      align-items: flex-start;
+    }
+    .step-item:last-child {
+      border-bottom: none;
+    }
+
+    .step-circle {
+      min-width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--navy-800);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+
+    .step-content h4 {
+      font-size: 0.925rem;
+      font-weight: 700;
+      color: var(--navy-950);
+      margin-bottom: 0.25rem;
+    }
+
+    .step-content p {
+      font-size: 0.85rem;
+      color: var(--slate-600);
+      line-height: 1.45;
+    }
+
+    .code-pill {
+      display: inline-block;
+      background: #0f172a;
+      color: #fef08a;
+      font-family: monospace;
+      font-size: 0.8rem;
+      padding: 2px 7px;
+      border-radius: 4px;
+      margin: 0.2rem 0;
+    }
+
+    /* Warning / Limitation Box */
+    .warning-box {
+      background-color: #fff1f2;
+      border: 1px solid #fecdd3;
+      border-left: 4px solid var(--crimson-700);
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
+      margin: 1.25rem 0;
+      font-size: 0.875rem;
+      color: #881337;
+      line-height: 1.5;
+    }
+    .warning-box h4 {
+      font-size: 0.925rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      color: var(--crimson-700);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Callout Card */
+    .callout-box {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-left: 4px solid var(--emerald-600);
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
+      margin: 1.25rem 0;
+      font-size: 0.875rem;
+      color: #14532d;
+      line-height: 1.5;
+    }
+
+    .checklist-ul {
+      margin-left: 1.25rem;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--slate-700);
+    }
+    .checklist-ul li {
+      margin-bottom: 0.4rem;
+    }
+
+    /* Final CTA Area */
+    .guide-cta-panel {
+      background: linear-gradient(180deg, var(--navy-900) 0%, var(--navy-950) 100%);
+      color: #ffffff;
+      border-radius: 8px;
+      padding: 2.25rem;
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .guide-cta-panel h2 {
+      font-family: Charter, Georgia, serif;
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+      border-bottom: none;
+      justify-content: center;
+    }
+    .guide-cta-panel p {
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      max-width: 650px;
+      margin: 0 auto 1.5rem;
+    }
+
+    /* 9-Digit Top Visitor Counter Panel */
+    .top-visitor-panel {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+    .top-visitor-panel .panel-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.725rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      color: #cbd5e1;
+    }
+    .visitor-digits-9 {
+      display: inline-flex;
+      gap: 2px;
+      align-items: center;
+    }
+    .v-digit {
+      display: inline-block;
+      background: #020617;
+      color: #fef08a;
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      font-size: 0.85rem;
+      font-weight: 800;
+      padding: 1px 4.5px;
+      border-radius: 3px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.75);
+      min-width: 15px;
+      text-align: center;
+      line-height: 1.25;
+    }
+
+    @media (max-width: 900px) {
+      .layout-wrapper {
+        flex-direction: column;
+      }
+      aside.sidebar-nav {
+        width: 100%;
+        position: static;
+        max-height: none;
+      }
+      .flow-cards {
+        grid-template-columns: 1fr;
+      }
+      .stage-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <img src="APCR Logo.png" alt="APCR Logo" style="height: 20px; width: auto; background: #fff; padding: 1px 3px; border-radius: 3px;">
+      <span><strong>SIR (Karnataka): Claims, Objections &amp; Appeals</strong> | Volunteer &amp; Elector Guidance</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+      <div class="top-visitor-panel" title="Total Website Visitors">
+        <div class="panel-label">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+          <span>Visitors:</span>
+        </div>
+        <div class="visitor-digits-9" id="top-visitor-digits">
+          <span class="v-digit">0</span><span class="v-digit">0</span><span class="v-digit">0</span><span class="v-digit">0</span><span class="v-digit">0</span><span class="v-digit">0</span><span class="v-digit">0</span><span class="v-digit">0</span><span class="v-digit">0</span>
+        </div>
+      </div>
+      <div><a href="mailto:apcrkarnataka.sir26@gmail.com">apcrkarnataka.sir26@gmail.com</a></div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <div class="header-branding">
+        <img src="APCR Logo.png" alt="APCR Logo" class="header-logo">
+        <div>
+          <span class="badge">Electoral Appeal Protocol &bull; SIR 2026</span>
+          <h1>Two-Step Electoral Appeal Procedure</h1>
+          <div class="header-sub">Association for Protection of Civil Rights (APCR) Karnataka &bull; Volunteer Handbook Guide</div>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <a href="index.html" class="btn-nav btn-nav-outline">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+          <span>Theory &amp; Legal Framework</span>
+        </a>
+        <a href="form.html" class="btn-nav btn-nav-primary">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+          <span>Application Builder &rarr;</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Layout Wrapper -->
+  <div class="layout-wrapper">
+
+    <!-- Left Sticky Sidebar -->
+    <aside class="sidebar-nav">
+      <div class="sidebar-title">Appeal Process Guide</div>
+      <nav class="sidebar-menu">
+        <a href="#why-two-steps"><span>1. The Two-Step Strategy</span></a>
+        <a href="#volunteer-stages"><span>2. 5 Key Appeal Stages</span></a>
+        <a href="#online-steps"><span>3. Online Filing (16 Steps)</span></a>
+        <a href="#portal-limits"><span>4. Portal Limitations</span></a>
+        <a href="#form-builder"><span>5. Detailed Appeal (form.html)</span></a>
+        <a href="#dropbox-submission"><span>6. Physical Evidence Package</span></a>
+        <a href="#legal-principles"><span>7. Standards of Proof</span></a>
+      </nav>
+
+      <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--slate-200);">
+        <div style="font-size: 0.75rem; color: var(--slate-600); margin-bottom: 0.5rem; font-weight: 600;">Ready to generate appeal?</div>
+        <a href="form.html" class="btn-nav btn-nav-primary" style="width: 100%; justify-content: center; text-align: center;">
+          <span>Open Application Builder &rarr;</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content-main">
+
+      <!-- Hero Banner -->
+      <div class="hero-banner" id="why-two-steps">
+        <h2>Why First File Online, Then Generate Detailed Legal Appeal on form.html?</h2>
+        <p>
+          In Special Intensive Revision (SIR) proceedings, an aggrieved voter whose name has been wrongly deleted or flagged has a strict <strong>15-day statutory window</strong> to file an appeal before the Designated Appellate Authority (District Magistrate / Additional District Magistrate / Sub-Divisional Officer) under Section 24 of the Representation of the People Act, 1950.
+        </p>
+        <p>
+          Based on APCR's on-the-ground interventions across states, relying exclusively on either the online portal or a standalone physical submission creates significant procedural risks. The most effective legal recourse is the <strong>Two-Step Protocol</strong>:
+        </p>
+
+        <div class="why-online-box">
+          <strong>The Dual-Channel Strategy:</strong><br>
+          1. <strong>Online Filing on ECINet (<a href="https://voters.eci.gov.in/" target="_blank" style="color:var(--amber-600); text-decoration:underline;">voters.eci.gov.in</a>):</strong> Creates an official, timestamped electronic entry with an <em>Application Acknowledgment Number</em> under the direct supervisory radar of the ECI and the Supreme Court.<br>
+          2. <strong>Crucial Online Portal Limitation:</strong> The online portal restricts "Brief Facts" to 1,000 characters, "Relief Sought" to 500 characters, and <strong>strictly does NOT permit uploading any documentary proofs or annexures</strong>.<br>
+          3. <strong>Comprehensive Physical Representation (<a href="form.html" style="color:var(--amber-600); text-decoration:underline;">form.html</a>):</strong> By entering the online reference number into our Application Builder, the elector generates an exhaustive legal petition citing Supreme Court precedents (Lal Babu Hussein, ADR v. ECI), natural justice violations, and an itemized schedule of verified documents, submitted directly to the Appellate Authority/Dropbox.
+        </div>
+      </div>
+
+      <!-- 3-Step Process Flow Cards -->
+      <div class="flow-cards">
+        <div class="flow-card">
+          <div class="flow-step-num">1</div>
+          <h3>File Initial Appeal Online</h3>
+          <p>Visit <strong>voters.eci.gov.in</strong> &rarr; Click 'Submit Appeal for Individuals' &rarr; Authenticate via OTP &amp; Aadhaar E-Hastakshar &rarr; <strong>Obtain the Online Reference / Acknowledgment Number</strong>.</p>
+        </div>
+
+        <div class="flow-card" style="border-color: var(--amber-500); background: #fffdfa;">
+          <div class="flow-step-num" style="background: var(--amber-500); color: var(--navy-950);">2</div>
+          <h3>Generate Detailed Appeal on form.html</h3>
+          <p>Open <strong>form.html</strong> &rarr; Select "Yes, Online Appeal Submitted" &rarr; Enter your Reference Number &rarr; Select your specific scenario (1–13) &rarr; Download full legal petition with legal grounds.</p>
+        </div>
+
+        <div class="flow-card">
+          <div class="flow-step-num">3</div>
+          <h3>Submit Evidence Package</h3>
+          <p>Attach the online acknowledgment slip + detailed petition from form.html + certified copies of all proofs &rarr; Deposit at nearest designated <strong>Appellate Authority Dropbox</strong> / SDM / DM office.</p>
+        </div>
+      </div>
+
+      <!-- Section: 5 Key Appeal Stages -->
+      <section id="volunteer-stages">
+        <h2>
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+          <span>The Volunteer's Role: 5 Key Appeal Stages</span>
+        </h2>
+        <p style="font-size:0.875rem; color:var(--slate-600); margin-bottom:1rem;">
+          From the APCR Volunteer Handbook: Volunteers guide citizens through a structured five-stage process to ensure complete and timely statutory protection:
+        </p>
+
+        <div class="stage-grid">
+          <div class="stage-item">
+            <span class="stage-badge">Stage 1</span>
+            <div class="stage-title">Verify Eligibility</div>
+            <div class="stage-desc">Confirm rejection order &amp; specific grounds for exclusion. Document if no formal order or notice was received.</div>
+          </div>
+
+          <div class="stage-item">
+            <span class="stage-badge">Stage 2</span>
+            <div class="stage-title">Prepare Petition</div>
+            <div class="stage-desc">Gather EPIC, Part No., Sl. No., Aadhaar, DOB proof, 2002 SIR roll excerpts, and all original linkage records.</div>
+          </div>
+
+          <div class="stage-item" style="border-color:var(--amber-500); background:#fffbeb;">
+            <span class="stage-badge" style="color:var(--amber-600);">Stage 3 &bull; Critical</span>
+            <div class="stage-title">File Timely</div>
+            <div class="stage-desc"><strong>Strict 15-day window</strong> from supplementary roll publication. Submit online via ECINet to generate reference number.</div>
+          </div>
+
+          <div class="stage-item">
+            <span class="stage-badge">Stage 4</span>
+            <div class="stage-title">Track &amp; Serve</div>
+            <div class="stage-desc">Obtain application reference number. Formally serve notice to respondents (ERO / DEO / ECI) with physical petition.</div>
+          </div>
+
+          <div class="stage-item">
+            <span class="stage-badge">Stage 5</span>
+            <div class="stage-title">Follow-up</div>
+            <div class="stage-desc">Monitor ECINet for status updates. Tribunals prioritize cases under active Supreme Court oversight.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Online Filing 16 Steps -->
+      <section id="online-steps">
+        <h2>
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          <span>Step-by-Step Walkthrough: Filing on voters.eci.gov.in (16 Steps)</span>
+        </h2>
+        <p style="font-size:0.875rem; color:var(--slate-600); margin-bottom:1.25rem;">
+          Follow these 16 steps on the official Election Commission of India portal (<a href="https://voters.eci.gov.in/" target="_blank" style="color:var(--amber-600); font-weight:600;">https://voters.eci.gov.in/</a>) to file the initial digital appeal:
+        </p>
+
+        <!-- Phase 1 -->
+        <div class="phase-block">
+          <div class="phase-header">
+            <span>Phase 1: Access &amp; Authentication</span>
+            <span style="font-size:0.75rem; color:var(--slate-500);">Steps 1 to 3</span>
+          </div>
+          <div class="step-list">
+            <div class="step-item">
+              <div class="step-circle">1</div>
+              <div class="step-content">
+                <h4>Visit Official ECI Portal</h4>
+                <p>Navigate to <a href="https://voters.eci.gov.in/" target="_blank" style="color:var(--amber-600); font-weight:600;">https://voters.eci.gov.in/</a> (or <span class="code-pill">ecinet.eci.gov.in</span>).</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-circle">2</div>
+              <div class="step-content">
+                <h4>Select Appeal Tab</h4>
+                <p>Click on <strong>"Submit Appeal for Individuals (Under Adjudication)"</strong> on the main service dashboard.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-circle">3</div>
+              <div class="step-content">
+                <h4>Account Creation / Sign In</h4>
+                <p>Click <strong>Sign Up</strong> to create a new user account if not registered, or <strong>Sign In</strong> if you already have an account.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 2 -->
+        <div class="phase-block">
+          <div class="phase-header">
+            <span>Phase 2: Login &amp; Elector Verification</span>
+            <span style="font-size:0.75rem; color:var(--slate-500);">Steps 4 to 8</span>
+          </div>
+          <div class="step-list">
+            <div class="step-item">
+              <div class="step-circle">4</div>
+              <div class="step-content">
+                <h4>Login Credentials</h4>
+                <p>Log in using your registered Mobile Number or Voter ID (EPIC) Number.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-circle">5</div>
+              <div class="step-content">
+                <h4>OTP Verification</h4>
+                <p>Enter the 6-digit One-Time Password (OTP) received on your registered mobile number.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-circle">6</div>
+              <div class="step-content">
+                <h4>Search Appellant by EPIC</h4>
+                <p>Post-login, enter the appellant's EPIC (Voter ID) number in the search field to retrieve electoral records.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-circle">7</div>
+              <div class="step-content">
+                <h4>Verify Retrieved Elector Data</h4>
+                <p>Scrutinize the displayed appellant details (Constituency, Part No., Serial No., Relative Name) to confirm accuracy.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-circle">8</div>
+              <div class="step-content">
+                <h4>Confirm Name &amp; Residential Address</h4>
+                <p>Verify and fill in the appellant's full name and current residential address in the respective fields.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 3 -->
+        <div class="phase-block">
+          <div class="phase-header">
+            <span>Phase 3: Data Entry &amp; Initial Submission</span>
+            <span style="font-size:0.75rem; color:var(--slate-500);">Steps 9 to 11</span>
+          </div>
+          <div class="step-list">
+            <div class="step-item">
+              <div class="step-circle">9</div>
+              <div class="step-content">
+                <h4>Enter Brief Facts of Appeal (Max 1,000 Chars)</h4>
+                <p>Summarize the core facts: regular voting history, rightful occupant of address, arbitrary deletion/notice, baseline roll proof. <em>(Note: Keep concise due to 1,000-character portal limit)</em>.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-circle">10</div>
+              <div class="step-content">
+                <h4>Enter Relief Sought (Max 500 Chars) &amp; Place</h4>
+                <p>Specify prayers: (1) Set aside deletion order; (2) Immediate restoration of name in electoral roll; (3) Issue corrected EPIC; (4) Interim relief to vote. Enter Place of submission.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-circle">11</div>
+              <div class="step-content">
+                <h4>Click Submit</h4>
+                <p>Click the <strong>Submit</strong> button to transition to digital authentication.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 4 -->
+        <div class="phase-block">
+          <div class="phase-header">
+            <span>Phase 4: Digital Verification &amp; E-Hastakshar</span>
+            <span style="font-size:0.75rem; color:var(--slate-500);">Steps 12 to 14</span>
+          </div>
+          <div class="step-list">
+            <div class="step-item">
+              <div class="step-circle">12</div>
+              <div class="step-content">
+                <h4>Aadhaar Authentication</h4>
+                <p>Provide the appellant's 12-digit Aadhaar Number for identity verification for the e-sign facility.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-circle">13</div>
+              <div class="step-content">
+                <h4>OTP Receipt for E-Hastakshar</h4>
+                <p>An OTP is dispatched to the mobile number registered with the Aadhaar card.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-circle">14</div>
+              <div class="step-content">
+                <h4>Execute Digital Signature</h4>
+                <p>Enter the OTP and confirm to complete the electronic digital signature process.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 5 -->
+        <div class="phase-block">
+          <div class="phase-header" style="background:#ecfdf5; color:var(--emerald-700);">
+            <span>Phase 5: Completion &amp; Application Reference Number</span>
+            <span style="font-size:0.75rem; color:var(--emerald-600);">Steps 15 to 16 &bull; Crucial</span>
+          </div>
+          <div class="step-list">
+            <div class="step-item">
+              <div class="step-circle" style="background:var(--emerald-700);">15</div>
+              <div class="step-content">
+                <h4>Successful Submission Confirmation</h4>
+                <p>Upon verification, the portal confirms: <em>"Your appeal has been successfully submitted under Section 24 of RP Act, 1950."</em></p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-circle" style="background:var(--emerald-700);">16</div>
+              <div class="step-content">
+                <h4>Save Receipt &amp; Note Application Reference Number</h4>
+                <p><strong>Download and save the official PDF acknowledgment receipt.</strong> Carefully copy the <strong>Application Reference / Acknowledgment Number</strong> (e.g. <span class="code-pill">ECI/APP/2026/KA/XXXXXX</span>). This number is required for the next step on <strong>form.html</strong>.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Portal Limitations & Why form.html is Mandatory -->
+      <section id="portal-limits">
+        <h2>
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          <span>The Critical Portal Limitation: Why Online Filing Alone Is Insufficient</span>
+        </h2>
+
+        <div class="warning-box">
+          <h4>Warning: The Online Portal Does NOT Allow Uploading Documents!</h4>
+          The official ECI portal was designed with structural constraints:
+          <ul style="margin-left: 1.25rem; margin-top: 0.4rem;">
+            <li><strong>Zero Document Uploads:</strong> There is <em>no feature</em> on the online portal to attach or upload PDF, JPG, or any digital copies of Aadhaar, Birth Certificates, School Certificates, Land Records, or 2002 SIR Roll baseline sheets.</li>
+            <li><strong>Character Caps:</strong> Brief facts are capped at 1,000 characters and Relief at 500 characters, making it impossible to lay out comprehensive legal grounds, natural justice violations, or case laws.</li>
+            <li><strong>Risk of Summary Rejection:</strong> An appeal without supporting physical documentary evidence cannot satisfy the legal standard of proof before the Appellate Tribunal.</li>
+          </ul>
+        </div>
+
+        <p style="font-size:0.875rem; color:var(--slate-700); line-height:1.6;">
+          Under the Indian Evidence Act and the Representation of the People Act, 1950, proceedings before the Appellate Officer (DM / ADM / SDM) are <strong>quasi-judicial civil proceedings</strong>. The standard of proof is the <strong>preponderance of probabilities</strong>. To succeed, the appellant must place a complete evidentiary dossier on record. This is why APCR developed the <strong>Application Builder (<a href="form.html" style="color:var(--amber-600); font-weight:600;">form.html</a>)</strong>.
+        </p>
+      </section>
+
+      <!-- Section: How to use Reference Number on form.html -->
+      <section id="form-builder">
+        <h2>
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+          <span>Using Your Online Reference Number on form.html</span>
+        </h2>
+
+        <div class="callout-box">
+          <strong>How form.html Seamlessly Links With Your Online Appeal:</strong><br>
+          When you navigate to <a href="form.html" style="color:var(--emerald-700); font-weight:700; text-decoration:underline;">form.html (Application Builder)</a>:
+          <ol style="margin-left: 1.25rem; margin-top: 0.5rem; line-height: 1.55;">
+            <li>In Section 1 (<em>Common Elector &amp; Authority Details</em>), find the section: <strong>"Online Appeal Filing Status (ECI Portal voters.eci.gov.in)"</strong>.</li>
+            <li>Select the radio button: <strong>"Yes, Online Appeal Submitted"</strong>.</li>
+            <li>Enter your <strong>Online Appeal Acknowledgment / Reference Number</strong> into the input box.</li>
+            <li>The system will dynamically insert an official tracking line into the representation header:
+              <br><span class="code-pill">Online Appeal Acknowledgment / Tracking No.: [ Your Reference No. ]</span>
+            </li>
+            <li>A dedicated statutory legal paragraph will automatically be woven into the petition body across whichever of the <strong>13 Scenarios</strong> you choose, formally declaring that this written representation is filed in continuation of the online submission to supply the requisite evidentiary records.</li>
+            <li>Export the complete legal document as a formatted <strong>Microsoft Word (.doc)</strong> file or click <strong>Print</strong>.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- Section: Dropbox Submission -->
+      <section id="dropbox-submission">
+        <h2>
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+          <span>Assembling the Complete Evidence Package &amp; Dropbox Submission</span>
+        </h2>
+        <p style="font-size:0.875rem; color:var(--slate-600); margin-bottom:1rem;">
+          Slide 10 of the Volunteer Handbook sets out the physical submission protocol. Once the appeal is filed online and the detailed petition is printed from <span style="font-weight:600;">form.html</span>, assemble the final package in this order:
+        </p>
+
+        <div style="background:var(--slate-50); border:1px solid var(--slate-200); border-radius:6px; padding:1.25rem;">
+          <h4 style="font-size:0.9rem; color:var(--navy-900); margin-bottom:0.6rem;">Checklist of Documents to Staple Together:</h4>
+          <ul class="checklist-ul">
+            <li><strong>Page 1:</strong> Printout of the <strong>Online Appeal Acknowledgment Slip</strong> (downloaded from voters.eci.gov.in showing the Application Reference Number).</li>
+            <li><strong>Pages 2–4:</strong> The <strong>Detailed Legal Representation</strong> generated from <a href="form.html" style="color:var(--amber-600); font-weight:600;">form.html</a> (bearing the elector's signature/thumb impression and verification date).</li>
+            <li><strong>Annexure A:</strong> Self-attested copy of <strong>Aadhaar Card</strong> (for identity/address verification, as affirmed by SC in ADR v. ECI).</li>
+            <li><strong>Annexure B:</strong> Primary citizenship/birth proof (Birth Certificate issued by Municipal Corporation / Gram Panchayat, or School Transfer Certificate / Matriculation Certificate).</li>
+            <li><strong>Annexure C:</strong> Legacy / Linkage records (Excerpts of <strong>2002 SIR Electoral Roll</strong> showing parents'/grandparents' inclusion).</li>
+            <li><strong>Annexure D:</strong> Certified copy of the Impugned Deletion Order / Notice (if served), or a specific declaration that no notice was ever served.</li>
+          </ul>
+
+          <div style="margin-top: 1rem; padding-top: 0.85rem; border-top: 1px dashed var(--slate-300); font-size: 0.825rem; color: var(--slate-700);">
+            <strong>Where to Submit:</strong> Deposit the sealed dossier at the nearest designated <strong>Appellate Authority Dropbox</strong> (District Election Office / Deputy Commissioner / Assistant Commissioner / Sub-Divisional Magistrate office). Obtain an acknowledgment receipt / receiving stamp on an office copy for your records.
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Standards of Proof & Legal Principles -->
+      <section id="legal-principles">
+        <h2>
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/></svg>
+          <span>Key Legal Standards for Volunteers (Slides 6–8)</span>
+        </h2>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem; margin-top:0.75rem;">
+          <div style="background:var(--slate-50); border:1px solid var(--slate-200); border-radius:6px; padding:1rem;">
+            <h4 style="font-size:0.875rem; color:var(--navy-900); margin-bottom:0.4rem;">Standard of Proof: Preponderance of Probabilities</h4>
+            <p style="font-size:0.8rem; color:var(--slate-600); line-height:1.45;">
+              This is a civil proceeding, not a criminal trial. The standard is <strong>preponderance of probabilities</strong>—the appellant does not have to prove their citizenship or linkage beyond a reasonable doubt, but simply establish that their eligibility is more probable than not based on the cumulative record.
+            </p>
+          </div>
+
+          <div style="background:var(--slate-50); border:1px solid var(--slate-200); border-radius:6px; padding:1rem;">
+            <h4 style="font-size:0.875rem; color:var(--navy-900); margin-bottom:0.4rem;">Linkage vs. Core Qualification</h4>
+            <p style="font-size:0.8rem; color:var(--slate-600); line-height:1.45;">
+              <strong>Settled Law:</strong> Mere failure to establish an algorithmic or mechanical linkage to a pre-existing 2002 entry cannot be the sole basis for disenfranchisement if the elector independently proves core constitutional qualifications: (1) Indian Citizenship, (2) 18+ Years of Age, and (3) Ordinary Residence.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Final Action Panel -->
+      <div class="guide-cta-panel">
+        <h2>Start Your Application Now</h2>
+        <p>
+          Have your Online Appeal Reference Number ready? Open the Application Builder to select your scenario, automatically incorporate your tracking number, and export a ready-to-print legal petition.
+        </p>
+        <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;">
+          <a href="form.html" class="btn-nav btn-nav-primary" style="font-size:0.95rem; padding:0.7rem 1.5rem;">
+            <span>Go to Application Builder (form.html) &rarr;</span>
+          </a>
+          <a href="index.html" class="btn-nav btn-nav-outline" style="font-size:0.95rem; padding:0.7rem 1.5rem;">
+            <span>Review Full Legal Framework &rarr;</span>
+          </a>
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+
+  <script>
+    // --- 9-Digit Live Visitor Counter (Synchronized) ---
+    async function initVisitorCounter() {
+      const digitsContainer = document.getElementById('top-visitor-digits');
+      if (!digitsContainer) return;
+
+      function renderDigits(num) {
+        const countInt = Math.max(0, parseInt(num, 10) || 0);
+        const padded = String(countInt).padStart(9, '0');
+        digitsContainer.innerHTML = padded
+          .split('')
+          .map(d => `<span class="v-digit">${d}</span>`)
+          .join('');
+      }
+
+      let stored = localStorage.getItem('apcr_visitors_9digit_v3');
+      let count = stored !== null ? parseInt(stored, 10) : 0;
+      renderDigits(count);
+
+      try {
+        const isNewSession = !sessionStorage.getItem('apcr_session_9digit_v3');
+        const endpoint = isNewSession
+          ? 'https://api.counterapi.dev/v1/sirappeals-apcrkarnataka/visits/up'
+          : 'https://api.counterapi.dev/v1/sirappeals-apcrkarnataka/visits';
+
+        const res = await fetch(endpoint, { method: 'GET', mode: 'cors' });
+        if (res.ok) {
+          const data = await res.json();
+          if (data && typeof data.count === 'number') {
+            const liveCount = data.count;
+            localStorage.setItem('apcr_visitors_9digit_v3', liveCount);
+            sessionStorage.setItem('apcr_session_9digit_v3', 'true');
+            renderDigits(liveCount);
+            return;
+          }
+        }
+      } catch (e) {
+        // Fallback gracefully on local/offline
+      }
+
+      if (!sessionStorage.getItem('apcr_session_9digit_v3')) {
+        count += 1;
+        sessionStorage.setItem('apcr_session_9digit_v3', 'true');
+        localStorage.setItem('apcr_visitors_9digit_v3', count);
+        renderDigits(count);
+      }
+    }
+
+    initVisitorCounter();
+    window.addEventListener('DOMContentLoaded', initVisitorCounter);
+  </script>
+</body>
+</html>
